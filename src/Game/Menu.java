@@ -1,49 +1,36 @@
 package Game;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class Menu {
 
-    private static final String MOTD_GET_URL = "http://cswebcat.swansea.ac.uk/puzzle";
-    private static final String MOTD_SOL_GET_URL = "http://cswebcat.swansea.ac.uk/message";
+    private static final String MOTD_GET_URL = "cswebcat.swansea.ac.uk";
+    private static final String MOTD_GET_PUZZLE_URL = "/puzzle";
+    private static final String MOTD_SOL_GET_URL = "/message?solution=";
+    private static final String MOTD_INITIAL = "http";
+    private static final String MOTD_REQUEST_METHOD = "GET";
     private static final int MOTD_ALPHABET_LENGTH = 26;
     private static final int MOTD_INT_CONVERSION = -1;
     private static final String MOTD_APPEND = "CS-230";
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private void updateMOTD()  {
+    private void updateMOTD(){
+        String messageOfTheDay;
         try{
-
+            String unsolvedPuzzle = getPuzzle();
+            String solvedPuzzle = puzzleSolve(unsolvedPuzzle);
+            messageOfTheDay = sendSolution(solvedPuzzle);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }
 
-    private String puzzleSolution(String puzzle){
+    private String puzzleSolve(String puzzle){
         String possibleLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         int moveLetter = -1;
         StringBuilder solution = new StringBuilder();
@@ -58,4 +45,30 @@ public class Menu {
         solution = new StringBuilder(length + solution);
         return String.valueOf(solution);
     }
+
+    private static String requested(final String path) throws IOException {
+        URL url = new URL(MOTD_INITIAL,MOTD_GET_URL, path);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod(MOTD_REQUEST_METHOD);
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+
+        String reply = con.getResponseCode() == HttpURLConnection.HTTP_OK
+                ? in.readLine()
+                : null;
+
+        con.disconnect();
+        return reply;
+
+    }
+
+    private static String getPuzzle() throws IOException {
+        return requested(MOTD_GET_PUZZLE_URL);
+    }
+
+    private static String sendSolution(final String answer) throws IOException {
+        return requested(MOTD_SOL_GET_URL + answer);
+    }
 }
+
