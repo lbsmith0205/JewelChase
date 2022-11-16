@@ -54,9 +54,13 @@ public class Menu {
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
 
-        String reply = con.getResponseCode() == HttpURLConnection.HTTP_OK
-                ? in.readLine()
-                : null;
+        String reply;
+        if(con.getResponseCode() == HttpURLConnection.HTTP_OK){
+            reply = in.readLine();
+        }
+        else{
+            reply = null;
+        }
 
         con.disconnect();
         return reply;
