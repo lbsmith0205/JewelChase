@@ -8,16 +8,22 @@ import java.net.URL;
 
 public class Menu {
 
+    //Puzzle solution constants
+    private static final String MOTD_INITIAL = "http";
     private static final String MOTD_GET_URL = "cswebcat.swansea.ac.uk";
     private static final String MOTD_GET_PUZZLE_URL = "/puzzle";
     private static final String MOTD_SOL_GET_URL = "/message?solution=";
-    private static final String MOTD_INITIAL = "http";
     private static final String MOTD_REQUEST_METHOD = "GET";
+    private static final String MOTD_APPEND = "CS-230";
     private static final int MOTD_ALPHABET_LENGTH = 26;
     private static final int MOTD_INT_CONVERSION = -1;
-    private static final String MOTD_APPEND = "CS-230";
 
+    // Loads necessary components for the main menu
+    public void startMenu(){
+        updateMOTD();
+    }
 
+    //Updates message of the day
     private void updateMOTD(){
         String messageOfTheDay;
         try{
@@ -29,6 +35,7 @@ public class Menu {
         }
 
     }
+
 
     private String puzzleSolve(String puzzle){
         String possibleLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
