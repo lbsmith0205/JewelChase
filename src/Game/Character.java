@@ -23,7 +23,6 @@ public abstract class Character {
         this.y = y;
         this.doesExist = true;
     }
-    }
 
     /**
      * Removes an instance of Character from the game.
@@ -50,3 +49,4 @@ public abstract class Character {
 
     public abstract void move();
 }
+
