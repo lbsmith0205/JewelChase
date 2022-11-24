@@ -1,5 +1,6 @@
 package Game;
 
+<<<<<<< HEAD
 import javafx.scene.paint.Color;
 
 public abstract class Tile {
@@ -12,6 +13,20 @@ public abstract class Tile {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.tileColours = tileColours;
+=======
+import java.util.ArrayList;
+
+public abstract class Tile {
+
+    private final Object tileColours;
+    private final int yPosition;
+    private final int xPosition;
+
+    public Tile(int xPosition, int yPosition, ArrayList<String> tileColours){
+            this.xPosition = xPosition;
+            this.yPosition = yPosition;
+            this.tileColours = tileColours;
+>>>>>>> origin/Luke
     }
 
     public int getYPosition() {
@@ -25,4 +40,8 @@ public abstract class Tile {
     public Object getTileColours() {
         return tileColours;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/Luke
