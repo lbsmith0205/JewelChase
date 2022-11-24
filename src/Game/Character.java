@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 /**
  * Character.java
  * Super class for all player and non player character classes.
- * @author Dan.
+ * @author Daniel Baxter, Jack Lewis.
  */
 public abstract class Character {
     protected Tile position;
