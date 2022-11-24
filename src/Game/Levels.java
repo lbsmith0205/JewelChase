@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class Levels {
     private ArrayList<Character> characters = new ArrayList<Character>();
+    private ArrayList<Item>Items = new ArrayList<Item>();
+
 
     public Levels(){}
+
 }
