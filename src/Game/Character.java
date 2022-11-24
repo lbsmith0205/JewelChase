@@ -8,19 +8,16 @@ import javafx.scene.paint.Color;
  * @author Dan.
  */
 public abstract class Character {
-    protected int x;
-    protected int y;
+    protected Tile position;
     protected boolean doesExist;
     protected ArrayList<Color> currentColours;
 
     /**
      * Creates an instance of Character.
-     * @param x The character's x coordinate.
-     * @param y The character's y coordinate.
+     * @param position The Tile on which the Character is located.
      */
-    public Character(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Character(Tile position) {
+        this.position = position;
         this.doesExist = true;
     }
 
