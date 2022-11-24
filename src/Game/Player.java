@@ -1,5 +1,8 @@
 package Game;
 
+import javafx.scene.image.ImageView;
+import java.awt.event.KeyEvent;
+
 /**
  * Player.java
  * Sub class of Character.
@@ -16,8 +19,28 @@ public class Player extends Character {
         super(position);
     }
 
+    public void onItemBeginDrag(KeyEvent event) {
+
+        if (event.getKeyCode() == KeyEvent.VK_UP) {
+
+        }
+        if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+
+        }
+        if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+
+        }
+        if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+
+        }
+
+
+    }
+
+
     @Override
     public void move() {
+
 
     }
 }
