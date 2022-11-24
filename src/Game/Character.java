@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
  */
 public abstract class Character {
     protected Tile position;
-    protected boolean doesExist;
+    protected boolean isDead;
     protected ArrayList<Color> currentColours;
 
     /**
@@ -18,14 +18,14 @@ public abstract class Character {
      */
     public Character(Tile position) {
         this.position = position;
-        this.doesExist = true;
+        this.isDead = true;
     }
 
     /**
      * Removes an instance of Character from the game.
      */
     protected void kill() {
-        this.doesExist = false;
+        this.isDead = false;
     }
 
     /**
