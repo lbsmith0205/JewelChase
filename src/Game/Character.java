@@ -38,7 +38,7 @@ public abstract class Character {
      */
     protected boolean isLegalMove(Tile target) {
         for (Color currentColour : currentColours) {
-            for (Color targetColour : target.getColours) {
+            for (Color targetColour : target.getTileColours()) {
                 if (targetColour == currentColour) {
                     return true;
                 }
