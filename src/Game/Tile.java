@@ -22,7 +22,7 @@ public abstract class Tile {
         return xPosition;
     }
 
-    public Object getTileColours() {
+    public Color[] getTileColours() {
         return tileColours;
     }
 }
