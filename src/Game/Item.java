@@ -1,10 +1,10 @@
 package Game;
 
 public class Item {
-    private int xCoord;
-    private int yCoord;
-    private boolean exist;
-    private boolean contact = false;
+    protected int xCoord;
+    protected int yCoord;
+    protected boolean exist;
+    protected boolean contact = false;
 
     public Item (int x, int y) {
         this.xCoord = x;
