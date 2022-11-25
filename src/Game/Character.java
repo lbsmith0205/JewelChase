@@ -1,6 +1,8 @@
 package Game;
-import java.util.ArrayList;
+
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 
 /**
  * Character.java

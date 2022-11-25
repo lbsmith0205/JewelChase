@@ -45,7 +45,6 @@ public class Menu {
             int alphabetPos = possibleLetters.indexOf(puzzle.charAt(i));
             solution.append(possibleLetters.charAt(Math.floorMod((alphabetPos + ((i + 1) * moveLetter)), MOTD_ALPHABET_LENGTH)));
             moveLetter = moveLetter * MOTD_INT_CONVERSION;
-
         }
         solution.append(MOTD_APPEND);
         String length = String.valueOf(solution.length());
