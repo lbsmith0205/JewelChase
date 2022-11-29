@@ -3,13 +3,13 @@ package Game;
 <<<<<<< HEAD
 import javafx.scene.paint.Color;
 
-public abstract class Tile {
+public class Tile {
 
     private final Color[] tileColours;
     private final int yPosition;
     private final int xPosition;
 
-    public Tile(int xPosition, int yPosition, Color[] tileColours){
+    public Tile(int xPosition, int yPosition, Color[] tileColours) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.tileColours = tileColours;
@@ -37,7 +37,7 @@ public abstract class Tile {
         return xPosition;
     }
 
-    public Object getTileColours() {
+    public Color[] getTileColours() {
         return tileColours;
     }
 <<<<<<< HEAD
