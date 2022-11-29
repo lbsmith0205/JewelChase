@@ -1,4 +1,6 @@
-package Game;
+package Game.Characters;
+
+import Game.Tile;
 
 /**
  * SmartThieves.java

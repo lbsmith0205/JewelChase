@@ -1,5 +1,6 @@
-package Game;
+package Game.Characters;
 
+import Game.Tile;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;

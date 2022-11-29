@@ -1,4 +1,4 @@
-package Game;
+package Game.Items;
 
 public class Loot extends Item{
 
@@ -44,5 +44,7 @@ public class Loot extends Item{
         this.type = type;
     }
 
+    public void interact() {
 
+    }
 }

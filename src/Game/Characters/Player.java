@@ -1,6 +1,7 @@
-package Game;
+package Game.Characters;
 
-import javafx.scene.image.ImageView;
+import Game.Tile;
+
 import java.awt.event.KeyEvent;
 
 /**
