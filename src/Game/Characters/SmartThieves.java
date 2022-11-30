@@ -1,4 +1,6 @@
-package Game;
+package Game.Characters;
+
+import Game.Tile;
 
 /**
  * SmartThieves.java
@@ -6,7 +8,7 @@ package Game;
  * @author Daniel Baxter, Jack Lewis.
  */
 
-public class SmartThieves extends Character{
+public class SmartThieves extends Character {
     /**
      * Creates an instance of Character.
      *

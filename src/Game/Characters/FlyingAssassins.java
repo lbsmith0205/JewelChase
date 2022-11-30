@@ -1,4 +1,6 @@
-package Game;
+package Game.Characters;
+
+import Game.Tile;
 
 /**
  * FlyingAssassins.java
@@ -6,7 +8,7 @@ package Game;
  * @author Daniel Baxter, Jack Lewis.
  */
 
-public class FlyingAssassins extends Character{
+public class FlyingAssassins extends Character {
 
     /**
      * Creates an instance of Character.

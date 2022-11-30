@@ -1,6 +1,6 @@
-package Game;
+package Game.Items;
 
-public class Loot extends Item{
+public class Loot extends Item {
 
     private static final int CENT_COIN_VALUE = 1;
     private static final int DOLLAR_COIN_VALUE = 2;

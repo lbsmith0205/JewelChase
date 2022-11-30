@@ -1,4 +1,6 @@
-package Game;
+package Game.Characters;
+
+import Game.Tile;
 
 /**
  * FloorFollowingThieves.java
@@ -6,7 +8,7 @@ package Game;
  * @author Daniel Baxter, Jack Lewis.
  */
 
-public class FloorFollowingThieves extends Character{
+public class FloorFollowingThieves extends Character {
     /**
      * Creates an instance of Character.
      *
