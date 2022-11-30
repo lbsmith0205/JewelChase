@@ -8,13 +8,13 @@ import Game.Tile;
  * @author Daniel Baxter, Jack Lewis.
  */
 
-public class FloorFollowingThieves extends Character {
+public class FloorFollowingThief extends Character {
     /**
      * Creates an instance of Character.
      *
      * @param position The Tile on which the Character is located.
      */
-    public FloorFollowingThieves(Tile position) {
+    public FloorFollowingThief(Tile position) {
         super(position);
     }
 
