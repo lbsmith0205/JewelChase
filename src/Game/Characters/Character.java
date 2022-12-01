@@ -1,5 +1,6 @@
-package Game;
+package Game.Characters;
 
+import Game.Tile;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  */
 public abstract class Character {
     protected Tile position;
-    protected boolean isDead;
+    protected boolean isDead = false;
     protected ArrayList<Color> currentColours;
 
     /**
@@ -20,14 +21,13 @@ public abstract class Character {
      */
     public Character(Tile position) {
         this.position = position;
-        this.isDead = true;
     }
 
     /**
      * Removes an instance of Character from the game.
      */
     protected void kill() {
-        this.isDead = false;
+        this.isDead = true;
     }
 
     /**
