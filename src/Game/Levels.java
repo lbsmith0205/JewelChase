@@ -16,11 +16,19 @@ public class Levels extends Application {
     //Arraylist of items in level
     private Tile [] tiles;// Array of tile objects to show board
     private Color[] tileColors = {Color.INDIANRED,Color.
-            SPRINGGREEN,Color.DEEPSKYBLUE,Color.KHAKI};;
+            SPRINGGREEN,Color.DEEPSKYBLUE,Color.KHAKI};
+    private int offsetsX[] = {0,30,0,30};
+    private int offsetY[] = {0,0,30,30};
+
     public Levels(){
     }
 
     public Color[] getTileColors(){return tileColors;}
+
+    public int [] getOffsetsX(){return offsetsX;}
+
+    public int[] getOffsetY() {return offsetY;}
+
 
 
     public static void main(String[] args){
@@ -31,6 +39,9 @@ public class Levels extends Application {
     public void start(Stage primaryStage) throws Exception{
 
         getTileColors();
+        getOffsetsX();
+        getOffsetY();
+
 
         Group root = new Group();
         Scene scene = new Scene(root, 1080,720);
@@ -38,7 +49,17 @@ public class Levels extends Application {
         stage.setTitle("Drawing Tests");
 
         Tile tile = new Tile(540,330,tileColors);
+        for (int i = 0; i < 4; i++) {
+            Rectangle t = new Rectangle();
+            t.setX(tile.getXPosition() + offsetsX[i]);
+            t.setY(tile.getYPosition() + offsetY[i]);
+            t.setWidth(30);
+            t.setHeight(30);
+            t.setFill(tileColors[i]);
+            root.getChildren().add(t);
+        }
 
+        /*
         Rectangle tileVer1 = new Rectangle();
         tileVer1.setX(tile.getXPosition());
         tileVer1.setY(tile.getYPosition());
@@ -66,7 +87,12 @@ public class Levels extends Application {
         tileVer4.setWidth(30);
         tileVer4.setHeight(30);
         tileVer4.setFill(tileColors[3]);
-/*
+
+        root.getChildren().add(tileVer1);
+        root.getChildren().add(tileVer2);
+        root.getChildren().add(tileVer3);
+        root.getChildren().add(tileVer4);
+
         Rectangle tileTest = new Rectangle();
         tileTest.setX(505);
         tileTest.setY(330);
@@ -100,14 +126,11 @@ public class Levels extends Application {
         root.getChildren().add(tileTest3);
         root.getChildren().add(tileTest4);
 */
-        root.getChildren().add(tileVer1);
-        root.getChildren().add(tileVer2);
-        root.getChildren().add(tileVer3);
-        root.getChildren().add(tileVer4);
         stage.setScene(scene);
         stage.show();
-    }
 
 
 
 }
+
+    }
