@@ -1,8 +1,8 @@
 package Game.Items;
 
-public class Item {
-    protected int xCoord;
-    protected int yCoord;
+public abstract class Item {
+    protected final int xCoord;
+    protected final int yCoord;
     protected boolean exist;
     protected boolean contact = false;
 
@@ -16,8 +16,5 @@ public class Item {
         exist = false;
     }
 
-    protected boolean interact (Item item) {
-        contact = true;
-        return true;
-    }
+    public abstract void interact ();
 }
