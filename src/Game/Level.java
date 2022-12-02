@@ -63,6 +63,13 @@ public class Level extends Application {
             t.setFill(tileColors[i]);
             root.getChildren().add(t);
         }
+        Rectangle p = new Rectangle();
+        p.setX(540);
+        p.setY(360);
+        p.setWidth((WIDTH_HEIGHT)*2);
+        p.setHeight((WIDTH_HEIGHT)*2);
+        root.getChildren().add(p);
+
         stage.setScene(scene);
         stage.show();
 
