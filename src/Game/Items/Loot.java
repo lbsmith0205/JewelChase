@@ -1,5 +1,6 @@
 package Game.Items;
 
+
 public class Loot extends Item{
 
     private static final int CENT_COIN_VALUE = 1;

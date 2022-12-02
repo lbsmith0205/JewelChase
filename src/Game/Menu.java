@@ -18,10 +18,13 @@ public class Menu {
     private static final int MOTD_ALPHABET_LENGTH = 26;
     private static final int MOTD_INT_CONVERSION = -1;
 
-    // Loads necessary components for the main menu
+    // Calls all functions used for the main menu
     public void startMenu(){
         updateMOTD();
     }
+
+
+    //Need to do main menu javafx
 
     //Updates message of the day
     private void updateMOTD(){
@@ -36,7 +39,7 @@ public class Menu {
 
     }
 
-
+    // i dont remember how this works...
     private String puzzleSolve(String puzzle){
         String possibleLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         int moveLetter = -1;

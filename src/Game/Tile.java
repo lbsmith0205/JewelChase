@@ -2,11 +2,18 @@ package Game;
 
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+
 public class Tile {
 
     private final Color[] tileColours;
     private final int yPosition;
     private final int xPosition;
+
+    public static final int T_HEIGHT = 64;
+    public static final int T_WIDTH = 64;
+
+    private ArrayList<Object> objectsOnTile;
 
     public Tile(int xPosition, int yPosition, Color[] tileColours) {
         this.xPosition = xPosition;
@@ -24,5 +31,21 @@ public class Tile {
 
     public Color[] getTileColours() {
         return tileColours;
+    }
+
+    public ArrayList<Object> getObjectsOnTile() {
+        return objectsOnTile;
+    }
+
+    public void addObjectToTile(Object newObject) {
+        objectsOnTile.add(newObject);
+    }
+
+    public void removeObjectFromTile(Object targetObject) {
+        for (Object object : objectsOnTile) {
+            if (object == targetObject) {
+                objectsOnTile.remove(object);
+            }
+        }
     }
 }
