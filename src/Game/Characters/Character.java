@@ -47,5 +47,9 @@ public abstract class Character {
     }
 
     public abstract void move();
+
+    protected void setPosition(Tile newPosition) {
+        this.position = newPosition;
+    }
 }
 
