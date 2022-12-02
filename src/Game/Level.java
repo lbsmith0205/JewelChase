@@ -24,6 +24,8 @@ public class Level extends Application {
 
     private int offsetsX[] = {0,OFFSET_VALUE,0,OFFSET_VALUE};
     private int offsetY[] = {0,0,OFFSET_VALUE,OFFSET_VALUE};
+    private final int FIND_CENTRE= 15;
+
 
     public Level(){
     }
@@ -64,10 +66,10 @@ public class Level extends Application {
             root.getChildren().add(t);
         }
         Rectangle p = new Rectangle();
-        p.setX(540);
-        p.setY(360);
-        p.setWidth((WIDTH_HEIGHT)*2);
-        p.setHeight((WIDTH_HEIGHT)*2);
+        p.setX(tile.getXPosition()+FIND_CENTRE);
+        p.setY(tile.getYPosition()+FIND_CENTRE);
+        p.setWidth(WIDTH_HEIGHT);
+        p.setHeight(WIDTH_HEIGHT);
         root.getChildren().add(p);
 
         stage.setScene(scene);
