@@ -1,6 +1,8 @@
 package Game.Items;
 
 
+import Game.Tile;
+
 public class Loot extends Item{
 
     private static final int CENT_COIN_VALUE = 1;
@@ -11,8 +13,8 @@ public class Loot extends Item{
     private int value;
     private String type;
 
-    public Loot (int x, int y, String lootType) {
-        super(x, y);
+    public Loot (Tile position, String lootType) {
+        super(position);
         switch (lootType){
             case "¢":
                 value = CENT_COIN_VALUE;
@@ -46,6 +48,6 @@ public class Loot extends Item{
     }
 
     public void interact() {
-
+        //score.add(this.value);
     }
 }

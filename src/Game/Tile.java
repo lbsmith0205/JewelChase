@@ -12,12 +12,15 @@ public class Tile {
     public static final int T_HEIGHT = 64;
     public static final int T_WIDTH = 64;
 
+    private String tileType;
+
     private ArrayList<Object> objectsOnTile;
 
     public Tile(int xPosition, int yPosition, Color[] tileColours) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.tileColours = tileColours;
+        this.tileType = "Normal";
     }
 
     public int getYPosition() {
@@ -27,6 +30,7 @@ public class Tile {
     public int getXPosition() {
         return xPosition;
     }
+
 
     public Color[] getTileColours() {
         return tileColours;
