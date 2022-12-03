@@ -20,6 +20,9 @@ public class Player extends Character {
         super(position);
     }
 
+    int x = position.getXPosition();
+    int y = position.getYPosition();
+
     // will eventually relate this tile positions
     public void processKeyEvent(KeyEvent event) {
         switch(event.getKeyCode()) {
