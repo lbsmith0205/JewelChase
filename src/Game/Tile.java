@@ -31,6 +31,9 @@ public class Tile {
         return xPosition;
     }
 
+    public void setTileType(String type) {
+        this.tileType = type;
+    }
 
     public Color[] getTileColours() {
         return tileColours;

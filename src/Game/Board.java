@@ -15,4 +15,18 @@ public class Board {
         return tiles[x][y];
     }
 
+    public  boolean hasTile(int x, int y) {
+        boolean tileExist = false;
+
+        for(int i = 0; i < tiles.length; i++) {
+            for(int j = 0; j < tiles.length; j++) {
+                if(tiles[i][j] == tiles[x][y]) {
+                    tileExist = true;
+                }
+            }
+        }
+
+        return tileExist;
+    }
+
 }

@@ -40,16 +40,46 @@ public class Bomb extends Item{
         }
     }
 
-    private void explode() {
+    private void explode(Tile explodingTile) {
         if(!bombActivated || bombTimer > 0) {
             return;
         }
 
+        int currentTileX = this.position.getXPosition();
+        int currentTileY = this.position.getYPosition();
+
+        if(bombTimer == 0) {
+            this.remove();
+            this.position.setTileType("Explode");
+
+            //Exploding up
+            if(this.boardIn.hasTile(currentTileX, (currentTileY + 1))) {
+                explode(this.boardIn.findTile(currentTileX, (currentTileY + 1)));
+            }
+
+            //Exploding down
+            if(this.boardIn.hasTile(currentTileX, (currentTileY - 1))) {
+                explode(this.boardIn.findTile(currentTileX, (currentTileY - 1)));
+            }
+
+            //Exploding left
+            if(this.boardIn.hasTile((currentTileX - 1), currentTileY)) {
+                explode(this.boardIn.findTile((currentTileX - 1), currentTileY));
+            }
+
+            //Exploding right
+            if(this.boardIn.hasTile((currentTileX + 1), currentTileY)) {
+                explode(this.boardIn.findTile((currentTileX + 1), currentTileY));
+            }
+
+        }
 
     }
 
     public void tickDown() {
-        this.bombTimer = bombTimer - 1;
+        if(bombTimer > 0 && this.bombActivated) {
+            this.bombTimer = bombTimer - 1;
+        }
     }
 
     public void deactivateBomb() {
