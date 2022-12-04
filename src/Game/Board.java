@@ -1,9 +1,9 @@
 package Game;
 
 public class Board {
-    private int width;
-    private int height;
-    private Tile[][] tiles;
+    private final int width;
+    private final int height;
+    private final Tile[][] tiles;
 
     public Board(int width, int height) {
         this.width = width;
@@ -11,5 +11,8 @@ public class Board {
         this.tiles = new Tile[width][height];
     }
 
+    public Tile findTile(int x, int y) {
+        return tiles[x][y];
+    }
 
 }

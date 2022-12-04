@@ -21,5 +21,5 @@ public abstract class Item {
         exist = false;
     }
 
-    public abstract void interact ();
+    protected abstract void interact ();
 }
