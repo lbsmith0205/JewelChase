@@ -1,6 +1,7 @@
 package Game.Items;
 
 import Game.Tile;
+import Game.Characters.Character;
 
 public class Door extends Item {
 
@@ -9,7 +10,7 @@ public class Door extends Item {
     }
 
     @Override
-    public void interact() {
+    public void interact(Character c) {
 
     }
 }

@@ -48,8 +48,12 @@ public abstract class Character {
 
     public abstract void move();
 
-    protected void setPosition(Tile newPosition) {
+    public void setPosition(Tile newPosition) {
         this.position = newPosition;
+    }
+
+    public Tile getPosition() {
+        return this.position;
     }
 }
 

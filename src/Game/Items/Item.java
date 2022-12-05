@@ -1,6 +1,7 @@
 package Game.Items;
 
 import Game.Tile;
+import Game.Characters.Character;
 
 public abstract class Item {
 
@@ -21,5 +22,6 @@ public abstract class Item {
         exist = false;
     }
 
-    protected abstract void interact ();
+
+    public abstract void interact(Character c);
 }

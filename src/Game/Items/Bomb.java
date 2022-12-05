@@ -1,7 +1,11 @@
 package Game.Items;
 
 import Game.Board;
+import Game.Characters.FloorFollowingThief;
+import Game.Characters.Player;
+import Game.Characters.SmartThief;
 import Game.Tile;
+import Game.Characters.Character;
 
 public class Bomb extends Item{
     private static final int BOMB_DEFAULT_TIMER = 3;
@@ -22,8 +26,8 @@ public class Bomb extends Item{
         int bombY = position.getYPosition();
 
         for(int i = 0; i < activationTiles.length; i++) {
-            for(int x = bombX - 1; x < bombX + 2; x++) {
-                for(int y = bombY - 1; y < bombY + 2; y++) {
+            for(int x = bombX - 1; x < bombX + 1; x++) {
+                for(int y = bombY - 1; y < bombY + 1; y++) {
                     if(y != bombY && x != bombX) {
                         activationTiles[i] = boardIn.findTile(x,y);
                     }
@@ -32,9 +36,9 @@ public class Bomb extends Item{
         }
     }
 
-    public void activateBomb(Tile position) {
-        for(int i = 0; i < activationTiles.length; i++) {
-            if(position == activationTiles[i]) {
+    private void activateBomb(Tile position) {
+        for(Tile t : activationTiles) {
+            if(position == t) {
                 this.bombActivated = true;
             }
         }
@@ -76,7 +80,7 @@ public class Bomb extends Item{
 
     }
 
-    public void tickDown() {
+    private void tickDown() {
         if(bombTimer > 0 && this.bombActivated) {
             this.bombTimer = bombTimer - 1;
         }
@@ -87,7 +91,18 @@ public class Bomb extends Item{
     }
 
     @Override
-    public void interact() {
+    public void interact(Character c) {
+        if(!this.bombActivated) {
+            if(c instanceof SmartThief || c instanceof FloorFollowingThief || c instanceof Player) {
+                this.activateBomb(c.getPosition());
+            }
+        }
+
+        if(this.bombTimer == 0) {
+            this.explode(this.position);
+        } else {
+            this.tickDown();
+        }
 
     }
 }
