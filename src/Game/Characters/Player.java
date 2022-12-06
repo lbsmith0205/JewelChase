@@ -1,6 +1,6 @@
 package Game.Characters;
 
-import Game.Tile;
+import Game.Board.Tile;
 
 import java.awt.event.KeyEvent;
 

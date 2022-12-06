@@ -1,4 +1,4 @@
-package Game;
+package Game.Board;
 
 import java.io.File;
 import java.io.FileNotFoundException;

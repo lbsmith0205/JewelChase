@@ -1,7 +1,6 @@
-package Game;
+package Game.Board;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import Game.Items.Item;
 import javafx.application.Application;

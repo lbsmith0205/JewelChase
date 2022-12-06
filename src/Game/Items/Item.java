@@ -1,6 +1,6 @@
 package Game.Items;
 
-import Game.Tile;
+import Game.Board.Tile;
 import Game.Characters.Character;
 
 public abstract class Item {

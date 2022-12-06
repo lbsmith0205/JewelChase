@@ -1,10 +1,10 @@
 package Game.Items;
 
-import Game.Board;
+import Game.Board.Board;
 import Game.Characters.FloorFollowingThief;
 import Game.Characters.Player;
 import Game.Characters.SmartThief;
-import Game.Tile;
+import Game.Board.Tile;
 import Game.Characters.Character;
 
 public class Bomb extends Item{
@@ -82,7 +82,7 @@ public class Bomb extends Item{
 
     private void tickDown() {
         if(bombTimer > 0 && this.bombActivated) {
-            this.bombTimer = bombTimer - 1;
+            this.bombTimer = bombTimer--;
         }
     }
 

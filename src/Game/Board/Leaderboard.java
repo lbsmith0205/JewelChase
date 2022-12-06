@@ -1,4 +1,4 @@
-package Game;
+package Game.Board;
 
 import java.util.ArrayList;
 import javafx.util.Pair;

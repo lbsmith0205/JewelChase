@@ -1,6 +1,6 @@
 package Game.Items;
 
-import Game.Tile;
+import Game.Board.Tile;
 import javafx.scene.paint.Color;
 import Game.Characters.Character;
 
