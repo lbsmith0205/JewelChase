@@ -23,7 +23,11 @@ public class Lever extends Item {
     }
 
     public void addGateToLever(Gate g) {
-        this.linkedGates.add(g);
+        if(g.getColorCode() == this.colorCode) {
+            this.linkedGates.add(g);
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override

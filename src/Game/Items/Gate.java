@@ -5,6 +5,10 @@ import javafx.scene.paint.Color;
 import Game.Characters.Character;
 
 public class Gate extends Item{
+    private static final String BLUE_GATE_PATH = "Sprites/Items/Gates/GateBlue.png";
+    private static final String RED_GATE_PATH = "Sprites/Items/Gates/GateRed.png";
+    private static final String GREEN_GATE_PATH = "Sprites/Items/Gates/GateGreen.png";
+
     private final Color colorCode;
     private final Lever linkedLever;
 
