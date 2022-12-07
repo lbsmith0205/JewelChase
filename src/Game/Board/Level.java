@@ -3,6 +3,7 @@ package Game.Board;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import Game.Items.Item;
 import javafx.application.Application;
@@ -18,9 +19,7 @@ public class Level extends Application {
     private ArrayList<Item>Items = new ArrayList<Item>();
     //Arraylist of items in level
     private Tile [] tiles;// Array of tile objects to show board
-    private Color[] tileColors = {Color.INDIANRED,Color.
-            SPRINGGREEN,Color.DEEPSKYBLUE,Color.KHAKI};
-    public Color[] tileColChar;
+    public Color[] tileColChar = new Color[4];
 
     private final int WIDTH_HEIGHT= 30, OFFSET_VALUE = WIDTH_HEIGHT;
 
@@ -71,7 +70,7 @@ public class Level extends Application {
 
     public void background () {
         try {
-            File testFile = new File("Level1.txt");
+            File testFile = new File("src/Levels/Level1.txt");
             Scanner in = new Scanner(testFile);
             int windowResX = (in.nextInt() + 2) * 64;
             int windowResY = (in.nextInt() + 2) * 64;
@@ -102,6 +101,8 @@ public class Level extends Application {
             Group root = new Group();
             Scene scene = new Scene(root, windowResX,windowResY);
             Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
             stage.setTitle("Drawing Tests");
             Tile tile = new Tile(windowResX,windowResY,tileColChar);
             for (int i = 0; i < 4; i++) {
@@ -110,7 +111,7 @@ public class Level extends Application {
                 t.setY(tile.getYPosition() + offsetY[i]);
                 t.setWidth(WIDTH_HEIGHT);
                 t.setHeight(WIDTH_HEIGHT);
-                t.setFill(tileColors[i]);
+                t.setFill(tileColChar[i]);
                 root.getChildren().add(t);
             }
         } catch (FileNotFoundException e) {
@@ -120,16 +121,16 @@ public class Level extends Application {
 
 
     public Level(){
-        Group root = new Group();
+      /*  Group root = new Group();
         Scene scene = new Scene(root, 1080,720);
         Stage stage = new Stage();
         stage.setTitle("Drawing Tests");
 
         stage.setScene(scene);
-        stage.show();
+        stage.show();*/
     }
 
-    public Color[] getTileColors(){return tileColors;}
+    //public Color[] getTileColors(){return tileColors;}
 
     public int [] getOffsetsX(){return offsetsX;}
 
@@ -144,7 +145,7 @@ public class Level extends Application {
 
     public void start(Stage primaryStage) throws Exception{
 
-        getTileColors();
+       // getTileColors();
         getOffsetsX();
         getOffsetY();
         background ();
