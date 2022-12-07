@@ -23,7 +23,7 @@ public class Level extends Application {
     private Tile [][]tiles = new Tile [10][15]; // Array of tile objects to show board
     public Color[] tileColChar = new Color[4];
 
-    private final int WIDTH_HEIGHT= 30, OFFSET_VALUE = WIDTH_HEIGHT;
+    private final int WIDTH_HEIGHT= 32, OFFSET_VALUE = WIDTH_HEIGHT;
 
     private int offsetsX[] = {0,OFFSET_VALUE,0,OFFSET_VALUE};
     private int offsetY[] = {0,0,OFFSET_VALUE,OFFSET_VALUE};
@@ -116,8 +116,6 @@ public class Level extends Application {
             stage.setScene(scene);
             stage.show();
             stage.setTitle("Drawing Tests");
-            int b = 0;
-            int c = 0;
             for (int x = 0; x < 15; x++) {
                 for (int y = 0; y < 10; y++) {
                     Tile tile = tiles[y][x];
@@ -129,8 +127,8 @@ public class Level extends Application {
                         t.setHeight(WIDTH_HEIGHT);
                         t.setFill(tileColChar[i]);
                         root.getChildren().add(t);
-                    }c++;
-                }b++;
+                    }
+                }
             }
 
         } catch (FileNotFoundException e) {
