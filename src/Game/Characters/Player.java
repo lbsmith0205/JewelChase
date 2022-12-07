@@ -20,9 +20,14 @@ public class Player extends Character {
         super(position);
     }
 
+    protected boolean isDead = false;
     int x = position.getXPosition();
     int y = position.getYPosition();
 
+    @Override
+    protected void kill() {
+        this.isDead = true;
+    }
     // will eventually relate this tile positions
     public void processKeyEvent(KeyEvent event) {
         switch(event.getKeyCode()) {
