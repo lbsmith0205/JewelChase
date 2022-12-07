@@ -15,16 +15,5 @@ public abstract class Thief extends Character {
         super(position);
     }
 
-    public void interact() {
-        for (Object o : position.getObjectsOnTile()) {
-            if (o instanceof Loot) {
-                position.removeObjectFromTile(o);
-            } else-if (o instanceof Lever) {
-
-                position.removeObjectFromTile(o);
-            }
-
-        }
-    }
 }
 
