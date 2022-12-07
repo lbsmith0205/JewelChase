@@ -20,7 +20,8 @@ public abstract class Item {
     }
 
     protected void remove() {
-        exist = false;
+        this.exist = false;
+        this.position.removeObjectFromTile(this);
     }
 
 

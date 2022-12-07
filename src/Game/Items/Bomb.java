@@ -76,24 +76,24 @@ public class Bomb extends Item{
             if(currentTileX == this.position.getXPosition()) {
                 //Exploding up
                 if (this.boardIn.hasTile(tileUp)) {
-                    explode(this.boardIn.findTile(tileUp));
+                    explode(tileUp);
                 }
 
                 //Exploding down
                 if (this.boardIn.hasTile(tileDown)) {
-                    explode(this.boardIn.findTile(tileDown));
+                    explode(tileDown);
                 }
             }
 
             if(currentTileY == this.position.getYPosition()) {
                 //Exploding left
                 if (this.boardIn.hasTile(tileLeft)) {
-                    explode(this.boardIn.findTile(tileLeft));
+                    explode(tileLeft);
                 }
 
                 //Exploding right
                 if (this.boardIn.hasTile(tileRight)) {
-                    explode(this.boardIn.findTile(tileRight));
+                    explode(tileRight);
                 }
             }
 
