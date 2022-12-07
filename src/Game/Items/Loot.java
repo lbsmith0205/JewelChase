@@ -53,7 +53,6 @@ public class Loot extends Item{
 
     public LootType getType() { return this.type;}
 
-    // Would suggest implementing this separately in Thief and Player as they are the things that move. Dan :P
     public void interact(Character c) {
         //score.add(this.value);
     }
