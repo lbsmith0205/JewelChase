@@ -8,7 +8,7 @@ import Game.Board.Tile;
  * @author Daniel Baxter, Jack Lewis.
  */
 
-public class SmartThief extends Character {
+public class SmartThief extends Thief {
     /**
      * Creates an instance of Character.
      *
