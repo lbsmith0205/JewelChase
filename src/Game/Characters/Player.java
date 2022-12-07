@@ -10,9 +10,9 @@ import java.awt.event.KeyEvent;
  * @author Daniel Baxter, Jack Lewis.
  */
 
-public class Player extends Character {
+public class Player extends Thief {
     /**
-     * Creates an instance of Character.
+     * Creates an instance of Player.
      *
      * @param position The Tile on which the Character is located.
      */

@@ -1,6 +1,8 @@
 package Game.Characters;
 
 import Game.Board.Tile;
+import Game.Items.Loot;
+
 
 public abstract class Thief extends Character {
     /**
@@ -10,6 +12,14 @@ public abstract class Thief extends Character {
      */
     public Thief(Tile position) {
         super(position);
+    }
+
+    public void steal() {
+        for (Object o : position.getObjectsOnTile()) {
+            if (o instanceof Loot) {
+                position.removeObjectFromTile(o);
+            }
+        }
     }
 }
 

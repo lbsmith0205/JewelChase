@@ -3,11 +3,14 @@ package Game.Board;
 public class Board {
     private final int width;
     private final int height;
+
+    private final int size;
     private final Tile[][] tiles;
 
     public Board(int width, int height) {
         this.width = width;
         this.height = height;
+        this.size = width * height;
         this.tiles = new Tile[width][height];
     }
 
@@ -43,6 +46,15 @@ public class Board {
         int y = t.getYPosition();
 
         return findTile(x,y) != null;
+    }
+
+    /**
+     * Returns the number of tiles in the board.
+     *
+     * @return int, number of tiles in instance of board.
+     */
+    public int getSize() {
+        return size;
     }
 
 }
