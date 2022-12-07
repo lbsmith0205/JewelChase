@@ -4,6 +4,8 @@ package Game.Items;
 import Game.Board.Tile;
 import Game.Characters.Character;
 
+import Game.Characters.FloorFollowingThief;
+import Game.Characters.SmartThief;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -58,6 +60,9 @@ public class Loot extends Item{
     }
 
     public void interact(Character c) {
+        if(c instanceof SmartThief || c instanceof FloorFollowingThief) {
+            this.remove();
+        }
         //score.add(this.value);
     }
 
