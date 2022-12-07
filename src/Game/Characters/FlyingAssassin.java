@@ -12,7 +12,7 @@ import javafx.scene.image.Image;
  * Sub class of Character.
  * @author Oliver Rudge.
  */
-
+/*
 public class FlyingAssassin extends Character {
 
     private Direction direction;
@@ -25,7 +25,7 @@ public class FlyingAssassin extends Character {
      *
      * @param position The Tile on which the Character is located.
      */
-
+/*
     public FlyingAssassin(Tile position) {
         super(position);
     }
@@ -72,4 +72,4 @@ public class FlyingAssassin extends Character {
 
 
     }
-}
+}*/

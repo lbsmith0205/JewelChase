@@ -77,8 +77,6 @@ public class Level extends Application {
             int windowResY = in.nextInt() * 64;
             in.nextLine();
             int j = 0;
-            int x = 0;
-            int y = 0;
             while (in.hasNextLine() && j < windowResX*windowResY/(64*64)) {
                 String curLine = in.next();
                 Scanner line = new Scanner(curLine);
@@ -100,12 +98,11 @@ public class Level extends Application {
                         case 'G':
                             tileColChar[i] = Color.SPRINGGREEN;
                             break;
-                    }while (x < 10){
-                        while (y < 15){
-                            Tile tile = new Tile(y*64,x*64,tileColChar);
-                            tiles[x][y] = tile;
-                            y++;
-                        }x++;
+                    }for (int x = 0; x < 15; x++){
+                        for (int y = 0; y < 10; y++){
+                            Tile tile = new Tile(x*64,y*64,tileColChar);
+                            tiles[y][x] = tile;
+                        }
                     }
                 }j++;
 
@@ -120,9 +117,9 @@ public class Level extends Application {
             stage.setTitle("Drawing Tests");
             int b = 0;
             int c = 0;
-            while (b < 10) {
-                while (c < 15) {
-                    Tile tile = tiles[b][c];
+            for (int x = 0; x < 15; x++) {
+                for (int y = 0; y < 10; y++) {
+                    Tile tile = tiles[y][x];
                     for (int i = 0; i < 4; i++) {
                         Rectangle t = new Rectangle();
                         t.setX(tile.getXPosition() + offsetsX[i]);
