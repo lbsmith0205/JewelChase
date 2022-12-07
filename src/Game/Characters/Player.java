@@ -24,6 +24,7 @@ public class Player extends Character {
     int x = position.getXPosition();
     int y = position.getYPosition();
 
+    @Override
     protected void kill() {
         this.isDead = true;
     }
