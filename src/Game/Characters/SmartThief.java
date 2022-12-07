@@ -1,6 +1,6 @@
 package Game.Characters;
 
-import Game.Tile;
+import Game.Board.Tile;
 
 /**
  * SmartThieves.java
@@ -8,7 +8,7 @@ import Game.Tile;
  * @author Daniel Baxter, Jack Lewis.
  */
 
-public class SmartThief extends Character {
+public class SmartThief extends Thief {
     /**
      * Creates an instance of Character.
      *

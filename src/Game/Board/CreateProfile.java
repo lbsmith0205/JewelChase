@@ -1,4 +1,4 @@
-package Game;
+package Game.Board;
 
 public class CreateProfile {
 
