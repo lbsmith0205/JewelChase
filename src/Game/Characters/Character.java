@@ -12,7 +12,6 @@ import java.util.ArrayList;
  */
 public abstract class Character {
     protected Tile position;
-    protected boolean isDead = false;
     protected ArrayList<Color> currentColours;
 
     /**
@@ -27,7 +26,7 @@ public abstract class Character {
      * Removes an instance of Character from the game.
      */
     protected void kill() {
-        this.isDead = true;
+
     }
 
     /**
