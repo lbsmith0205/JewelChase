@@ -7,19 +7,23 @@ import Game.Characters.SmartThief;
 import Game.Board.Tile;
 import Game.Characters.Character;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
 public class Bomb extends Item{
     private static final String BOMB_SPRITE_DEFAULT_PATH = "Sprites/Items/Bombs/Bomb.png";
     private static final String BOMB_SPRITE_TIME_3_PATH = "Sprites/Items/Bombs/Bomb3.png";
     private static final String BOMB_SPRITE_TIME_2_PATH = "Sprites/Items/Bombs/Bomb2.png";
     private static final String BOMB_SPRITE_TIME_1_PATH = "Sprites/Items/Bombs/Bomb1.png";
 
-
-    private static final int BOMB_DEFAULT_TIMER = 3;
+    private static final int BOMB_DEFAULT_TIMER = 4;
 
     private final Board boardIn;
     private final Tile[] activationTiles;
     private boolean bombActivated = false;
     private int bombTimer;
+    private String bombState;
+    private Image bombLook;
 
 
     public Bomb(Tile position, Board board) {
@@ -27,6 +31,8 @@ public class Bomb extends Item{
         this.bombTimer = BOMB_DEFAULT_TIMER;
         this.activationTiles = new Tile[8];
         this.boardIn = board;
+        this.bombState = BOMB_SPRITE_DEFAULT_PATH;
+        this.bombLook = new Image(bombState);
 
         int bombX = position.getXPosition();
         int bombY = position.getYPosition();
@@ -98,6 +104,23 @@ public class Bomb extends Item{
     private void tickDown() {
         if(bombTimer > 0 && this.bombActivated) {
             this.bombTimer = bombTimer--;
+            this.changeBombState();
+        }
+    }
+
+    private void changeBombState() {
+        if(!this.bombActivated) {
+            this.bombState = BOMB_SPRITE_DEFAULT_PATH;
+        } else {
+            if(this.bombTimer == 3) {
+                this.bombState = BOMB_SPRITE_TIME_3_PATH;
+            } else if(this.bombTimer == 2) {
+                this.bombState = BOMB_SPRITE_TIME_2_PATH;
+            } else if(this.bombTimer == 1) {
+                this.bombState = BOMB_SPRITE_TIME_1_PATH;
+            } else {
+                this.bombState = null;
+            }
         }
     }
 
@@ -110,6 +133,7 @@ public class Bomb extends Item{
         if(!this.bombActivated) {
             if(c instanceof SmartThief || c instanceof FloorFollowingThief || c instanceof Player) {
                 this.activateBomb(c.getPosition());
+                this.tickDown();
             }
         }
 
@@ -118,6 +142,10 @@ public class Bomb extends Item{
         } else {
             this.tickDown();
         }
+    }
 
+    @Override
+    public void draw(GraphicsContext gc) {
+        gc.drawImage(this.bombLook, this.position.getXPosition(), this.position.getYPosition());
     }
 }

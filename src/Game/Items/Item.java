@@ -2,6 +2,7 @@ package Game.Items;
 
 import Game.Board.Tile;
 import Game.Characters.Character;
+import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Item {
 
@@ -24,4 +25,6 @@ public abstract class Item {
 
 
     public abstract void interact(Character c);
+
+    public abstract void draw(GraphicsContext gc);
 }

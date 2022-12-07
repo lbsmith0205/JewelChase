@@ -1,19 +1,28 @@
 package Game.Items;
 
+import Game.Board.Tile;
 import Game.Board.Board;
+
 import Game.Characters.Player;
 import Game.Characters.SmartThief;
-import Game.Board.Tile;
 import Game.Characters.Character;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
 public class Door extends Item {
+    private static final String DOOR_SPRITE_PATH = "Sprites/Items/Door.png";
+
     private final Board boardIn;
+    private final Image doorLook;
+
     private boolean isOpen;
 
     public Door(Tile position, Board board) {
         super(position);
         this.boardIn = board;
         this.isOpen = false;
+        this.doorLook = new Image(DOOR_SPRITE_PATH);
     }
 
     public void openDoor() {
@@ -33,5 +42,10 @@ public class Door extends Item {
                 //WIN
             }
         }
+    }
+
+    @Override
+    public void draw(GraphicsContext gc) {
+        gc.drawImage(this.doorLook, this.position.getXPosition(), this.position.getYPosition());
     }
 }
