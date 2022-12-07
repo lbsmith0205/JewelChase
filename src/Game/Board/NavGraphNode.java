@@ -1,5 +1,7 @@
 package Game.Board;
 
+import Game.Direction;
+
 import java.util.ArrayList;
 
 /**
@@ -11,13 +13,22 @@ public class NavGraphNode {
 
     public NavGraphNode(Tile tile) {
         this.tile = tile;
-        populateAccessibleNodes();
     }
 
-    /**
-     * populates accessibleNodes with all
-     */
-    private void populateAccessibleNodes() {
-
+    public void addAccessibleNode(NavGraphNode node) {
+        accessibleNodes.add(node);
     }
+
+    public Tile getTile() {
+        return this.tile;
+    }
+
+    public ArrayList<NavGraphNode> getAccessibleNodes() {
+        return this.accessibleNodes;
+    }
+
+
+
+
+
 }

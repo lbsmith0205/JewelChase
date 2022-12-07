@@ -1,16 +1,27 @@
 package Game.Board;
 
+import javafx.scene.paint.Color;
+
 public class Board {
     private final int width;
     private final int height;
-
-    private final int size;
     private final Tile[][] tiles;
+
+    public int getHeight() {
+        return height;
+    }
+
+    public Tile getTile(int x, int y) {
+        return tiles[x][y];
+    }
+
+    public int getWidth() {
+        return width;
+    }
 
     public Board(int width, int height) {
         this.width = width;
         this.height = height;
-        this.size = width * height;
         this.tiles = new Tile[width][height];
     }
 
@@ -48,13 +59,17 @@ public class Board {
         return findTile(x,y) != null;
     }
 
-    /**
-     * Returns the number of tiles in the board.
-     *
-     * @return int, number of tiles in instance of board.
-     */
-    public int getSize() {
-        return size;
+
+
+    public boolean isLegalMove(Tile source, Tile target) {
+        for (Color currentColour : source.getTileColours()) {
+            for (Color targetColour : target.getTileColours()) {
+                if (targetColour == currentColour) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }
