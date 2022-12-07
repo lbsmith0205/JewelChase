@@ -3,6 +3,7 @@ package Game.Board;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import Game.Items.Item;
@@ -18,7 +19,7 @@ public class Level extends Application {
     //Arraylist of characters
     private ArrayList<Item>Items = new ArrayList<Item>();
     //Arraylist of items in level
-    private Tile [] tiles;// Array of tile objects to show board
+    private Tile [][]tiles = new Tile [10][15]; // Array of tile objects to show board
     public Color[] tileColChar = new Color[4];
 
     private final int WIDTH_HEIGHT= 30, OFFSET_VALUE = WIDTH_HEIGHT;
@@ -72,11 +73,16 @@ public class Level extends Application {
         try {
             File testFile = new File("src/Levels/Level1.txt");
             Scanner in = new Scanner(testFile);
-            int windowResX = (in.nextInt() + 2) * 64;
-            int windowResY = (in.nextInt() + 2) * 64;
+            int windowResX = in.nextInt() * 64;
+            int windowResY = in.nextInt() * 64;
             in.nextLine();
-            while (in.hasNext()) {
-                String curColour = in.next();
+            int j = 0;
+            int x = 0;
+            int y = 0;
+            while (in.hasNextLine() && j < windowResX*windowResY/(64*64)) {
+                String curLine = in.next();
+                Scanner line = new Scanner(curLine);
+                String curColour = line.next();
                 for (int i = 0; i < 4; i++) {
                     switch (curColour.charAt(i)) {
                         case 'R':
@@ -94,26 +100,41 @@ public class Level extends Application {
                         case 'G':
                             tileColChar[i] = Color.SPRINGGREEN;
                             break;
+                    }while (x < 10){
+                        while (y < 15){
+                            Tile tile = new Tile(y*64,x*64,tileColChar);
+                            tiles[x][y] = tile;
+                            y++;
+                        }x++;
                     }
-                }
+                }j++;
+
             }
             in.close();
+            System.out.print(Arrays.toString(tiles));
             Group root = new Group();
             Scene scene = new Scene(root, windowResX,windowResY);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.show();
             stage.setTitle("Drawing Tests");
-            Tile tile = new Tile(windowResX,windowResY,tileColChar);
-            for (int i = 0; i < 4; i++) {
-                Rectangle t = new Rectangle();
-                t.setX(tile.getXPosition() + offsetsX[i]);
-                t.setY(tile.getYPosition() + offsetY[i]);
-                t.setWidth(WIDTH_HEIGHT);
-                t.setHeight(WIDTH_HEIGHT);
-                t.setFill(tileColChar[i]);
-                root.getChildren().add(t);
+            int b = 0;
+            int c = 0;
+            while (b < 10) {
+                while (c < 15) {
+                    Tile tile = tiles[b][c];
+                    for (int i = 0; i < 4; i++) {
+                        Rectangle t = new Rectangle();
+                        t.setX(tile.getXPosition() + offsetsX[i]);
+                        t.setY(tile.getYPosition() + offsetY[i]);
+                        t.setWidth(WIDTH_HEIGHT);
+                        t.setHeight(WIDTH_HEIGHT);
+                        t.setFill(tileColChar[i]);
+                        root.getChildren().add(t);
+                    }c++;
+                }b++;
             }
+
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
         }
