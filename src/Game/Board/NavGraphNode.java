@@ -1,6 +1,4 @@
-package Game.Characters;
-
-import Game.Board.Tile;
+package Game.Board;
 
 import java.util.ArrayList;
 
