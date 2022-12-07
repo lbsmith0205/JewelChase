@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import javafx.util.Pair;
 
 public class Leaderboard {
+    // level number
     private int level;
     // name and score
     private final ArrayList<Pair<String, Integer>> Placement;
