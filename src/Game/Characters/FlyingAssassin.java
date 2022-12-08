@@ -31,7 +31,6 @@ public class FlyingAssassin extends Character {
         super(position);
     }
 
-    @Override
     public void move(Board currentBoard) {
         int targetX = xPosition;
         int targetY = yPosition;

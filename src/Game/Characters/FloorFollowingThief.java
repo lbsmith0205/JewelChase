@@ -20,7 +20,6 @@ public class FloorFollowingThief extends Thief {
         super(position);
     }
 
-    @Override
     public void move(Board currentBoard) {
 
     }

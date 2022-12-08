@@ -1,6 +1,8 @@
 package Game.Characters;
 
-import Game.Tile;
+import Game.Board.Board;
+import Game.Board.Tile;
+
 
 import java.awt.event.KeyEvent;
 
@@ -49,8 +51,7 @@ public class Player extends Character {
     }
 
 
-    @Override
-    public void move() {
+    public void move(Board boardIn) {
 
 
     }

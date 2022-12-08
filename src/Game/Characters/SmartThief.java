@@ -20,7 +20,6 @@ public class SmartThief extends Thief {
         super(position);
     }
 
-    @Override
     public void move(Board currentBoard) {
 
     }

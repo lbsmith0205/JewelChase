@@ -7,10 +7,10 @@ public class Board {
     private final int height;
     private final Tile[][] tiles;
 
-    public Board(int width, int height) {
+    public Board(int width, int height, Tile[][] tile2DArray) {
         this.width = width;
         this.height = height;
-        this.tiles = new Tile[width][height];
+        this.tiles = tile2DArray;
     }
 
     public int getHeight() {
