@@ -1,5 +1,6 @@
 package Game.Characters;
 
+import Game.Board.Board;
 import Game.Board.Tile;
 import javafx.scene.paint.Color;
 
@@ -45,7 +46,7 @@ public abstract class Character {
         return false;
     }
 
-    public abstract void move();
+    public abstract void move(Board currentBoard);
 
     public void setPosition(Tile newPosition) {
         this.position = newPosition;

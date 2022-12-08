@@ -1,5 +1,6 @@
 package Game.Characters;
 
+import Game.Board.Board;
 import Game.Board.Tile;
 
 /**
@@ -20,7 +21,7 @@ public class FloorFollowingThief extends Thief {
     }
 
     @Override
-    public void move() {
+    public void move(Board currentBoard) {
 
     }
 }
