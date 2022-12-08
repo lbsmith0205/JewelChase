@@ -1,26 +1,54 @@
 package Game.Characters;
 
-import Game.Tile;
+import Game.Board.Board;
+import Game.Board.Tile;
+import Game.Direction;
+
+
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 /**
- * FlyingAssassins.java
+ * FlyingAssassin.java
  * Sub class of Character.
- * @author Daniel Baxter, Jack Lewis.
+ * @author Oliver Rudge.
  */
 
 public class FlyingAssassin extends Character {
+
+    private Direction direction;
+    protected Image image;
+    int xPosition = position.getXPosition();
+    int yPosition = position.getYPosition();
 
     /**
      * Creates an instance of Character.
      *
      * @param position The Tile on which the Character is located.
      */
+
     public FlyingAssassin(Tile position) {
         super(position);
     }
 
     @Override
-    public void move() {
+    public void move(Board currentBoard) {
+        int targetX = xPosition;
+        int targetY = yPosition;
+
+        switch (direction) {
+            case UP -> targetY--;
+            case LEFT -> targetX--;
+            case DOWN -> targetY++;
+            case RIGHT -> targetX++;
+        }
+
+        try {
+            setPosition(currentBoard.getTile(targetX, targetY));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            direction = direction.turnBack();
+            move(currentBoard);
+        }
 
     }
 }
