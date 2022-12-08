@@ -1,6 +1,7 @@
 package Game.Board;
 
 import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 
 public class Tile {

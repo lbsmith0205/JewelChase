@@ -3,12 +3,15 @@ package Game.Board;
 import Game.Direction;
 
 import java.util.Collections;
+/*
+import java.util.Collections;
 
 /**
  * NavGraph.java
  *
  * @author Daniel Baxter
  */
+
 public class NavGraph {
     private final NavGraphNode[][] nodes;
 
