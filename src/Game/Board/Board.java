@@ -13,6 +13,12 @@ public class Board {
         this.tiles = new Tile[width][height];
     }
 
+    public Board(int width, int height, Tile[][] tile2DArray) {
+        this.width = width;
+        this.height = height;
+        this.tiles = tile2DArray;
+    }
+
     public int getHeight() {
         return height;
     }
