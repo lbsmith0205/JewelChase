@@ -1,6 +1,7 @@
 package Game.Characters;
 
-import Game.Tile;
+import Game.Board.Board;
+import Game.Board.Tile;
 
 /**
  * FloorFollowingThieves.java
@@ -8,9 +9,10 @@ import Game.Tile;
  * @author Daniel Baxter, Jack Lewis.
  */
 
-public class FloorFollowingThief extends Character {
+public class FloorFollowingThief extends Thief {
+
     /**
-     * Creates an instance of Character.
+     * Creates an instance of FloorFollowingThief.
      *
      * @param position The Tile on which the Character is located.
      */
@@ -19,7 +21,7 @@ public class FloorFollowingThief extends Character {
     }
 
     @Override
-    public void move() {
+    public void move(Board currentBoard) {
 
     }
 }

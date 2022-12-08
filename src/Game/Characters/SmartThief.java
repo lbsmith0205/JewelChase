@@ -1,14 +1,16 @@
 package Game.Characters;
 
-import Game.Tile;
+import Game.Board.Board;
+import Game.Board.NavGraph;
+import Game.Board.Tile;
 
 /**
- * SmartThieves.java
+ * SmartThief.java
  * Sub class of Character.
- * @author Daniel Baxter, Jack Lewis.
+ * @author Daniel Baxter
  */
 
-public class SmartThief extends Character {
+public class SmartThief extends Thief {
     /**
      * Creates an instance of Character.
      *
@@ -19,7 +21,7 @@ public class SmartThief extends Character {
     }
 
     @Override
-    public void move() {
+    public void move(Board currentBoard) {
 
     }
 }
