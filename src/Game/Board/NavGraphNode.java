@@ -1,15 +1,13 @@
 package Game.Board;
 
-import Game.Direction;
-
 import java.util.ArrayList;
 
 /**
- * Class representing a node in the NavGraph for implementation of A* Algorithm
+ * Class representing a node in the NavGraph for implementation of BFS Algorithm
  */
 public class NavGraphNode {
     private final Tile tile;
-    private ArrayList<NavGraphNode> accessibleNodes = new ArrayList<NavGraphNode>();
+    private final ArrayList<NavGraphNode> accessibleNodes = new ArrayList<>();
 
     public NavGraphNode(Tile tile) {
         this.tile = tile;
