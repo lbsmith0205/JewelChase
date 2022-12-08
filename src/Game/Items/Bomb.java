@@ -103,7 +103,7 @@ public class Bomb extends Item{
 
     private void tickDown() {
         if(bombTimer > 0 && this.bombActivated) {
-            this.bombTimer = bombTimer--;
+            this.bombTimer--;
             this.changeBombState();
         }
     }
