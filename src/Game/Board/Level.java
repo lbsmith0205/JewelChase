@@ -1,4 +1,5 @@
 package Game.Board;
+
 import Game.Items.Item;
 
 import java.io.File;
@@ -19,10 +20,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Level extends Application {
-    private static final int WIDTH_HEIGHT= 32, OFFSET_VALUE = WIDTH_HEIGHT;
+    private static final int WIDTH_HEIGHT = 32, OFFSET_VALUE = WIDTH_HEIGHT;
 
     //Arraylist of items in level
-    private ArrayList<Item>Items = new ArrayList<Item>();
+    private ArrayList<Item> Items = new ArrayList<Item>();
     // Array of tile objects to show board
     private Color[][] tileColChar = new Color[150][4];
     private Color[] finalColours = new Color[600];
@@ -32,19 +33,19 @@ public class Level extends Application {
     private int time;
     private int score;
 
-    private final int GRID_OFFSET= 64;
+    private final int GRID_OFFSET = 64;
     private final String levelFilePath;
 
-    private int offsetsX[] = {0,OFFSET_VALUE,0,OFFSET_VALUE};
-    private int offsetY[] = {0,0,OFFSET_VALUE,OFFSET_VALUE};
+    private int offsetsX[] = {0, OFFSET_VALUE, 0, OFFSET_VALUE};
+    private int offsetY[] = {0, 0, OFFSET_VALUE, OFFSET_VALUE};
 
 
-    public Level(String fileName){
-        this.levelFilePath = fileName;
-        this.readLineByLine(fileReader(fileName));
+    public Level(String fileName) {
+        this.levelFilePath = "src/Levels/" + fileName + ".txt";
+        this.readLineByLine(fileReader(levelFilePath));
     }
 
-    public Scanner fileReader(String filename) {
+    private Scanner fileReader(String filename) {
         File file = new File(filename);
 
         Scanner in = null;
@@ -59,65 +60,118 @@ public class Level extends Application {
         return in;
     }
 
-    public void readLineByLine(Scanner in) {
+    private void readLineByLine(Scanner in) {
         String levelInfo = in.nextLine();
 
         Scanner readLevelInfo = new Scanner(levelInfo);
         int width = readLevelInfo.nextInt();
         int height = readLevelInfo.nextInt();
 
-        this.board = new Board(width, height);
-
         this.time = readLevelInfo.nextInt();
         this.score = readLevelInfo.nextInt();
 
-        for(int y = 0; y < height; y++) {
-            if(in.hasNextLine()) {
+        Tile[][] temp2DArray = new Tile[width][height];
+
+        for (int y = 0; y < height; y++) {
+            if (in.hasNextLine()) {
                 String tileRow = in.nextLine();
                 Scanner row = new Scanner(tileRow);
 
-                for(int x = 0; x < width; x++) {
-                    if(row.hasNext()) {
+                for (int x = 0; x < width; x++) {
+                    if (row.hasNext()) {
                         String t = row.next();
-                        this.readTiles(t);
+                        Tile temp = readTiles(t, x, y);
+                        temp2DArray[x][y] = temp;
                     }
                 }
             }
         }
+        this.board = new Board(width, height, temp2DArray);
+
+        String items = in.nextLine();
+        Scanner itemRow = new Scanner(items);
+        itemRow.useDelimiter(",");
+        //create Item here
+
+        String characters = in.nextLine();
+        Scanner characterRow = new Scanner(characters);
+        characterRow.useDelimiter(",");
+        //create Character here
     }
 
-    public Tile readTiles(String tile) {
-        Scanner in = new Scanner()
+    private Tile readTiles(String tile, int x, int y) {
+        Color[] colorToAdd = new Color[4];
+
+        for (int i = 0; i < colorToAdd.length; i++) {
+            char color = tile.charAt(i);
+            colorToAdd[i] = charToColor(color);
+        }
+
+        Tile tileMade = new Tile(x, y, colorToAdd);
         return tileMade;
     }
 
-    public void background () {
+    private Color charToColor(char c) {
+        switch (c) {
+            case 'R' -> {
+                return Color.INDIANRED;
+            }
+            case 'B' -> {
+                return Color.DEEPSKYBLUE;
+            }
+            case 'G' -> {
+                return Color.SPRINGGREEN;
+            }
+            case 'Y' -> {
+                return Color.KHAKI;
+            }
+            case 'C' -> {
+                return Color.CYAN;
+            }
+            case 'M' -> {
+                return Color.MAGENTA;
+            }
+            default -> {
+                return null;
+            }
+        }
+    }
+
+    private Item stringToItem(String i) {
+        //Have fun implementing this Dan
+    }
+
+    private Character stringToCharacter(String c) {
+        //Have fun implementing this too Dan
+    }
+
+    public void background() {
         try {
             File testFile = new File("src/Levels/Level4.txt");
             Scanner in = new Scanner(testFile);
             int windowResX = in.nextInt() * 64;
             int windowResY = in.nextInt() * 64;
             in.nextLine();
-            for (int j = 0; j < windowResX*windowResY/(64*64); j++) {
+            for (int j = 0; j < windowResX * windowResY / (64 * 64); j++) {
                 stringColour.add(in.next());
             }
             in.close();
 
             for (int x = 0; x < 150; x++) {
                 for (int y = 0; y < 4; y++) {
-                    if (stringColour.get(x).charAt(y) == 'R'){
+                    if (stringColour.get(x).charAt(y) == 'R') {
                         tileColChar[x][y] = Color.INDIANRED;
-                    } else if (stringColour.get(x).charAt(y) == 'B'){
+                    } else if (stringColour.get(x).charAt(y) == 'B') {
                         tileColChar[x][y] = Color.DEEPSKYBLUE;
-                    } else if (stringColour.get(x).charAt(y) == 'Y'){
+                    } else if (stringColour.get(x).charAt(y) == 'Y') {
                         tileColChar[x][y] = Color.KHAKI;
-                    }else if (stringColour.get(x).charAt(y) == 'C'){
+                    } else if (stringColour.get(x).charAt(y) == 'C') {
                         tileColChar[x][y] = Color.CYAN;
-                    }else if (stringColour.get(x).charAt(y) == 'G'){
+                    } else if (stringColour.get(x).charAt(y) == 'G') {
                         tileColChar[x][y] = Color.SPRINGGREEN;
-                    }else if (stringColour.get(x).charAt(y) == 'M'){
-                    tileColChar[x][y] = Color.MAGENTA;
-                }
+                    } else if (stringColour.get(x).charAt(y) == 'M') {
+                        tileColChar[x][y] = Color.MAGENTA;
+                    }
                 }
             }
             int k = 0;
@@ -130,7 +184,7 @@ public class Level extends Application {
                 }
             }
             Group root = new Group();
-            Scene scene = new Scene(root, windowResX,windowResY);
+            Scene scene = new Scene(root, windowResX, windowResY);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.show();
@@ -172,27 +226,30 @@ public class Level extends Application {
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
         }
-   }
+    }
 
 
     //public Color[] getTileColors(){return tileColors;}
 
-    public int [] getOffsetsX(){return offsetsX;}
+    public int[] getOffsetsX() {
+        return offsetsX;
+    }
 
-    public int[] getOffsetY() {return offsetY;}
+    public int[] getOffsetY() {
+        return offsetY;
+    }
 
 
-
-    public static void main(String[] args){
+    public static void main(String[] args) {
         launch(args);
 
     }
 
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         getOffsetsX();
         getOffsetY();
         background();
 
-}
-
     }
+
+}
