@@ -3,18 +3,19 @@ package Game.Characters;
 import Game.Tile;
 
 /**
- * FloorFollowingThieves.java
+ * FlyingAssassins.java
  * Sub class of Character.
  * @author Daniel Baxter, Jack Lewis.
  */
 
-public class FloorFollowingThief extends Character {
+public class FlyingAssassins extends Character{
+
     /**
      * Creates an instance of Character.
      *
      * @param position The Tile on which the Character is located.
      */
-    public FloorFollowingThief(Tile position) {
+    public FlyingAssassins(Tile position) {
         super(position);
     }
 

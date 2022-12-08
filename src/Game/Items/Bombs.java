@@ -1,4 +1,4 @@
 package Game.Items;
 
-public class Door {
+public class Bombs {
 }

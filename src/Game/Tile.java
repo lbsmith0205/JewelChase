@@ -1,4 +1,4 @@
-package Game.Board;
+package Game;
 
 import javafx.scene.paint.Color;
 
@@ -13,15 +13,12 @@ public class Tile {
     public static final int T_HEIGHT = 64;
     public static final int T_WIDTH = 64;
 
-    private String tileState;
-
     private ArrayList<Object> objectsOnTile;
 
     public Tile(int xPosition, int yPosition, Color[] tileColours) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.tileColours = tileColours;
-        this.tileState = "Normal";
     }
 
     public int getYPosition() {
@@ -31,12 +28,6 @@ public class Tile {
     public int getXPosition() {
         return xPosition;
     }
-
-    public void setTileState(String type) {
-        this.tileState = type;
-    }
-
-    public String getTileState() {return this.tileState;}
 
     public Color[] getTileColours() {
         return tileColours;

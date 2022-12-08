@@ -3,7 +3,7 @@ package Game;
 import java.util.Random;
 
 public enum Direction {
-    UP, RIGHT, DOWN, LEFT;
+    FORWARD, RIGHT, BACKWARD, LEFT;
     private static Random rnd = new Random();
 
     public static Direction getRandomDirection(){

@@ -1,4 +1,4 @@
-package Game.Board;
+package Game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,7 +28,8 @@ public class Profile {
         return highestLevel;
     }
 
-    private void newProfileFile() throws IOException {
+    private void newProfileFile(){
+        try{
             File myObj = new File("src/Profiles/" + profileName);
             if (myObj.exists()) {
                 if(myObj.delete()) {
@@ -43,9 +44,13 @@ public class Profile {
                 System.out.println("File Already Exists.");
             }
         }
+        catch (IOException e) {
+            System.out.println("An Error Has Occurred.");
+            e.printStackTrace();
+        }
+    }
 
-
-    public void save() throws IOException {
+    public void save(){
         newProfileFile();
         try {
             FileWriter writer = new FileWriter("src/Profiles/" + profileName);
@@ -73,7 +78,7 @@ public class Profile {
             in.close();
     }
 
-    public void updateOnLevelCompletion(int level, int score) throws IOException {
+    public void updateOnLevelCompletion(int level, int score) {
         if(level > highestLevel){
             this.highestLevel = level;
         }
