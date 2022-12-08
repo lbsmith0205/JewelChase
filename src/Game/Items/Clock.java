@@ -19,13 +19,17 @@ public class Clock extends Item{
         this.clockLook = new Image(CLOCK_SPRITE_PATH);
     }
 
-    @Override
-    public void interact(Character c) {
+    public int interact(Character c) {
         if(c instanceof SmartThief) {
-            //Remove time
-        } else if (c instanceof Player) {
-            //Add time to timer
+            this.remove();
+            return -(TIME_VALUE);
         }
+        if (c instanceof Player) {
+            this.remove();
+            return TIME_VALUE;
+        }
+
+        return 0;
     }
 
     @Override

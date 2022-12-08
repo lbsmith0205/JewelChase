@@ -33,15 +33,19 @@ public class Door extends Item {
         this.isOpen = false;
     }
 
-    @Override
-    public void interact(Character c) {
+
+    public EndGame interact(Character c) {
         if(this.isOpen) {
             if (c instanceof SmartThief) {
-                //Lose
-            } else if (c instanceof Player) {
-                //WIN
+                return EndGame.LOSE;
+            }
+
+            if (c instanceof Player) {
+                return EndGame.WIN;
             }
         }
+
+        return EndGame.CONTINUE;
     }
 
     @Override

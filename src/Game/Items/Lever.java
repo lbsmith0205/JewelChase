@@ -57,7 +57,7 @@ public class Lever extends Item {
         return this.colorCode;
     }
 
-    @Override
+
     public void interact(Character c) {
         if(c instanceof Thief) {
             for (Gate gate : linkedGates) {

@@ -24,8 +24,9 @@ public abstract class Item {
         this.position.removeObjectFromTile(this);
     }
 
-
-    public abstract void interact(Character c);
+    public Tile getPosition() {
+        return position;
+    }
 
     public abstract void draw(GraphicsContext gc);
 }
