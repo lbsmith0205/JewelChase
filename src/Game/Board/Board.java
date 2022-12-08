@@ -29,19 +29,6 @@ public class Board {
         return tiles[x][y];
     }
 
-    public boolean hasTile(int x, int y) {
-        for(int i = 0; i < tiles.length; i++) {
-            for(int j = 0; j < tiles.length; j++) {
-                if(tiles[i][j] == tiles[x][y]) {
-                    return true;
-                }
-            }
-        }
-        return false;
-
-        //return findTile(x,y) != null;
-    }
-
     public boolean hasTile(Tile t) {
         int x = t.getXPosition();
         int y = t.getYPosition();
@@ -54,8 +41,6 @@ public class Board {
         }
         return false;
     }
-
-
 
     public boolean isLegalMove(Tile source, Tile target) {
         for (Color currentColour : source.getTileColours()) {

@@ -1,5 +1,6 @@
 package Game.Characters;
 
+import Game.Board.Board;
 import Game.Board.Tile;
 import Game.Direction;
 
@@ -12,7 +13,7 @@ import javafx.scene.image.Image;
  * Sub class of Character.
  * @author Oliver Rudge.
  */
-/*
+
 public class FlyingAssassin extends Character {
 
     private Direction direction;
@@ -25,51 +26,29 @@ public class FlyingAssassin extends Character {
      *
      * @param position The Tile on which the Character is located.
      */
-/*
+
     public FlyingAssassin(Tile position) {
         super(position);
     }
 
     @Override
-    //0 to be replaced with boundary exception
-    public void move() {
+    public void move(Board currentBoard) {
+        int targetX = xPosition;
+        int targetY = yPosition;
 
-        if(this.direction == Direction.RIGHT){
-            if(this.xPosition + 1 == 0){
-                this.direction = Direction.LEFT;
-            }
-            else {
-                setPosition(board[this.xPosition + 1][this.yPosition]);
-            }
+        switch (direction) {
+            case UP -> targetY--;
+            case LEFT -> targetX--;
+            case DOWN -> targetY++;
+            case RIGHT -> targetX++;
         }
 
-        if(this.direction == Direction.LEFT){
-            if(this.xPosition - 1 == 0){
-                this.direction = Direction.RIGHT;
-            }
-            else {
-                setPosition(board[this.xPosition -1][this.yPosition]);
-            }
+        try {
+            setPosition(currentBoard.getTile(targetX, targetY));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            direction = direction.turnBack();
+            move(currentBoard);
         }
-
-        if(this.direction == Direction.FORWARD){
-            if(this.yPosition - 1 == 0){
-                this.direction = Direction.BACKWARD;
-            }
-            else {
-                setPosition(board[this.xPosition][this.yPosition - 1]);
-            }
-        }
-
-        if(this.direction == Direction.BACKWARD) {
-            if (this.yPosition + 1 == 0) {
-                this.direction = Direction.FORWARD;
-            }
-            else {
-                setPosition(board[this.xPosition][this.yPosition +1]);
-            }
-        }
-
 
     }
-}*/
+}
