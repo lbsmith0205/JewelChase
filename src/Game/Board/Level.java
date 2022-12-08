@@ -10,6 +10,7 @@ import java.util.Scanner;
 import Game.Items.Item;
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -20,8 +21,12 @@ public class Level extends Application {
     //Arraylist of characters
     private ArrayList<Item>Items = new ArrayList<Item>();
     //Arraylist of items in level
-    private Tile [][]tiles = new Tile [10][15]; // Array of tile objects to show board
-    public Color[] tileColChar = new Color[4];
+    private Tile [][]tiles = new Tile [15][10]; // Array of tile objects to show board
+    public Color[][] tileColChar = new Color[150][4];
+    public Color[] finalColours = new Color[600];
+    public ArrayList<String> stringColour = new ArrayList<>();
+    public ArrayList<Character> charColour = new ArrayList<>();
+
 
     private final int WIDTH_HEIGHT= 32, OFFSET_VALUE = WIDTH_HEIGHT;
 
@@ -68,7 +73,7 @@ public class Level extends Application {
         return shapeQueue;
     }
 
- */
+
 
     public void background () {
         try {
@@ -77,13 +82,10 @@ public class Level extends Application {
             int windowResX = in.nextInt() * 64;
             int windowResY = in.nextInt() * 64;
             in.nextLine();
-            int j = 0;
-            while (in.hasNextLine() && j < windowResX*windowResY/(64*64)) {
-                String curLine = in.next();
-                Scanner line = new Scanner(curLine);
-                String curColour = line.next();
+            for (int j=0; j < windowResX*windowResY/(64*64); j++) {
+                stringColour.add(in.next());
                 for (int i = 0; i < 4; i++) {
-                    switch (curColour.charAt(i)) {
+                    switch (stringColour.get(j).charAt(i)) {
                         case 'R':
                             tileColChar[i] = Color.INDIANRED;
                             break;
@@ -99,17 +101,17 @@ public class Level extends Application {
                         case 'G':
                             tileColChar[i] = Color.SPRINGGREEN;
                             break;
-                    }for (int x = 0; x < 15; x++){
+                    }
+                    for (int x = 0; x < 15; x++){
                         for (int y = 0; y < 10; y++){
                             Tile tile = new Tile(x*64,y*64,tileColChar);
-                            tiles[y][x] = tile;
+                            tiles[x][y] = tile;
                         }
                     }
-                }j++;
-
+               }
             }
+            in.next();
             in.close();
-            System.out.print(Arrays.toString(tiles));
             Group root = new Group();
             Scene scene = new Scene(root, windowResX,windowResY);
             Stage stage = new Stage();
@@ -118,7 +120,7 @@ public class Level extends Application {
             stage.setTitle("Drawing Tests");
             for (int x = 0; x < 15; x++) {
                 for (int y = 0; y < 10; y++) {
-                    Tile tile = tiles[y][x];
+                    Tile tile = tiles[x][y];
                     for (int i = 0; i < 4; i++) {
                         Rectangle t = new Rectangle();
                         t.setX(tile.getXPosition() + offsetsX[i]);
@@ -135,6 +137,70 @@ public class Level extends Application {
             System.out.println("An error occurred.");
         }
    }
+
+ */
+
+    public void gutBackground () {
+        try {
+            File testFile = new File("src/Levels/Level2.txt");
+            Scanner in = new Scanner(testFile);
+            int windowResX = in.nextInt() * 64;
+            int windowResY = in.nextInt() * 64;
+            in.nextLine();
+            for (int j=0; j < windowResX*windowResY/(64*64); j++) {
+                stringColour.add(in.next());
+            }in.close();
+
+            for (int x = 0; x < 150; x++) {
+                for (int y = 0; y < 4; y++) {
+                    if (stringColour.get(x).charAt(y) == 'R'){
+                        tileColChar[x][y] = Color.INDIANRED;
+                    }else if (stringColour.get(x).charAt(y) == 'B'){
+                        tileColChar[x][y] = Color.DEEPSKYBLUE;
+                    }else if (stringColour.get(x).charAt(y) == 'Y'){
+                        tileColChar[x][y] = Color.KHAKI;
+                    }else if (stringColour.get(x).charAt(y) == 'C'){
+                        tileColChar[x][y] = Color.LIGHTCYAN;
+                    }else if (stringColour.get(x).charAt(y) == 'G'){
+                        tileColChar[x][y] = Color.SPRINGGREEN;
+                    }
+                }
+            }int k = 0;
+            while (k < 600) {
+                for (int x = 0; x < 150; x++) {
+                    for (int y = 0; y < 4; y++) {
+                        finalColours[k] = tileColChar[x][y];
+                        k++;
+                    }
+                }
+            }
+            Group root = new Group();
+            Scene scene = new Scene(root, windowResX,windowResY);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+            stage.setTitle("Drawing Tests");
+int j = 0;
+            while (j < 600) {
+                for (int y = 0; y < 10; y++) {
+                    for (int x = 0; x < 15; x++) {
+                        for (int i = 0; i < 4; i++) {
+                            Rectangle t = new Rectangle();
+                            t.setX(x * 64 + offsetsX[i]);
+                            t.setY(y * 64 + offsetY[i]);
+                            t.setWidth(WIDTH_HEIGHT);
+                            t.setHeight(WIDTH_HEIGHT);
+                            t.setFill(finalColours[i + j]);
+                            t.setStroke(Color.DARKSLATEGRAY);
+                            root.getChildren().add(t);
+                        }j += 4;
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+        }
+    }
 
 
     public Level(){
@@ -165,7 +231,7 @@ public class Level extends Application {
        // getTileColors();
         getOffsetsX();
         getOffsetY();
-        background ();
+        gutBackground();
 
 /*
 
