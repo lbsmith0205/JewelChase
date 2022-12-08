@@ -88,27 +88,31 @@ int j = 0;
                             t.setWidth(WIDTH_HEIGHT);
                             t.setHeight(WIDTH_HEIGHT);
                             t.setFill(finalColours[i + j]);
-                            t.setStroke(Color.DARKSLATEGRAY);
                             root.getChildren().add(t);
                         }j += 4;
                     }
                 }
             }
-            Line line = new Line();
-            line.setStartX(0);
-            line.setStartY(64);
-            line.setEndX(960);
-            line.setEndY(64);
-            line.setStrokeWidth(3);
-
-            root.getChildren().add(line);
-            Line line1 = new Line();
-            line1.setStartX(0);
-            line1.setStartY(64);
-            line1.setEndX(960);
-            line1.setEndY(64);
-            line1.setStrokeWidth(3);
-            root.getChildren().add(line);
+            for(int x = 0;x < 10; x++) {
+                Line lineHor = new Line();
+                lineHor.setStartX(0);
+                lineHor.setStartY(64*x);
+                lineHor.setEndX(960);
+                lineHor.setEndY(64*x);
+                lineHor.setStrokeWidth(3);
+                lineHor.setStroke(Color.NAVY);
+                root.getChildren().add(lineHor);
+            }
+            for(int x = 0;x < 15; x++) {
+                Line lineVer = new Line();
+                lineVer.setStartX(64 * x);
+                lineVer.setStartY(0);
+                lineVer.setEndX(64 * x);
+                lineVer.setEndY(640);
+                lineVer.setStrokeWidth(3);
+                lineVer.setStroke(Color.NAVY);
+                root.getChildren().add(lineVer);
+            }
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
