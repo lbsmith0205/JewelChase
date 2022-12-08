@@ -28,8 +28,7 @@ public class Profile {
         return highestLevel;
     }
 
-    private void newProfileFile(){
-        try{
+    private void newProfileFile() throws IOException {
             File myObj = new File("src/Profiles/" + profileName);
             if (myObj.exists()) {
                 if(myObj.delete()) {
@@ -44,13 +43,9 @@ public class Profile {
                 System.out.println("File Already Exists.");
             }
         }
-        catch (IOException e) {
-            System.out.println("An Error Has Occurred.");
-            e.printStackTrace();
-        }
-    }
 
-    public void save(){
+
+    public void save() throws IOException {
         newProfileFile();
         try {
             FileWriter writer = new FileWriter("src/Profiles/" + profileName);
@@ -78,7 +73,7 @@ public class Profile {
             in.close();
     }
 
-    public void updateOnLevelCompletion(int level, int score) {
+    public void updateOnLevelCompletion(int level, int score) throws IOException {
         if(level > highestLevel){
             this.highestLevel = level;
         }
