@@ -128,7 +128,7 @@ public class Bomb extends Item{
         this.bombActivated = false;
     }
 
-    @Override
+
     public void interact(Character c) {
         if(!this.bombActivated) {
             if(c instanceof SmartThief || c instanceof FloorFollowingThief || c instanceof Player) {

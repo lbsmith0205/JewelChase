@@ -42,9 +42,6 @@ public class Gate extends Item {
         return this.colorCode;
     }
 
-    @Override
-    public void interact(Character c) {
-    }
 
     @Override
     public void draw(GraphicsContext gc) {

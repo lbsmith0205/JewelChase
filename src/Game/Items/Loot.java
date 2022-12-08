@@ -5,6 +5,7 @@ import Game.Board.Tile;
 import Game.Characters.Character;
 
 import Game.Characters.FloorFollowingThief;
+import Game.Characters.Player;
 import Game.Characters.SmartThief;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -59,11 +60,18 @@ public class Loot extends Item{
         return value;
     }
 
-    public void interact(Character c) {
+    public int interact(Character c) {
         if(c instanceof SmartThief || c instanceof FloorFollowingThief) {
             this.remove();
+            return 0;
         }
-        //score.add(this.value);
+
+        if(c instanceof Player) {
+            this.remove();
+            return this.value;
+        }
+
+        return 0;
     }
 
     @Override
