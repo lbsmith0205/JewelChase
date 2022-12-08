@@ -21,11 +21,13 @@ public class GameLoop implements Runnable{
             accumulator += lastDrawnTime;
             lastUpdate = currentTime;
 
-            while(accumulator > updateRate) {
-                update();
-                accumulator -= updateRate;
+            if(accumulator >= updateRate) {
+                while(accumulator > updateRate) {
+                    update();
+                    accumulator -= updateRate;
+                }
+                render();
             }
-            render();
             printStats();
             //draw here
         }

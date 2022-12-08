@@ -4,6 +4,7 @@ import Game.Characters.Player;
 import Game.Characters.SmartThief;
 import Game.Board.Tile;
 import Game.Characters.Character;
+import Game.Characters.Thief;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -58,7 +59,7 @@ public class Lever extends Item {
 
     @Override
     public void interact(Character c) {
-        if(c instanceof SmartThief || c instanceof Player) {
+        if(c instanceof Thief) {
             for (Gate gate : linkedGates) {
                 unlockGate(gate);
             }
