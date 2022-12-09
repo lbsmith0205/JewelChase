@@ -6,21 +6,32 @@ import Game.Characters.Player;
 import Game.Characters.SmartThief;
 import Game.Direction;
 import Game.Items.*;
+import Game.Items.Item;
+
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
-import Game.Items.Item;
+
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.shape.Line;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.shape.Rectangle;
 
-public class Level extends Application {
-    private static final int WIDTH_HEIGHT = 32, OFFSET_VALUE = WIDTH_HEIGHT;
+public class Level {
+    private static final int SQUARE_SIDE = 32, OFFSET_VALUE = SQUARE_SIDE;
+    private static final int TILE_SIZE = 64;
+    private static final int SQUARES_IN_TILE = 4;
 
     //Arraylist of items in level
     private ArrayList<Item> Items = new ArrayList<Item>();
@@ -29,6 +40,8 @@ public class Level extends Application {
     private Color[] finalColours = new Color[600];
     private ArrayList<String> stringColour = new ArrayList<>();
 
+    private Canvas tileLayer;
+    private Canvas itemCharacterLayer;
     private Board board;
     private int width;
     private int height;
@@ -36,19 +49,22 @@ public class Level extends Application {
     private int score;
     private int levelNo;
 
-
-
-
     private final int GRID_OFFSET = 64;
     private final String levelFilePath;
 
+    private final int windowResWidth;
+    private final int windowResHeight;
+
     private int offsetsX[] = {0, OFFSET_VALUE, 0, OFFSET_VALUE};
-    private int offsetY[] = {0, 0, OFFSET_VALUE, OFFSET_VALUE};
+    private int offsetsY[] = {0, 0, OFFSET_VALUE, OFFSET_VALUE};
 
 
     public Level(String fileName) {
         this.levelFilePath = "src/Levels/" + fileName + ".txt";
         this.readLevelFile(levelFilePath);
+
+        windowResWidth = this.board.getWidth() * TILE_SIZE;
+        windowResHeight = this.board.getHeight() * TILE_SIZE;
     }
 
     private Scanner fileReader(String levelFilePath) {
@@ -85,7 +101,7 @@ public class Level extends Application {
         parseItems(items);
         String characters = fileReader.nextLine();
         parseCharacters(characters);
-        board.refreshNavGraph();
+        //board.refreshNavGraph();
 
         fileReader.close();
     }
@@ -120,10 +136,10 @@ public class Level extends Application {
             switch (coloursList[i]) {
                 case 'R' -> tileColours[i] = Color.INDIANRED;
                 case 'G' -> tileColours[i] = Color.SPRINGGREEN;
-                case 'B' -> tileColours[i] = Color.DEEPSKYBLUE;
+                case 'B' -> tileColours[i] = Color.ROYALBLUE;
                 case 'Y' -> tileColours[i] = Color.KHAKI;
                 case 'C' -> tileColours[i] = Color.CYAN;
-                case 'M' -> tileColours[i] = Color.MAGENTA;
+                case 'M' -> tileColours[i] = Color.MEDIUMPURPLE;
             };
         }
         return new Tile(x, y, tileColours);
@@ -225,7 +241,7 @@ public class Level extends Application {
 
     }
 
-    public void background() {
+    /*public void background() {
         try {
             File testFile = new File("src/Levels/Level4.txt");
             Scanner in = new Scanner(testFile);
@@ -276,9 +292,9 @@ public class Level extends Application {
                         for (int i = 0; i < 4; i++) {
                             Rectangle t = new Rectangle();
                             t.setX(x * 64 + offsetsX[i]);
-                            t.setY(y * 64 + offsetY[i]);
-                            t.setWidth(WIDTH_HEIGHT);
-                            t.setHeight(WIDTH_HEIGHT);
+                            t.setY(y * 64 + offsetsY[i]);
+                            t.setWidth(SQUARE_SIDE);
+                            t.setHeight(SQUARE_SIDE);
                             t.setFill(finalColours[i + j]);
                             t.setStroke(Color.DARKSLATEGRAY);
                             root.getChildren().add(t);
@@ -291,7 +307,7 @@ public class Level extends Application {
                 Line lineHor = new Line();
                 lineHor.setStartX(0);
                 lineHor.setStartY(64*x);
-                lineHor.setEndX(960);
+                lineHor.setEndX(15*64);
                 lineHor.setEndY(64*x);
                 lineHor.setStrokeWidth(3);
                 lineHor.setStroke(Color.NAVY);
@@ -302,7 +318,7 @@ public class Level extends Application {
                 lineVer.setStartX(64 * x);
                 lineVer.setStartY(0);
                 lineVer.setEndX(64 * x);
-                lineVer.setEndY(640);
+                lineVer.setEndY(10*64);
                 lineVer.setStrokeWidth(3);
                 lineVer.setStroke(Color.NAVY);
                 root.getChildren().add(lineVer);
@@ -311,6 +327,59 @@ public class Level extends Application {
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
         }
+    }*/
+
+    public Pane drawLevel() {
+        BorderPane root = new BorderPane();
+
+        StackPane gameBoard = new StackPane();
+        root.setBottom(gameBoard);
+
+        tileLayer = new Canvas(windowResWidth, windowResHeight);
+        gameBoard.getChildren().add(tileLayer);
+
+        Board temp = this.board;
+        int boardSize = temp.getWidth() * temp.getHeight();
+        int numOfSquares = boardSize * SQUARES_IN_TILE;
+
+        GraphicsContext gc = tileLayer.getGraphicsContext2D();
+        int j = 0;
+        while(j < numOfSquares) {
+            for(int y = 0; y < temp.getHeight(); y++) {
+                for(int x = 0; x < temp.getWidth(); x++) {
+                    for(int i = 0; i < SQUARES_IN_TILE; i++) {
+                        gc.setFill(temp.getTile(x,y).getTileColours()[i]);
+                        int rectX = x * TILE_SIZE + offsetsX[i];
+                        int rectY = y * TILE_SIZE + offsetsY[i];
+                        gc.fillRect(rectX, rectY, SQUARE_SIDE, SQUARE_SIDE);
+                    }
+                    j += 4;
+                    gc.setStroke(Color.BLACK);
+                    int outlineX = x * TILE_SIZE;
+                    int outlineY = y * TILE_SIZE;
+                    gc.strokeRect(outlineX, outlineY, TILE_SIZE, TILE_SIZE);
+                }
+            }
+        }
+
+        itemCharacterLayer = new Canvas(windowResWidth, windowResHeight);
+        gameBoard.getChildren().add(itemCharacterLayer);
+
+        HBox topBar = new HBox();
+        Label timer = new Label("Time: " + this.time);
+        Label score = new Label("Score: " + this.score);
+
+
+        timer.setFont(new Font("Cambria", 22));
+        score.setFont(new Font("Cambria", 22));
+
+        topBar.getChildren().add(timer);
+        topBar.getChildren().add(score);
+        topBar.setAlignment(Pos.CENTER_LEFT);
+
+        root.setTop(topBar);
+
+        return root;
     }
 
 
@@ -321,20 +390,14 @@ public class Level extends Application {
     }
 
     public int[] getOffsetY() {
-        return offsetY;
+        return offsetsY;
     }
 
-
-    public static void main(String[] args) {
-        launch(args);
-
+    public int getWindowResWidth() {
+        return windowResWidth;
     }
 
-    public void start(Stage primaryStage) throws Exception {
-        getOffsetsX();
-        getOffsetY();
-        background();
-
+    public int getWindowResHeight() {
+        return windowResHeight;
     }
-
 }

@@ -21,6 +21,7 @@ public class Tile {
         this.yPosition = yPosition;
         this.tileColours = tileColours;
         this.tileState = "Normal";
+        this.objectsOnTile = new ArrayList<>();
     }
 
     public int getYPosition() {
