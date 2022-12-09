@@ -1,7 +1,7 @@
 package Game.Board;
 
 import javafx.scene.paint.Color;
-
+import Game.Items.Loot;
 import java.util.ArrayList;
 
 public class Tile {
@@ -56,5 +56,14 @@ public class Tile {
                 objectsOnTile.remove(object);
             }
         }
+    }
+
+    public boolean hasLoot() {
+        for (Object o : objectsOnTile) {
+            if (o instanceof Loot) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -1,6 +1,4 @@
 package Game.Characters;
-
-import Game.Board.Board;
 import Game.Board.Tile;
 import Game.Direction;
 import javafx.scene.paint.Color;
@@ -12,7 +10,7 @@ import java.util.ArrayList;
  * Super class for all player and non player character classes.
  * @author Daniel Baxter, Jack Lewis.
  */
-public abstract class Character {
+public class Character {
     protected Tile position;
     protected Direction direction;
     protected ArrayList<Color> currentColours;
@@ -48,8 +46,6 @@ public abstract class Character {
         }
         return false;
     }
-
-    public abstract void move(Board currentBoard);
 
     public void setPosition(Tile newPosition) {
         this.position = newPosition;

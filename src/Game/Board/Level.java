@@ -6,18 +6,13 @@ import Game.Characters.Player;
 import Game.Characters.SmartThief;
 import Game.Direction;
 import Game.Items.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
-
 import Game.Items.Item;
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -86,11 +81,11 @@ public class Level extends Application {
             tileParser.close();
         }
         this.board = new Board(width, height, tiles);
-
         String items = fileReader.nextLine();
         parseItems(items);
         String characters = fileReader.nextLine();
         parseCharacters(characters);
+        board.refreshNavGraph();
 
     }
 

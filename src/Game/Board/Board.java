@@ -4,17 +4,16 @@ import Game.Items.Bomb;
 import javafx.scene.paint.Color;
 import Game.Items.Gate;
 
-import java.util.Arrays;
-
 public class Board {
     private final int width;
     private final int height;
     private final Tile[][] tiles;
+    private NavGraph navigableRoutes = null;
 
-    public Board(int width, int height, Tile[][] tile2DArray) {
+    public Board(int width, int height, Tile[][] tiles) {
         this.width = width;
         this.height = height;
-        this.tiles = tile2DArray;
+        this.tiles = tiles;
     }
 
     public int getHeight() {
@@ -32,9 +31,9 @@ public class Board {
     public boolean hasTile(Tile t) {
         int x = t.getXPosition();
         int y = t.getYPosition();
-        for(int i = 0; i < tiles.length; i++) {
-            for(int j = 0; j < tiles.length; j++) {
-                if(tiles[i][j] == tiles[x][y]) {
+        for (Tile[] tile : tiles) {
+            for (int i = 0; i < tiles.length; i++) {
+                if (tile[i] == tiles[x][y]) {
                     return true;
                 }
             }
@@ -57,5 +56,17 @@ public class Board {
         }
         return false;
     }
+
+
+    public void refreshNavGraph() {
+        this.navigableRoutes = new NavGraph(this);
+    }
+
+    public NavGraph getNavGraph() {
+        return this.navigableRoutes;
+    }
+
+
+
 
 }

@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 
 /**
  * Player.java
- * Sub class of Character.
+ * Sub class of Character, represents to player character.
  * @author Daniel Baxter, Jack Lewis.
  */
 
@@ -24,36 +24,57 @@ public class Player extends Character {
     }
 
     // will eventually relate this tile positions
-    public void processKeyEvent(KeyEvent event) {
-        switch(event.getKeyCode()) {
-            case KeyEvent.VK_W:
-            case KeyEvent.VK_UP:
-                // W or Up key was pressed so move the player up by one tile
-                break;
-
-            case KeyEvent.VK_A:
-            case KeyEvent.VK_LEFT:
-                // A or Left key was pressed so move the player left by one tile
-                break;
-            case KeyEvent.VK_S:
-            case KeyEvent.VK_DOWN:
-                // S or Down key was pressed so move the player down by one tile
-                break;
-
-            case KeyEvent.VK_D:
-            case KeyEvent.VK_RIGHT:
-                // D or Right key was pressed so move the player right by one tile
-                break;
-            default:
-                break;
+    public void processKeyEvent(KeyEvent event, Board board) {
+        switch (event.getKeyCode()) {
+            case KeyEvent.VK_W, KeyEvent.VK_UP -> move(board, Direction.UP);
+            case KeyEvent.VK_A, KeyEvent.VK_LEFT -> move(board, Direction.LEFT);
+            case KeyEvent.VK_S, KeyEvent.VK_DOWN -> move(board, Direction.DOWN);
+            case KeyEvent.VK_D, KeyEvent.VK_RIGHT -> move(board, Direction.RIGHT);
         }
-
 
     }
 
+    /**
+     * Returns the next accessible tile in a specified direction, returns null if none available.
+     * @param board
+     * @param d
+     * @param source
+     * @return
+     */
+    private Tile findAccessibleTile(Board board, Direction d, Tile source) {
+        try {
+            int x = source.getXPosition();
+            int y = source.getYPosition();
+            switch (d) {
+                case UP -> y--;
+                case LEFT -> x--;
+                case DOWN -> y++;
+                case RIGHT -> x++;
+            }
 
-    public void move(Board boardIn) {
+            Tile target = board.getTile(x, y);
+            if (board.isLegalMove(source, target)) {
+                return target;
+            } else {
+                return findAccessibleTile(board, d, target);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
+    }
 
-
+    /**
+     * Moves the player character to the desired Tile.
+     * @param board
+     * @param d
+     */
+    public void move(Board board, Direction d) {
+        Tile destination = findAccessibleTile(board, d, this.position);
+        if (destination != null) {
+            position.removeObjectFromTile(this);
+            this.position = destination;
+            position.addObjectToTile(this);
+            this.direction = d;
+        }
     }
 }
