@@ -9,13 +9,14 @@ import javafx.stage.Stage;
 import java.util.Scanner;
 
 public class Main extends Application {
-    Level level1 = new Level("Level3");
+    static GameLoop gameLoop = new GameLoop("Level3");
+    Level level = gameLoop.getLevel();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Pane root = level1.drawLevel();
+        Pane root = level.drawLevel();
 
-        Scene scene = new Scene(root, level1.getWindowResWidth(), level1.getWindowResHeight() + 40);
+        Scene scene = new Scene(root, level.getWindowResWidth(), level.getWindowResHeight() + 40);
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -25,7 +26,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        //new Thread(new GameLoop()).start();
+        //new Thread(new GameLoop("Level3")).start();
+        new Thread(gameLoop).start();
         /*while(true)
         System.out.println(System.currentTimeMillis());*/
         /*System.out.println("Enter: ");

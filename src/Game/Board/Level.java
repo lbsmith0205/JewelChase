@@ -23,7 +23,9 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-
+/**
+ * @author Kenny Masekoameng, Luke Smith, Daniel Baxter, Khoi Nguyen Cao
+ */
 public class Level {
     private static final int SQUARE_SIDE = 32, OFFSET_VALUE = SQUARE_SIDE;
     private static final int TILE_SIZE = 64;

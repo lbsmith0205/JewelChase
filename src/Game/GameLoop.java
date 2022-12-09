@@ -1,11 +1,19 @@
 package Game;
 
+import Game.Board.Level;
+
 public class GameLoop implements Runnable{
-    private boolean running;
     private final double updateRate = 1.0d/60.0d;
 
+    private Level level;
+
+    private boolean running;
     private long nextStartTime;
     private int ups, fps;
+
+    public GameLoop(String fileName) {
+        this.level = new Level(fileName);
+    }
 
     @Override
     public void run() {
@@ -52,5 +60,9 @@ public class GameLoop implements Runnable{
             ups = 0;
             nextStartTime = System.currentTimeMillis() + 1000;
         }
+    }
+
+    public Level getLevel() {
+        return this.level;
     }
 }
