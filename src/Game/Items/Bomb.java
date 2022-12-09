@@ -146,6 +146,7 @@ public class Bomb extends Item{
 
     @Override
     public void draw(GraphicsContext gc) {
-        gc.drawImage(this.bombImage, this.position.getXPosition(), this.position.getYPosition());
+        gc.drawImage(this.bombImage, this.position.getXPosition() * IMAGE_SIZE,
+                this.position.getYPosition() * IMAGE_SIZE);
     }
 }

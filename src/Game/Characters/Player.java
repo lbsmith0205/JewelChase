@@ -3,6 +3,7 @@ package Game.Characters;
 import Game.Board.Board;
 import Game.Board.Tile;
 import Game.Direction;
+import javafx.scene.canvas.GraphicsContext;
 
 
 import java.awt.event.KeyEvent;
@@ -21,6 +22,11 @@ public class Player extends Character {
      */
     public Player(Tile position, Direction direction) {
         super(position, direction);
+    }
+
+    @Override
+    public void draw(GraphicsContext gc) {
+
     }
 
     // will eventually relate this tile positions

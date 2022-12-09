@@ -44,6 +44,6 @@ public class Gate extends Item {
 
     @Override
     public void draw(GraphicsContext gc) {
-        gc.drawImage(this.gateImage, this.position.getXPosition(), this.position.getYPosition());
+        gc.drawImage(this.gateImage, this.position.getXPosition() * IMAGE_SIZE, this.position.getYPosition() * IMAGE_SIZE);
     }
 }

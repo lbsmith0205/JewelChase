@@ -15,8 +15,9 @@ import javafx.scene.image.Image;
  */
 
 public class FlyingAssassin extends Character {
+    private static final String FLYING_ASSASSIN_PATH = "Sprites/Characters/Flying Assassin.png";
 
-    protected Image image;
+    protected Image flyingAssassinImage;
     int xPosition = position.getXPosition();
     int yPosition = position.getYPosition();
 
@@ -28,6 +29,13 @@ public class FlyingAssassin extends Character {
 
     public FlyingAssassin(Tile position, Direction direction) {
         super(position, direction);
+        this.flyingAssassinImage = new Image(FLYING_ASSASSIN_PATH);
+    }
+
+    @Override
+    public void draw(GraphicsContext gc) {
+        gc.drawImage(this.flyingAssassinImage, this.position.getXPosition() * IMAGE_SIZE,
+                this.position.getYPosition() * IMAGE_SIZE);
     }
 
     public void move(Board currentBoard) {
@@ -53,4 +61,6 @@ public class FlyingAssassin extends Character {
         }
 
     }
+
+
 }

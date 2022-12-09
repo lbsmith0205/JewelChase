@@ -49,7 +49,7 @@ public class Lever extends Item {
 
     @Override
     public void draw(GraphicsContext gc) {
-        gc.drawImage(this.leverImage, this.position.getXPosition(), this.position.getYPosition());
+        gc.drawImage(this.leverImage, this.position.getXPosition() * IMAGE_SIZE, this.position.getYPosition() * IMAGE_SIZE);
     }
 
 }

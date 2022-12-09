@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.util.Scanner;
 
 public class Main extends Application {
-    Level level1 = new Level("Level1");
+    Level level1 = new Level("Level3");
 
     @Override
     public void start(Stage primaryStage) throws Exception {

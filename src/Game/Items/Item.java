@@ -9,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
  * @author Khoi Nguyen Cao
  */
 public abstract class Item {
+    protected static final int IMAGE_SIZE = 64;
 
     protected final Tile position;
     protected final int xCoord;

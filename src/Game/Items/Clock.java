@@ -30,6 +30,6 @@ public class Clock extends Item{
 
     @Override
     public void draw(GraphicsContext gc) {
-        gc.drawImage(this.clockImage, this.position.getXPosition(), this.position.getYPosition());
+        gc.drawImage(this.clockImage, this.position.getXPosition() * IMAGE_SIZE, this.position.getYPosition() * IMAGE_SIZE);
     }
 }

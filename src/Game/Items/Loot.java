@@ -85,6 +85,6 @@ public class Loot extends Item{
 
     @Override
     public void draw(GraphicsContext gc) {
-        gc.drawImage(this.lootLook, this.position.getXPosition(), this.position.getYPosition());
+        gc.drawImage(this.lootLook, this.position.getXPosition() * IMAGE_SIZE, this.position.getYPosition() * IMAGE_SIZE);
     }
 }
