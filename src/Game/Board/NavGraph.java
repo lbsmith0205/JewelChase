@@ -3,8 +3,6 @@ package Game.Board;
 import Game.Direction;
 
 import java.util.Collections;
-/*
-import java.util.Collections;
 
 /**
  * NavGraph.java
@@ -69,6 +67,10 @@ public class NavGraph {
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
         }
+    }
+
+    public NavGraphNode getNode(int x, int y) {
+        return nodes[x][y];
     }
 
 }
