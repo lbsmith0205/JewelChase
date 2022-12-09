@@ -12,9 +12,9 @@ import javafx.scene.image.Image;
 
 public class Bomb extends Item{
     private static final String BOMB_SPRITE_DEFAULT_PATH = "Sprites/Items/Bombs/Bomb.png";
-    private static final String BOMB_SPRITE_TIME_3_PATH = "Sprites/Items/Bombs/Bomb3.png";
-    private static final String BOMB_SPRITE_TIME_2_PATH = "Sprites/Items/Bombs/Bomb2.png";
-    private static final String BOMB_SPRITE_TIME_1_PATH = "Sprites/Items/Bombs/Bomb1.png";
+    private static final String BOMB_COUNTDOWN_PATH_3 = "Sprites/Items/Bombs/Bomb3.png";
+    private static final String BOMB_COUNTDOWN_PATH_2 = "Sprites/Items/Bombs/Bomb2.png";
+    private static final String BOMB_COUNTDOWN_PATH_1 = "Sprites/Items/Bombs/Bomb1.png";
 
     private static final int BOMB_DEFAULT_TIMER = 4;
 
@@ -23,7 +23,7 @@ public class Bomb extends Item{
     private boolean bombActivated = false;
     private int bombTimer;
     private String bombState;
-    private Image bombLook;
+    private Image bombImage;
 
 
     public Bomb(Tile position, Board board) {
@@ -32,7 +32,7 @@ public class Bomb extends Item{
         this.activationTiles = new Tile[8];
         this.boardIn = board;
         this.bombState = BOMB_SPRITE_DEFAULT_PATH;
-        this.bombLook = new Image(bombState);
+        this.bombImage = new Image(bombState);
 
         int bombX = position.getXPosition();
         int bombY = position.getYPosition();
@@ -41,7 +41,7 @@ public class Bomb extends Item{
             for(int x = bombX - 1; x < bombX + 1; x++) {
                 for(int y = bombY - 1; y < bombY + 1; y++) {
                     if(y != bombY && x != bombX) {
-                        activationTiles[i] = boardIn.findTile(x,y);
+                        activationTiles[i] = boardIn.getTile(x,y);
                     }
                 }
             }
@@ -64,10 +64,10 @@ public class Bomb extends Item{
         int currentTileX = explodingTile.getXPosition();
         int currentTileY = explodingTile.getYPosition();
 
-        Tile tileUp = this.boardIn.findTile(currentTileX, (currentTileY + 1));
-        Tile tileDown = this.boardIn.findTile(currentTileX, (currentTileY - 1));
-        Tile tileLeft = this.boardIn.findTile((currentTileX - 1), currentTileY);
-        Tile tileRight = this.boardIn.findTile((currentTileX + 1), currentTileY);
+        Tile tileUp = this.boardIn.getTile(currentTileX, (currentTileY + 1));
+        Tile tileDown = this.boardIn.getTile(currentTileX, (currentTileY - 1));
+        Tile tileLeft = this.boardIn.getTile((currentTileX - 1), currentTileY);
+        Tile tileRight = this.boardIn.getTile((currentTileX + 1), currentTileY);
 
         if(bombTimer == 0) {
             this.remove();
@@ -113,11 +113,11 @@ public class Bomb extends Item{
             this.bombState = BOMB_SPRITE_DEFAULT_PATH;
         } else {
             if(this.bombTimer == 3) {
-                this.bombState = BOMB_SPRITE_TIME_3_PATH;
+                this.bombState = BOMB_COUNTDOWN_PATH_3;
             } else if(this.bombTimer == 2) {
-                this.bombState = BOMB_SPRITE_TIME_2_PATH;
+                this.bombState = BOMB_COUNTDOWN_PATH_2;
             } else if(this.bombTimer == 1) {
-                this.bombState = BOMB_SPRITE_TIME_1_PATH;
+                this.bombState = BOMB_COUNTDOWN_PATH_1;
             } else {
                 this.bombState = null;
             }
@@ -146,6 +146,6 @@ public class Bomb extends Item{
 
     @Override
     public void draw(GraphicsContext gc) {
-        gc.drawImage(this.bombLook, this.position.getXPosition(), this.position.getYPosition());
+        gc.drawImage(this.bombImage, this.position.getXPosition(), this.position.getYPosition());
     }
 }

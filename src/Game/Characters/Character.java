@@ -2,6 +2,7 @@ package Game.Characters;
 
 import Game.Board.Board;
 import Game.Board.Tile;
+import Game.Direction;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -13,14 +14,16 @@ import java.util.ArrayList;
  */
 public abstract class Character {
     protected Tile position;
+    protected Direction direction;
     protected ArrayList<Color> currentColours;
 
     /**
      * Creates an instance of Character.
      * @param position The Tile on which the Character is located.
      */
-    public Character(Tile position) {
+    public Character(Tile position, Direction direction) {
         this.position = position;
+        this.direction = direction;
     }
 
     /**

@@ -1,6 +1,11 @@
 package Game.Board;
 
-import Game.Items.Item;
+import Game.Characters.FloorFollowingThief;
+import Game.Characters.FlyingAssassin;
+import Game.Characters.Player;
+import Game.Characters.SmartThief;
+import Game.Direction;
+import Game.Items.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,8 +35,14 @@ public class Level extends Application {
     private ArrayList<String> stringColour = new ArrayList<>();
 
     private Board board;
+    private int width;
+    private int height;
     private int time;
     private int score;
+    private int levelNo;
+
+
+
 
     private final int GRID_OFFSET = 64;
     private final String levelFilePath;
@@ -42,107 +53,180 @@ public class Level extends Application {
 
     public Level(String fileName) {
         this.levelFilePath = "src/Levels/" + fileName + ".txt";
-        this.readLineByLine(fileReader(levelFilePath));
+        this.readLevelFile(levelFilePath);
     }
 
-    private Scanner fileReader(String filename) {
-        File file = new File(filename);
-
-        Scanner in = null;
-
+    private Scanner fileReader(String levelFilePath) {
         try {
-            in = new Scanner(file);
+            File file = new File(levelFilePath);
+            return new Scanner(file);
         } catch (FileNotFoundException e) {
-            System.out.println("Could not find: " + file);
-            System.exit(0);
+            System.out.println("Could not find file at " + levelFilePath);
+            return null;
         }
-
-        return in;
     }
 
-    private void readLineByLine(Scanner in) {
-        String levelInfo = in.nextLine();
+    /**
+     * Converts level file into usable parameters.
+     * @param levelFilePath
+     */
+    private void readLevelFile(String levelFilePath) {
+        Scanner fileReader = fileReader(levelFilePath);
+        String levelInfo = fileReader.nextLine();
+        parseLevelInfo(levelInfo);
 
-        Scanner readLevelInfo = new Scanner(levelInfo);
-        int width = readLevelInfo.nextInt();
-        int height = readLevelInfo.nextInt();
-
-        this.time = readLevelInfo.nextInt();
-        this.score = readLevelInfo.nextInt();
-
-        Tile[][] temp2DArray = new Tile[width][height];
-
+        Tile[][] tiles = new Tile[width][height];
         for (int y = 0; y < height; y++) {
-            if (in.hasNextLine()) {
-                String tileRow = in.nextLine();
-                Scanner row = new Scanner(tileRow);
+            String lineOfTiles = fileReader.nextLine();
+            Scanner tileParser = new Scanner(lineOfTiles);
+            tileParser.useDelimiter(" ");
+            for (int x = 0; x < width; x++) {
+                tiles[x][y] = parseTile(x, y, tileParser.next());
+            }
+            tileParser.close();
+        }
+        this.board = new Board(width, height, tiles);
 
-                for (int x = 0; x < width; x++) {
-                    if (row.hasNext()) {
-                        String t = row.next();
-                        Tile temp = readTiles(t, x, y);
-                        temp2DArray[x][y] = temp;
-                    }
-                }
+        String items = fileReader.nextLine();
+        parseItems(items);
+        String characters = fileReader.nextLine();
+        parseCharacters(characters);
+
+    }
+
+
+    /**
+     * Reads the level parameters from the top line of the level file.
+     * @param levelInfo
+     */
+    private void parseLevelInfo(String levelInfo) {
+        Scanner paramParser = new Scanner(levelInfo);
+        this.width = paramParser.nextInt();
+        this.height = paramParser.nextInt();
+        this.time = paramParser.nextInt();
+        this.score = paramParser.nextInt();
+        this.levelNo = paramParser.nextInt();
+        paramParser.close();
+    }
+
+
+    /**
+     * Converts a single block of colour chars into a Tile object.
+     * @param x
+     * @param y
+     * @param colours
+     * @return
+     */
+    private Tile parseTile(int x, int y, String colours) {
+        char[] coloursList = colours.toCharArray();
+        Color[] tileColours = new Color[4];
+        for (int i = 0; i < 4; i++) {
+            switch (coloursList[i]) {
+                case 'R' -> tileColours[i] = Color.INDIANRED;
+                case 'G' -> tileColours[i] = Color.SPRINGGREEN;
+                case 'B' -> tileColours[i] = Color.DEEPSKYBLUE;
+                case 'Y' -> tileColours[i] = Color.KHAKI;
+                case 'C' -> tileColours[i] = Color.CYAN;
+                case 'M' -> tileColours[i] = Color.MAGENTA;
+            };
+        }
+        return new Tile(x, y, tileColours);
+    }
+
+    /**
+     * Parses line of text file containing items and their locations.
+     * @param itemLine
+     */
+    private void parseItems(String itemLine) {
+        String[] items = itemLine.split(" ");
+        for (String item : items) {
+            Scanner parseItem = new Scanner(item);
+            parseItem.useDelimiter(",");
+            int x = parseItem.nextInt();
+            int y = parseItem.nextInt();
+            String type = parseItem.next();
+            parseItem.close();
+
+            switch (type) {
+                case "¢":
+                case "$":
+                case "Ru":
+                case "Di":
+                    Loot newLoot = new Loot(board.getTile(x, y), type);
+                    board.getTile(x, y).addObjectToTile(newLoot);
+                    break;
+                case "RGt":
+                case "GGt":
+                case "BGt":
+                    Gate newGate = new Gate(board.getTile(x, y), type);
+                    board.getTile(x, y).addObjectToTile(newGate);
+                    break;
+                case "RL":
+                case "GL":
+                case "BL":
+                    Lever newLever = new Lever(board.getTile(x, y), type);
+                    board.getTile(x, y).addObjectToTile(newLever);
+                    break;
+                case "D":
+                    Door newDoor = new Door(board.getTile(x, y));
+                    board.getTile(x, y).addObjectToTile(newDoor);
+                    break;
+                case "Bo":
+                    Bomb newBomb = new Bomb(board.getTile(x, y), board);
+                    board.getTile(x, y).addObjectToTile(newBomb);
+                    break;
+                case "Cl":
+                    Clock newClock = new Clock(board.getTile(x, y));
+                    board.getTile(x, y).addObjectToTile(newClock);
+                    break;
             }
         }
-        this.board = new Board(width, height, temp2DArray);
-
-        String items = in.nextLine();
-        Scanner itemRow = new Scanner(items);
-        itemRow.useDelimiter(",");
-        //create Item here
-
-        String characters = in.nextLine();
-        Scanner characterRow = new Scanner(characters);
-        characterRow.useDelimiter(",");
-        //create Character here
     }
 
-    private Tile readTiles(String tile, int x, int y) {
-        Color[] colorToAdd = new Color[4];
+    /**
+     * Parses line of text file containing characters, their starting locations and starting directions.
+     * @param characterLine
+     */
+    private void parseCharacters(String characterLine) {
+        String[] characters = characterLine.split(" ");
+        for (String character : characters) {
+            Scanner parseItem = new Scanner(character);
+            parseItem.useDelimiter(",");
+            int x = parseItem.nextInt();
+            int y = parseItem.nextInt();
+            String type = parseItem.next();
+            String directionChar = parseItem.next();
+            parseItem.close();
 
-        for (int i = 0; i < colorToAdd.length; i++) {
-            char color = tile.charAt(i);
-            colorToAdd[i] = charToColor(color);
+            Direction direction;
+            switch (directionChar) {
+                case "U" -> direction = Direction.UP;
+                case "L" -> direction = Direction.LEFT;
+                case "D" -> direction = Direction.DOWN;
+                case "R" -> direction = Direction.RIGHT;
+                default -> direction = null;
+            }
+
+            switch (type) {
+                case "P":
+                    Player newP = new Player(board.getTile(x, y), direction);
+                    board.getTile(x, y).addObjectToTile(newP);
+                    break;
+                case "FFT":
+                    FloorFollowingThief newFFT = new FloorFollowingThief(board.getTile(x, y), direction);
+                    board.getTile(x, y).addObjectToTile(newFFT);
+                    break;
+                case "FA":
+                    FlyingAssassin newFA = new FlyingAssassin(board.getTile(x, y), direction);
+                    board.getTile(x, y).addObjectToTile(newFA);
+                    break;
+                case "ST":
+                    SmartThief newST = new SmartThief(board.getTile(x, y), direction);
+                    board.getTile(x, y).addObjectToTile(newST);
+                    break;
+            }
         }
 
-        Tile tileMade = new Tile(x, y, colorToAdd);
-        return tileMade;
-    }
-
-    private Color charToColor(char c) {
-        switch (c) {
-            case 'R' -> {
-                return Color.INDIANRED;
-            }
-            case 'B' -> {
-                return Color.DEEPSKYBLUE;
-            }
-            case 'G' -> {
-                return Color.SPRINGGREEN;
-            }
-            case 'Y' -> {
-                return Color.KHAKI;
-            }
-            case 'C' -> {
-                return Color.CYAN;
-            }
-            case 'M' -> {
-                return Color.MAGENTA;
-            }
-            default -> {
-                return null;
-            }
-        }
-    }
-
-    private Item stringToItem(String i) {
-        //Have fun implementing this Dan
-    }
-
-    private Character stringToCharacter(String c) {
-        //Have fun implementing this too Dan
     }
 
     public void background() {

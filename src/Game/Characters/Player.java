@@ -2,6 +2,7 @@ package Game.Characters;
 
 import Game.Board.Board;
 import Game.Board.Tile;
+import Game.Direction;
 
 
 import java.awt.event.KeyEvent;
@@ -18,8 +19,8 @@ public class Player extends Character {
      *
      * @param position The Tile on which the Character is located.
      */
-    public Player(Tile position) {
-        super(position);
+    public Player(Tile position, Direction direction) {
+        super(position, direction);
     }
 
     // will eventually relate this tile positions

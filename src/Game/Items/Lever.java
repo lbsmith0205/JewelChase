@@ -1,7 +1,5 @@
 package Game.Items;
 
-import Game.Characters.Player;
-import Game.Characters.SmartThief;
 import Game.Board.Tile;
 import Game.Characters.Character;
 import Game.Characters.Thief;
@@ -13,62 +11,45 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 
 public class Lever extends Item {
-    private static final String LEVER_BLUE_SPRITE_PATH = "Sprites/Items/Levers/LeverBlue.png";
-    private static final String LEVER_RED_SPRITE_PATH = "Sprites/Items/Levers/LeverRed.png";
-    private static final String LEVER_GREEN_SPRITE_PATH = "Sprites/Items/Levers/LeverGreen.png";
+    private static final String BLUE_LEVER_PATH = "Sprites/Items/Levers/LeverBlue.png";
+    private static final String RED_LEVER_PATH = "Sprites/Items/Levers/LeverRed.png";
+    private static final String GREEN_LEVER_PATH = "Sprites/Items/Levers/LeverGreen.png";
 
-    private final Color colorCode;
+    private final Color colour;
     private final String leverSprite;
-    private final Image leverLook;
-    private ArrayList<Gate> linkedGates;
+    private final Image leverImage;
 
-    public Lever (Tile position, Color code) {
+    public Lever(Tile position, String type) {
         super(position);
-        this.colorCode = code;
 
-        if (this.colorCode == Color.BLUE) {
-            this.leverSprite = LEVER_BLUE_SPRITE_PATH;
-        } else if (this.colorCode == Color.RED) {
-            this.leverSprite = LEVER_RED_SPRITE_PATH;
-        } else if (this.colorCode == Color.GREEN) {
-            this.leverSprite = LEVER_GREEN_SPRITE_PATH;
-        } else {
-            this.leverSprite = null;
+        switch (type) {
+            case "RL":
+                this.colour = Color.RED;
+                this.leverSprite = RED_LEVER_PATH;
+                break;
+            case "GL":
+                this.colour = Color.GREEN;
+                this.leverSprite = GREEN_LEVER_PATH;
+                break;
+            case "BL":
+                this.colour = Color.BLUE;
+                this.leverSprite = BLUE_LEVER_PATH;
+                break;
+            default:
+                this.colour = null;
+                this.leverSprite = null;
         }
 
-        this.leverLook = new Image(leverSprite);
+        this.leverImage = new Image(leverSprite);
     }
 
-    public void unlockGate(Gate gate) {
-        if(gate.getColorCode() == this.colorCode) {
-            gate.remove();
-        }
-    }
-
-    public void addGateToLever(Gate g) {
-        if(g.getColorCode() == this.colorCode) {
-            this.linkedGates.add(g);
-        } else {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    public Color getColorCode() {
-        return this.colorCode;
-    }
-
-
-    public void interact(Character c) {
-        if(c instanceof Thief) {
-            for (Gate gate : linkedGates) {
-                unlockGate(gate);
-            }
-        }
+    public Color getColour() {
+        return this.colour;
     }
 
     @Override
     public void draw(GraphicsContext gc) {
-        gc.drawImage(this.leverLook, this.position.getXPosition(), this.position.getYPosition());
+        gc.drawImage(this.leverImage, this.position.getXPosition(), this.position.getYPosition());
     }
 
 }

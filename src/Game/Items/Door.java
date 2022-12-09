@@ -1,7 +1,6 @@
 package Game.Items;
 
 import Game.Board.Tile;
-import Game.Board.Board;
 
 import Game.Characters.Player;
 import Game.Characters.SmartThief;
@@ -11,45 +10,22 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Door extends Item {
-    private static final String DOOR_SPRITE_PATH = "Sprites/Items/Door.png";
+    private static final String DOOR_PATH = "Sprites/Items/Door.png";
 
-    private final Board boardIn;
-    private final Image doorLook;
+    private final Image doorImage;
+    private boolean isOpen = false;
 
-    private boolean isOpen;
-
-    public Door(Tile position, Board board) {
+    public Door(Tile position) {
         super(position);
-        this.boardIn = board;
-        this.isOpen = false;
-        this.doorLook = new Image(DOOR_SPRITE_PATH);
+        this.doorImage = new Image(DOOR_PATH);
     }
 
     public void openDoor() {
         this.isOpen = true;
     }
 
-    public void closeDoor() {
-        this.isOpen = false;
-    }
-
-
-    public EndGame interact(Character c) {
-        if(this.isOpen) {
-            if (c instanceof SmartThief) {
-                return EndGame.LOSE;
-            }
-
-            if (c instanceof Player) {
-                return EndGame.WIN;
-            }
-        }
-
-        return EndGame.CONTINUE;
-    }
-
     @Override
     public void draw(GraphicsContext gc) {
-        gc.drawImage(this.doorLook, this.position.getXPosition(), this.position.getYPosition());
+        gc.drawImage(this.doorImage, this.position.getXPosition(), this.position.getYPosition());
     }
 }

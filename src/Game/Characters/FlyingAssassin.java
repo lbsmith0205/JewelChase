@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 
 public class FlyingAssassin extends Character {
 
-    private Direction direction;
     protected Image image;
     int xPosition = position.getXPosition();
     int yPosition = position.getYPosition();
@@ -27,8 +26,8 @@ public class FlyingAssassin extends Character {
      * @param position The Tile on which the Character is located.
      */
 
-    public FlyingAssassin(Tile position) {
-        super(position);
+    public FlyingAssassin(Tile position, Direction direction) {
+        super(position, direction);
     }
 
     public void move(Board currentBoard) {

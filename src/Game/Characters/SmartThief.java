@@ -3,6 +3,7 @@ package Game.Characters;
 import Game.Board.Board;
 import Game.Board.NavGraph;
 import Game.Board.Tile;
+import Game.Direction;
 
 /**
  * SmartThief.java
@@ -16,8 +17,8 @@ public class SmartThief extends Thief {
      *
      * @param position The Tile on which the Character is located.
      */
-    public SmartThief(Tile position) {
-        super(position);
+    public SmartThief(Tile position, Direction direction) {
+        super(position, direction);
     }
 
     public void move(Board currentBoard) {

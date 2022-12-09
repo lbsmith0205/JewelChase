@@ -1,6 +1,10 @@
 package Game.Board;
 
+import Game.Items.Bomb;
 import javafx.scene.paint.Color;
+import Game.Items.Gate;
+
+import java.util.Arrays;
 
 public class Board {
     private final int width;
@@ -25,10 +29,6 @@ public class Board {
         return tiles[x][y];
     }
 
-    public Tile findTile(int x, int y) {
-        return tiles[x][y];
-    }
-
     public boolean hasTile(Tile t) {
         int x = t.getXPosition();
         int y = t.getYPosition();
@@ -43,6 +43,11 @@ public class Board {
     }
 
     public boolean isLegalMove(Tile source, Tile target) {
+        for (Object object : target.getObjectsOnTile()) {
+            if (object instanceof Gate || object instanceof Bomb) {
+                return false;
+            }
+        }
         for (Color currentColour : source.getTileColours()) {
             for (Color targetColour : target.getTileColours()) {
                 if (targetColour == currentColour) {

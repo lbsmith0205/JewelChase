@@ -2,6 +2,7 @@ package Game.Characters;
 
 import Game.Board.Board;
 import Game.Board.Tile;
+import Game.Direction;
 
 /**
  * FloorFollowingThieves.java
@@ -16,8 +17,8 @@ public class FloorFollowingThief extends Thief {
      *
      * @param position The Tile on which the Character is located.
      */
-    public FloorFollowingThief(Tile position) {
-        super(position);
+    public FloorFollowingThief(Tile position, Direction direction) {
+        super(position, direction);
     }
 
     public void move(Board currentBoard) {
