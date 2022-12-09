@@ -4,6 +4,10 @@ import Game.Board.Tile;
 import Game.Characters.Character;
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * Item class, used to hold information about it
+ * @author Khoi Nguyen Cao
+ */
 public abstract class Item {
 
     protected final Tile position;
@@ -19,6 +23,9 @@ public abstract class Item {
         this.yCoord = position.getYPosition();
     }
 
+    /**
+     * Used to remove an Item from the Tile and delete itself
+     */
     protected void remove() {
         this.exist = false;
         this.position.removeObjectFromTile(this);
@@ -28,5 +35,9 @@ public abstract class Item {
         return position;
     }
 
+    /**
+     * Uses GraphicContext to draw itself
+     * @param gc GraphicContext buffer from the Canvas
+     */
     public abstract void draw(GraphicsContext gc);
 }

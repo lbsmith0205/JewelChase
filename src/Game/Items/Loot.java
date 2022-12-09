@@ -10,6 +10,10 @@ import Game.Characters.SmartThief;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * Loot class, used to create an instance of either a Cent, Dollar, Diamond, or a Ruby
+ * @author Khoi Nguyen Cao
+ */
 public class Loot extends Item{
     private static final String CENT_SPRITE_PATH = "Sprites/Items/Cent.png";
     private static final String DOLLAR_SPRITE_PATH = "Sprites/Items/Dollar.png";
@@ -26,7 +30,7 @@ public class Loot extends Item{
     private String lootSprite;
     private Image lootLook;
 
-    //need to change the way to construct a Loot
+
     public Loot (Tile position, String lootType) {
         super(position);
         switch (lootType){
@@ -60,6 +64,11 @@ public class Loot extends Item{
         return value;
     }
 
+    /**
+     * Uses
+     * @param c
+     * @return
+     */
     public int interact(Character c) {
         if(c instanceof SmartThief || c instanceof FloorFollowingThief) {
             this.remove();

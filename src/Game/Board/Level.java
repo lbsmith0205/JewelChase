@@ -86,6 +86,8 @@ public class Level extends Application {
         String characters = fileReader.nextLine();
         parseCharacters(characters);
         board.refreshNavGraph();
+
+        fileReader.close();
     }
 
 
@@ -278,6 +280,7 @@ public class Level extends Application {
                             t.setWidth(WIDTH_HEIGHT);
                             t.setHeight(WIDTH_HEIGHT);
                             t.setFill(finalColours[i + j]);
+                            t.setStroke(Color.DARKSLATEGRAY);
                             root.getChildren().add(t);
                         }
                         j += 4;
