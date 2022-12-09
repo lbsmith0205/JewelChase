@@ -28,13 +28,13 @@ public class Level {
     private static final int SQUARE_SIDE = 32, OFFSET_VALUE = SQUARE_SIDE;
     private static final int TILE_SIZE = 64;
     private static final int SQUARES_IN_TILE = 4;
+    private static final int offsetsX[] = {0, OFFSET_VALUE, 0, OFFSET_VALUE};
+    private static final int offsetsY[] = {0, 0, OFFSET_VALUE, OFFSET_VALUE};
 
-    //Arraylist of items in level
-    private ArrayList<Item> Items = new ArrayList<Item>();
-    // Array of tile objects to show board
-    private Color[][] tileColChar = new Color[150][4];
-    private Color[] finalColours = new Color[600];
-    private ArrayList<String> stringColour = new ArrayList<>();
+    private final String levelFilePath;
+    private final int windowResWidth;
+    private final int windowResHeight;
+
 
     private Canvas tileLayer;
     private Canvas itemCharacterLayer;
@@ -45,14 +45,7 @@ public class Level {
     private int score;
     private int levelNo;
 
-    private final int GRID_OFFSET = 64;
-    private final String levelFilePath;
 
-    private final int windowResWidth;
-    private final int windowResHeight;
-
-    private int offsetsX[] = {0, OFFSET_VALUE, 0, OFFSET_VALUE};
-    private int offsetsY[] = {0, 0, OFFSET_VALUE, OFFSET_VALUE};
 
 
     public Level(String fileName) {
@@ -281,20 +274,15 @@ public class Level {
 
         GraphicsContext gcSpawning = tileLayer.getGraphicsContext2D();
 
-        for (int x = 0; x < this.width; x++) {
-            for (int y = 0; y < this.height; y++) {
-                ArrayList<Object> thingOnTile = this.board.getTile(x, y).getObjectsOnTile();
-                if (!thingOnTile.isEmpty()) {
-                    Object thingToDraw = thingOnTile.get(0);
-                    if (thingToDraw instanceof Item) {
-                        ((Item) thingToDraw).draw(gcSpawning);
-                    }
+        ArrayList<Item> itemToDraw = getAllItem(temp);
+        ArrayList<Character> characterToDraw = getAllCharacter(temp);
 
-                    if (thingToDraw instanceof Character) {
-                        ((Character) thingToDraw).draw(gcSpawning);
-                    }
-                }
-            }
+        for(Item i : itemToDraw) {
+            i.draw(gcSpawning);
+        }
+
+        for(Character c : characterToDraw) {
+            c.draw(gcSpawning);
         }
 
         HBox topBar = new HBox();
@@ -315,7 +303,41 @@ public class Level {
     }
 
 
-    //public Color[] getTileColors(){return tileColors;}
+    public void update() {
+
+    }
+
+    private ArrayList<Character> getAllCharacter(Board board) {
+        ArrayList<Character> characterList = new ArrayList<>();
+        for (int x = 0; x < this.board.getWidth(); x++) {
+            for (int y = 0; y < this.board.getHeight(); y++) {
+                ArrayList<Object> thingOnTile = this.board.getTile(x, y).getObjectsOnTile();
+                if(!thingOnTile.isEmpty()) {
+                    if(thingOnTile.get(0) instanceof Character) {
+                        Character characterToAdd = (Character) thingOnTile.get(0);
+                        characterList.add(characterToAdd);
+                    }
+                }
+            }
+        }
+        return characterList;
+    }
+
+    private ArrayList<Item> getAllItem(Board board) {
+        ArrayList<Item> itemList = new ArrayList<>();
+        for (int x = 0; x < this.board.getWidth(); x++) {
+            for (int y = 0; y < this.board.getHeight(); y++) {
+                ArrayList<Object> thingOnTile = this.board.getTile(x, y).getObjectsOnTile();
+                if(!thingOnTile.isEmpty()) {
+                    if(thingOnTile.get(0) instanceof Item) {
+                        Item itemToAdd = (Item) thingOnTile.get(0);
+                        itemList.add(itemToAdd);
+                    }
+                }
+            }
+        }
+        return itemList;
+    }
 
     public int[] getOffsetsX() {
         return offsetsX;

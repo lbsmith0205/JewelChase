@@ -13,8 +13,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        level1.getOffsetsX();
-        level1.getOffsetY();
         Pane root = level1.drawLevel();
 
         Scene scene = new Scene(root, level1.getWindowResWidth(), level1.getWindowResHeight() + 40);
