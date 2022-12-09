@@ -86,7 +86,6 @@ public class Level extends Application {
         String characters = fileReader.nextLine();
         parseCharacters(characters);
         board.refreshNavGraph();
-
     }
 
 

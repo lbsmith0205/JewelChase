@@ -42,7 +42,11 @@ public class FlyingAssassin extends Character {
         }
 
         try {
-            setPosition(currentBoard.getTile(targetX, targetY));
+            Tile target = currentBoard.getTile(targetX, targetY);
+            position.removeObjectFromTile(this);
+            this.position = target;
+            position.addObjectToTile(this);
+            this.direction = direction;
         } catch (ArrayIndexOutOfBoundsException e) {
             direction = direction.turnBack();
             move(currentBoard);
