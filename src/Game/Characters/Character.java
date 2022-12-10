@@ -2,6 +2,7 @@ package Game.Characters;
 import Game.Board.Tile;
 import Game.Direction;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public abstract class Character {
     protected Tile position;
     protected Direction direction;
     protected ArrayList<Color> currentColours;
+    protected Image image;
 
     /**
      * Creates an instance of Character.
@@ -27,12 +29,6 @@ public abstract class Character {
         this.direction = direction;
     }
 
-    /**
-     * Removes an instance of Character from the game.
-     */
-    protected void kill() {
-
-    }
 
     /**
      * Determines whether a move to a proposed tile is legal.
@@ -58,6 +54,9 @@ public abstract class Character {
         return this.position;
     }
 
-    public abstract void draw(GraphicsContext gc);
+    public void draw(GraphicsContext gc) {
+        gc.drawImage(this.image, this.position.getXPosition() * IMAGE_SIZE,
+                this.position.getYPosition() * IMAGE_SIZE);
+    }
 }
 

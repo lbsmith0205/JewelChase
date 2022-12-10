@@ -2,7 +2,6 @@ package Game.Characters;
 
 import Game.Board.Tile;
 import Game.Direction;
-import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Thief extends Character {
     /**
@@ -14,7 +13,6 @@ public abstract class Thief extends Character {
         super(position, direction);
     }
 
-    @Override
-    public abstract void draw(GraphicsContext gc);
+
 }
 

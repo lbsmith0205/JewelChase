@@ -19,7 +19,6 @@ public class Player extends Character {
 
     private String PLAYER_PATH = "Sprites/Characters/Player_" + direction + ".png";
 
-    private Image image;
     /**
      * Creates an instance of Character.
      *
@@ -28,12 +27,6 @@ public class Player extends Character {
     public Player(Tile position, Direction direction) {
         super(position, direction);
         this.image = new Image(PLAYER_PATH);
-    }
-
-    @Override
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(this.image, this.position.getXPosition() * IMAGE_SIZE,
-                this.position.getYPosition() * IMAGE_SIZE);
     }
 
     // will eventually relate this tile positions

@@ -15,7 +15,6 @@ import javafx.scene.image.Image;
 public class FloorFollowingThief extends Thief {
     private String FLOOR_THIEF_PATH = "Sprites/Characters/Floor_Following_Thief_" + direction +".png";
 
-    private Image image;
     /**
      * Creates an instance of FloorFollowingThief.
      *
@@ -24,12 +23,6 @@ public class FloorFollowingThief extends Thief {
     public FloorFollowingThief(Tile position, Direction direction) {
         super(position, direction);
         this.image = new Image(FLOOR_THIEF_PATH);
-    }
-
-    @Override
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(this.image, this.position.getXPosition() * IMAGE_SIZE,
-                this.position.getYPosition() * IMAGE_SIZE);
     }
 
     public void move(Board currentBoard) {

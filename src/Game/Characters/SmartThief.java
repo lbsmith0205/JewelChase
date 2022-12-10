@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class SmartThief extends Thief {
     private String SMART_THIEF_PATH = "Sprites/Characters/Smart_Thief_" + direction + ".png";
 
-    private Image image;
     /**
      * Creates an instance of Character.
      *
@@ -28,12 +27,6 @@ public class SmartThief extends Thief {
     public SmartThief(Tile position, Direction direction) {
         super(position, direction);
         this.image = new Image(SMART_THIEF_PATH);
-    }
-
-    @Override
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(this.image, this.position.getXPosition() * IMAGE_SIZE,
-                this.position.getYPosition() * IMAGE_SIZE);
     }
 
     public void move(Board currentBoard) {

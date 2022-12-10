@@ -22,18 +22,4 @@ public enum Direction {
         return values()[(ordinal() + 3) % 4];
     }
 
-    @Override
-    public String toString() {
-        String output = "";
-        switch (this) {
-            case UP -> output = "Up";
-            case RIGHT -> output = "Right";
-            case DOWN -> output = "Down";
-            case LEFT -> output = "Left";
-        }
-        return output;
-    }
-
-
-
 }
