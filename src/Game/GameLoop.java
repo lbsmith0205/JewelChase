@@ -3,7 +3,7 @@ package Game;
 import Game.Board.Level;
 
 public class GameLoop implements Runnable{
-    private final double updateRate = 1.0d/60.0d;
+    private final double tickRate = 1.0d/60.0d;
 
     private Level level;
 
@@ -29,10 +29,10 @@ public class GameLoop implements Runnable{
             accumulator += lastDrawnTime;
             lastUpdate = currentTime;
 
-            if(accumulator >= updateRate) {
-                while(accumulator > updateRate) {
+            if(accumulator >= tickRate) {
+                while(accumulator > tickRate) {
                     update();
-                    accumulator -= updateRate;
+                    accumulator -= tickRate;
                 }
                 render();//draw here
             }

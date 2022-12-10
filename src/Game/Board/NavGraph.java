@@ -22,13 +22,13 @@ public class NavGraph {
         nodes = new NavGraphNode[board.getWidth()][board.getHeight()];
 
         for (int x = 0; x < board.getWidth(); x++) {
-            for (int y = 0; x < board.getWidth(); y++) {
+            for (int y = 0; y < board.getHeight(); y++) {
                 nodes[x][y] = new NavGraphNode(board.getTile(x, y));
             }
         }
 
         for (int x = 0; x < board.getWidth(); x++) {
-            for (int y = 0; x < board.getHeight(); y++) {
+            for (int y = 0; y < board.getHeight(); y++) {
                 Tile sourceTile = board.getTile(x, y);
                 nodes[x][y].addAccessibleNode(findAccessibleNode(board, Direction.UP, sourceTile));
                 nodes[x][y].addAccessibleNode(findAccessibleNode(board, Direction.LEFT, sourceTile));

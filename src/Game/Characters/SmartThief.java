@@ -7,7 +7,7 @@ import Game.Board.Tile;
 import Game.Direction;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
+import java.lang.Math.*;
 import java.util.ArrayList;
 
 /**
@@ -44,11 +44,10 @@ public class SmartThief extends Thief {
         seed.add(thisTile);
         ArrayList<ArrayList<Tile>> routes = availableRoutes(seed, navigableRoutes);
         Tile target = optimalMove(routes);
+        direction = getNewDirection(position, target);
         position.removeObjectFromTile(this);
         this.position = target;
         position.addObjectToTile(this);
-        //this.direction = direction;
-
     }
 
     public ArrayList<ArrayList<Tile>> availableRoutes(ArrayList<ArrayList<Tile>> parentRoutes, NavGraph navigableRoutes) {
@@ -80,6 +79,21 @@ public class SmartThief extends Thief {
 
     private Tile terminus(ArrayList<Tile> route) {
         return route.get(route.size() - 1);
+    }
+
+    private Direction getNewDirection(Tile source, Tile target) {
+        int proposedXTravel = Math.round(Math.signum(target.getXPosition() - source.getXPosition()));
+        int proposedYTravel = Math.round(Math.signum(target.getYPosition() - source.getYPosition()));
+        Direction d = null;
+        switch (proposedXTravel) {
+            case 1 -> d = Direction.RIGHT;
+            case -1 -> d = Direction.LEFT;
+        }
+        switch (proposedYTravel) {
+            case 1 -> d = Direction.DOWN;
+            case -1 -> d = Direction.UP;
+        }
+        return d;
     }
 
 

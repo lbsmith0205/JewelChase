@@ -93,7 +93,7 @@ public class Level {
         parseItems(items);
         String characters = fileReader.nextLine();
         parseCharacters(characters);
-        //board.refreshNavGraph();
+        board.refreshNavGraph();
 
         fileReader.close();
     }
@@ -240,7 +240,6 @@ public class Level {
 
     public Pane drawLevel() {
         BorderPane root = new BorderPane();
-
         StackPane gameBoard = new StackPane();
         root.setBottom(gameBoard);
 
