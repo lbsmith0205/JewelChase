@@ -15,7 +15,7 @@ import javafx.scene.image.Image;
  */
 
 public class FlyingAssassin extends Character {
-    private String FLYING_ASSASSIN_PATH = "Sprites/Characters/Flying_Assassin_" + direction + ".png";
+    private String FLYING_ASSASSIN_PATH = "Sprites/Characters/FA/Flying_Assassin_" + direction.name() + ".png";
 
     int xPosition = position.getXPosition();
     int yPosition = position.getYPosition();

@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 
 public class SmartThief extends Thief {
-    private String SMART_THIEF_PATH = "Sprites/Characters/Smart_Thief_" + direction + ".png";
+    private String SMART_THIEF_PATH = "Sprites/Characters/ST/Smart_Thief_" + direction.name() + ".png";
 
     /**
      * Creates an instance of Character.

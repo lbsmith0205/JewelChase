@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
  */
 
 public class FloorFollowingThief extends Thief {
-    private String FLOOR_THIEF_PATH = "Sprites/Characters/Floor_Following_Thief_" + direction +".png";
+    private String FLOOR_THIEF_PATH = "Sprites/Characters/FFT/Floor_Following_Thief_" + direction.name() +".png";
 
     /**
      * Creates an instance of FloorFollowingThief.

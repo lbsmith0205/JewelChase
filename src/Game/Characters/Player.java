@@ -17,7 +17,7 @@ import java.awt.event.KeyEvent;
 
 public class Player extends Character {
 
-    private String PLAYER_PATH = "Sprites/Characters/Player_" + direction + ".png";
+    private String PLAYER_PATH = "Sprites/Characters/Player/Player_" + direction.name() + ".png";
 
     /**
      * Creates an instance of Character.
