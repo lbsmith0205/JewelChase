@@ -8,6 +8,9 @@ import Game.Characters.Character;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -15,12 +18,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
 /**
@@ -304,8 +305,20 @@ public class Level {
     }
 
 
+    /**
+     * Update the state of the game, manage the movements and interactions happening on the Level
+     */
     public void update() {
-
+        ArrayList<Character> characters = getAllCharacter(this.board);
+        for (Character c : characters) {
+            /*if (c instanceof SmartThief) {
+                ((SmartThief) c).move(this.board);
+            } else*/ if (c instanceof FloorFollowingThief) {
+                ((FloorFollowingThief) c).move(this.board);
+            } else if (c instanceof FlyingAssassin) {
+                ((FlyingAssassin) c).move(this.board);
+            }
+        }
     }
 
     private ArrayList<Character> getAllCharacter(Board board) {
@@ -340,6 +353,50 @@ public class Level {
         return itemList;
     }
 
+    public void save() {
+        String fileName = "Level" + levelNo + ".txt";
+        File saveFile = new File("src/SavedGame" + fileName);
+
+        try {
+            saveFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        PrintWriter printWriter = null;
+        if(saveFile.exists()) {
+            try {
+                printWriter  = new PrintWriter(saveFile);
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found: " + fileName);
+            }
+        }
+        String firstLine = String.format("%d %d %d %d %d", width, height, time, score, levelNo);
+        printWriter.println(firstLine);
+        for(int y = 0; y < this.height; y++) {
+            for (int x = 0; x < this.width; x++) {
+                Tile t = this.board.getTile(x, y);
+                String tString = t.getTileInString();
+                printWriter.print(tString + " ");
+            }
+            printWriter.print("\n");
+        }
+        ArrayList<Item> items = getAllItem(this.board);
+        for(Item t : items) {
+            int xPos = t.getPosition().getXPosition();
+            int yPos = t.getPosition().getYPosition();
+            printWriter.print(xPos + "," + yPos + "," + t.getTypeInString());
+        }
+        printWriter.print("\n");
+
+        ArrayList<Character> characters = getAllCharacter(this.board);
+        for(Character c : characters) {
+            int xPos = c.getPosition().getXPosition();
+            int yPos = c.getPosition().getYPosition();
+            printWriter.print(xPos + "," + yPos + "," + c.getTypeInString() +
+                    "," + c.getDirectionInString());
+        }
+    }
+
     public int[] getOffsetsX() {
         return offsetsX;
     }
@@ -354,5 +411,9 @@ public class Level {
 
     public int getWindowResHeight() {
         return windowResHeight;
+    }
+
+    public String getLevelFilePath() {
+        return this.levelFilePath;
     }
 }

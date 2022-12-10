@@ -28,6 +28,7 @@ public class Loot extends Item{
     private final int value;
 
     private String lootSprite;
+    private String lootType;
     private Image lootLook;
 
 
@@ -35,22 +36,27 @@ public class Loot extends Item{
         super(position);
         switch (lootType){
             case "¢":
+                this.lootType = lootType;
                 this.value = CENT_COIN_VALUE;
                 this.lootSprite = CENT_SPRITE_PATH;
                 break;
             case "$":
+                this.lootType = lootType;
                 this.value = DOLLAR_COIN_VALUE;
                 this.lootSprite = DOLLAR_SPRITE_PATH;
                 break;
             case "Ru":
+                this.lootType = lootType;
                 this.value = RUBY_VALUE;
                 this.lootSprite = RUBY_SPRITE_PATH;
                 break;
             case "Di":
+                this.lootType = lootType;
                 this.value = DIAMOND_VALUE;
                 this.lootSprite = DIAMOND_SPRITE_PATH;
                 break;
             default:
+                this.lootType = null;
                 this.value = 0;
                 this.lootSprite = null;
                 break;
@@ -62,6 +68,10 @@ public class Loot extends Item{
 
     public int getValue() {
         return value;
+    }
+
+    public String getLootType() {
+        return lootType;
     }
 
     /**

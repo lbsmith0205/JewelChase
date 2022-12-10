@@ -1,6 +1,7 @@
 package Game.Characters;
 import Game.Board.Tile;
 import Game.Direction;
+import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -44,6 +45,32 @@ public abstract class Character {
             }
         }
         return false;
+    }
+
+    public String getTypeInString() {
+        if(this instanceof Player) {
+            return "P";
+        } else if(this instanceof FlyingAssassin) {
+            return "FA";
+        } else if(this instanceof FloorFollowingThief) {
+            return "FFT";
+        } else if(this instanceof SmartThief) {
+            return "ST";
+        }
+        return null;
+    }
+
+    public String getDirectionInString() {
+        if(this.direction == Direction.UP) {
+            return "U";
+        } else if(this.direction == Direction.DOWN) {
+            return "D";
+        } else if(this.direction == Direction.LEFT) {
+            return "L";
+        } else if(this.direction == Direction.RIGHT) {
+            return "R";
+        }
+        return null;
     }
 
     public void setPosition(Tile newPosition) {

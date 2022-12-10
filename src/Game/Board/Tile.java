@@ -51,7 +51,8 @@ public class Tile {
     }
 
     public void removeObjectFromTile(Object targetObject) {
-        for (Object object : objectsOnTile) {
+        for (int i = 0; i < objectsOnTile.size(); i++) {
+            Object object = objectsOnTile.get(i);
             if (object == targetObject) {
                 objectsOnTile.remove(object);
             }
@@ -65,5 +66,26 @@ public class Tile {
             }
         }
         return false;
+    }
+
+    public String getTileInString() {
+        String colour = "";
+        for(int i = 0; i < tileColours.length; i++) {
+            if(tileColours[i] == Color.INDIANRED) {
+                colour += "R";
+            } else if(tileColours[i] == Color.SPRINGGREEN) {
+                colour += "G";
+            } else if(tileColours[i] == Color.ROYALBLUE) {
+                colour += "B";
+            } else if(tileColours[i] == Color.KHAKI) {
+                colour += "Y";
+            } else if(tileColours[i] == Color.CYAN) {
+                colour += "C";
+            } else if(tileColours[i] == Color.MEDIUMPURPLE) {
+                colour += "M";
+            }
+        }
+
+        return colour;
     }
 }

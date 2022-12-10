@@ -8,7 +8,7 @@ public class Board {
     private final int width;
     private final int height;
     private final Tile[][] tiles;
-    private NavGraph navigableRoutes = null;
+    private NavGraph navigableRoutes;
 
     public Board(int width, int height, Tile[][] tiles) {
         this.width = width;

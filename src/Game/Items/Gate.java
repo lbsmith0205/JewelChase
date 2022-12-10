@@ -42,8 +42,13 @@ public class Gate extends Item {
         this.gateImage = new Image(gateSprite);
     }
 
+    public Color getColour() {
+        return colour;
+    }
+
     @Override
     public void draw(GraphicsContext gc) {
-        gc.drawImage(this.gateImage, this.position.getXPosition() * IMAGE_SIZE, this.position.getYPosition() * IMAGE_SIZE);
+        gc.drawImage(this.gateImage, this.position.getXPosition() * IMAGE_SIZE,
+                this.position.getYPosition() * IMAGE_SIZE);
     }
 }
