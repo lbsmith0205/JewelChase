@@ -355,45 +355,51 @@ public class Level {
 
     public void save() {
         String fileName = "Level" + levelNo + ".txt";
-        File saveFile = new File("src/SavedGame" + fileName);
+        File saveFile = new File("src/SavedGame/" + fileName);
 
         try {
             saveFile.createNewFile();
+            print(saveFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        PrintWriter printWriter = null;
-        if(saveFile.exists()) {
-            try {
-                printWriter  = new PrintWriter(saveFile);
-            } catch (FileNotFoundException e) {
-                System.out.println("File not found: " + fileName);
-            }
-        }
-        String firstLine = String.format("%d %d %d %d %d", width, height, time, score, levelNo);
-        printWriter.println(firstLine);
-        for(int y = 0; y < this.height; y++) {
-            for (int x = 0; x < this.width; x++) {
-                Tile t = this.board.getTile(x, y);
-                String tString = t.getTileInString();
-                printWriter.print(tString + " ");
-            }
-            printWriter.print("\n");
-        }
-        ArrayList<Item> items = getAllItem(this.board);
-        for(Item t : items) {
-            int xPos = t.getPosition().getXPosition();
-            int yPos = t.getPosition().getYPosition();
-            printWriter.print(xPos + "," + yPos + "," + t.getTypeInString());
-        }
-        printWriter.print("\n");
 
-        ArrayList<Character> characters = getAllCharacter(this.board);
-        for(Character c : characters) {
-            int xPos = c.getPosition().getXPosition();
-            int yPos = c.getPosition().getYPosition();
-            printWriter.print(xPos + "," + yPos + "," + c.getTypeInString() +
-                    "," + c.getDirectionInString());
+    }
+
+    private void print(File file) {
+        PrintWriter printWriter = null;
+        if(file.exists()) {
+            try {
+                printWriter  = new PrintWriter(file);
+                String firstLine = String.format("%d %d %d %d %d", width, height, time, score, levelNo);
+                printWriter.println(firstLine);
+                for(int y = 0; y < this.height; y++) {
+                    for (int x = 0; x < this.width; x++) {
+                        Tile t = this.board.getTile(x, y);
+                        String tString = t.getTileInString();
+                        printWriter.print(tString + " ");
+                    }
+                    printWriter.print("\n");
+                }
+                ArrayList<Item> items = getAllItem(this.board);
+                for(Item t : items) {
+                    int xPos = t.getPosition().getXPosition();
+                    int yPos = t.getPosition().getYPosition();
+                    printWriter.print(xPos + "," + yPos + "," + t.getTypeInString() + " ");
+                }
+                printWriter.print("\n");
+
+                ArrayList<Character> characters = getAllCharacter(this.board);
+                for(Character c : characters) {
+                    int xPos = c.getPosition().getXPosition();
+                    int yPos = c.getPosition().getYPosition();
+                    printWriter.print(xPos + "," + yPos + "," + c.getTypeInString() +
+                            "," + c.getDirectionInString() + " ");
+                }
+                printWriter.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found: " + file.getName());
+            }
         }
     }
 

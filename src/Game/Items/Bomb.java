@@ -64,8 +64,8 @@ public class Bomb extends Item{
         int currentTileX = explodingTile.getXPosition();
         int currentTileY = explodingTile.getYPosition();
 
-        Tile tileUp = this.boardIn.getTile(currentTileX, (currentTileY + 1));
-        Tile tileDown = this.boardIn.getTile(currentTileX, (currentTileY - 1));
+        Tile tileUp = this.boardIn.getTile(currentTileX, (currentTileY - 1));
+        Tile tileDown = this.boardIn.getTile(currentTileX, (currentTileY + 1));
         Tile tileLeft = this.boardIn.getTile((currentTileX - 1), currentTileY);
         Tile tileRight = this.boardIn.getTile((currentTileX + 1), currentTileY);
 
