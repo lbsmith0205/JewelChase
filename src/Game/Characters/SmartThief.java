@@ -7,7 +7,7 @@ import Game.Board.Tile;
 import Game.Direction;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import java.lang.Math.*;
+
 import java.util.ArrayList;
 
 /**
@@ -17,9 +17,9 @@ import java.util.ArrayList;
  */
 
 public class SmartThief extends Thief {
-    private static final String SMART_THIEF_PATH = "Sprites/Characters/SmartThief.png";
+    private String SMART_THIEF_PATH = "Sprites/Characters/Smart_Thief_" + direction + ".png";
 
-    private Image smartThiefImage;
+    private Image image;
     /**
      * Creates an instance of Character.
      *
@@ -27,12 +27,12 @@ public class SmartThief extends Thief {
      */
     public SmartThief(Tile position, Direction direction) {
         super(position, direction);
-        this.smartThiefImage = new Image(SMART_THIEF_PATH);
+        this.image = new Image(SMART_THIEF_PATH);
     }
 
     @Override
     public void draw(GraphicsContext gc) {
-        gc.drawImage(this.smartThiefImage, this.position.getXPosition() * IMAGE_SIZE,
+        gc.drawImage(this.image, this.position.getXPosition() * IMAGE_SIZE,
                 this.position.getYPosition() * IMAGE_SIZE);
     }
 

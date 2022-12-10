@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
  */
 
 public class FloorFollowingThief extends Thief {
-    private static final String FLOOR_THIEF_PATH = "Sprites/Characters/FloorFollowingThief.png";
+    private String FLOOR_THIEF_PATH = "Sprites/Characters/Floor_Following_Thief_" + direction +".png";
 
     private Image image;
     /**
