@@ -25,7 +25,6 @@ public class Player extends Thief {
         refreshImage();
     }
 
-
     // will eventually relate this tile positions
     public void processKeyEvent(KeyEvent event, Board board) {
         switch (event.getKeyCode()) {

@@ -1,6 +1,7 @@
 package Game.Items;
 
 import Game.Board.Board;
+import Game.Board.Level;
 import Game.Characters.FloorFollowingThief;
 import Game.Characters.Player;
 import Game.Characters.SmartThief;
@@ -55,27 +56,17 @@ public class Bomb extends Item{
         }
     }
 
-    private void tickDown() {
-        if(bombTimer > 0 && this.bombActivated) {
-            this.bombTimer--;
-            this.changeBombState();
-        }
-    }
+
 
     private void changeBombState() {
-        if(!this.bombActivated) {
-            this.bombState = BOMB_SPRITE_DEFAULT_PATH;
-        } else {
-            if(this.bombTimer == 3) {
-                this.bombState = BOMB_COUNTDOWN_PATH_3;
-            } else if(this.bombTimer == 2) {
-                this.bombState = BOMB_COUNTDOWN_PATH_2;
-            } else if(this.bombTimer == 1) {
-                this.bombState = BOMB_COUNTDOWN_PATH_1;
-            } else {
-                this.bombState = null;
-            }
+        int explosionTime = level.getTime() - BOMB_DEFAULT_TIMER;
+        int bombTimeRemaining = level.getTime() - explosionTime;
+        switch (bombTimeRemaining) {
+            case 3 -> bombState = BOMB_COUNTDOWN_PATH_3;
+            case 2 -> bombState = BOMB_COUNTDOWN_PATH_2;
+            case 1 -> bombState = BOMB_COUNTDOWN_PATH_1;
         }
+
     }
 
     public void deactivateBomb() {
@@ -84,7 +75,7 @@ public class Bomb extends Item{
 
     @Override
     protected void refreshImage() {
-        this.image = new Image(BOMB_SPRITE_DEFAULT_PATH);
+        this.image = new Image(bombState);
     }
 
 }

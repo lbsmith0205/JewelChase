@@ -26,7 +26,7 @@ public class Main extends Application {
         tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         primaryStage.setTitle("Jewel Chase");
-        primaryStage.getIcons().add(new Image("Sprites/Items/Diamond.png", 256, 256, false, true));
+        primaryStage.getIcons().add(new Image("Sprites/Coconut.png", 256, 256, false, true));
         primaryStage.setScene(scene);
         primaryStage.show();
         tickTimeline.play();
