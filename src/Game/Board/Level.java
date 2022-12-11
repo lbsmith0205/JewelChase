@@ -48,6 +48,14 @@ public class Level {
         windowResHeight = this.board.getHeight() * TILE_SIDE;
     }
 
+    public Level(String fileName, String profile) {
+        this.levelFilePath = "src/SavedGame/" + fileName + profile + ".txt";
+        this.readLevelFile(levelFilePath);
+
+        windowResWidth = this.board.getWidth() * TILE_SIDE;
+        windowResHeight = this.board.getHeight() * TILE_SIDE;
+    }
+
     private Scanner fileReader(String levelFilePath) {
         try {
             File file = new File(levelFilePath);
@@ -267,54 +275,63 @@ public class Level {
         }
     }
 
+    public void update() {
+        this.moveAll();
+        this.countdown();
+        this.drawLevel();
+        this.accumulate();
+    }
+
     public void save() {
         String fileName = "Level" + levelNo + ".txt";
-        File saveFile = new File("src/SavedGame/" + fileName);
-
-        try {
-            saveFile.createNewFile();
-            print(saveFile);
-        } catch (IOException e) {
-            e.printStackTrace();
+        File saveDirectory = new File("src/SavedGame");
+        File saveFile = new File(saveDirectory, fileName);
+        if(!saveDirectory.exists()) {
+            try {
+                saveDirectory.mkdir();
+                saveFile.createNewFile();
+                print(saveFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
 
     private void print(File file) {
         PrintWriter printWriter = null;
-        if(file.exists()) {
-            try {
-                printWriter  = new PrintWriter(file);
-                String firstLine = String.format("%d %d %d %d %d", width, height, time, score, levelNo);
-                printWriter.println(firstLine);
-                for(int y = 0; y < this.height; y++) {
-                    for (int x = 0; x < this.width; x++) {
-                        Tile t = this.board.getTile(x, y);
-                        String tString = t.getTileInString();
-                        printWriter.print(tString + " ");
-                    }
-                    printWriter.print("\n");
-                }
-                ArrayList<Item> items = board.getAllItems();
-                for(Item t : items) {
-                    int xPos = t.getPosition().getXPosition();
-                    int yPos = t.getPosition().getYPosition();
-                    printWriter.print(xPos + "," + yPos + "," + t.getTypeInString() + " ");
+        try {
+            printWriter = new PrintWriter(file);
+            String firstLine = String.format("%d %d %d %d %d", width, height, time, score, levelNo);
+            printWriter.println(firstLine);
+            for (int y = 0; y < this.height; y++) {
+                for (int x = 0; x < this.width; x++) {
+                    Tile t = this.board.getTile(x, y);
+                    String tString = t.getTileInString();
+                    printWriter.print(tString + " ");
                 }
                 printWriter.print("\n");
-
-                ArrayList<Character> characters = board.getAllCharacters();
-                for(Character c : characters) {
-                    int xPos = c.getPosition().getXPosition();
-                    int yPos = c.getPosition().getYPosition();
-                    printWriter.print(xPos + "," + yPos + "," + c.getTypeInString() +
-                            "," + c.getDirectionInString() + " ");
-                }
-                printWriter.close();
-            } catch (FileNotFoundException e) {
-                System.out.println("File not found: " + file.getName());
             }
+            ArrayList<Item> items = board.getAllItems();
+            for (Item t : items) {
+                int xPos = t.getPosition().getXPosition();
+                int yPos = t.getPosition().getYPosition();
+                printWriter.print(xPos + "," + yPos + "," + t.getTypeInString() + " ");
+            }
+            printWriter.print("\n");
+
+            ArrayList<Character> characters = board.getAllCharacters();
+            for (Character c : characters) {
+                int xPos = c.getPosition().getXPosition();
+                int yPos = c.getPosition().getYPosition();
+                printWriter.print(xPos + "," + yPos + "," + c.getTypeInString() +
+                        "," + c.getDirectionInString() + " ");
+            }
+            printWriter.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + file.getName());
         }
+
     }
 
     public int getWindowResWidth() {
