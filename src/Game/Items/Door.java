@@ -12,12 +12,11 @@ import javafx.scene.image.Image;
 public class Door extends Item {
     private static final String DOOR_PATH = "Sprites/Items/Door.png";
 
-    private final Image doorImage;
     private boolean isOpen = false;
 
     public Door(Tile position) {
         super(position);
-        this.doorImage = new Image(DOOR_PATH);
+        refreshImage();
     }
 
     public void openDoor() {
@@ -25,7 +24,9 @@ public class Door extends Item {
     }
 
     @Override
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(this.doorImage, this.position.getXPosition() * IMAGE_SIZE, this.position.getYPosition() * IMAGE_SIZE);
+    protected void refreshImage() {
+        this.image = new Image(DOOR_PATH);
+
+
     }
 }

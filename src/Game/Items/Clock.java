@@ -12,11 +12,9 @@ public class Clock extends Item{
     private static final String CLOCK_PATH = "Sprites/Items/Clock.png";
     private static final int TIME_VALUE = 10;
 
-    private Image clockImage;
-
     public Clock(Tile position) {
         super(position);
-        this.clockImage = new Image(CLOCK_PATH);
+        refreshImage();
     }
 
     public int interact(Character c) {
@@ -29,7 +27,7 @@ public class Clock extends Item{
     }
 
     @Override
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(this.clockImage, this.position.getXPosition() * IMAGE_SIZE, this.position.getYPosition() * IMAGE_SIZE);
+    protected void refreshImage() {
+        this.image = new Image(CLOCK_PATH);
     }
 }

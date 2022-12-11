@@ -16,30 +16,30 @@ public class Gate extends Item {
 
 
     private final String gateSprite;
-    private Image gateImage;
 
     public Gate(Tile position, String type) {
         super(position);
 
         switch (type) {
-            case "RGt":
+            case "RGt" -> {
                 this.colour = Color.RED;
                 this.gateSprite = RED_GATE_PATH;
-                break;
-            case "GGt":
+            }
+            case "GGt" -> {
                 this.colour = Color.GREEN;
                 this.gateSprite = GREEN_GATE_PATH;
-                break;
-            case "BGt":
+            }
+            case "BGt" -> {
                 this.colour = Color.BLUE;
                 this.gateSprite = BLUE_GATE_PATH;
-                break;
-            default:
+            }
+            default -> {
                 this.colour = null;
                 this.gateSprite = null;
+            }
         }
+        refreshImage();
 
-        this.gateImage = new Image(gateSprite);
     }
 
     public Color getColour() {
@@ -47,8 +47,9 @@ public class Gate extends Item {
     }
 
     @Override
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(this.gateImage, this.position.getXPosition() * IMAGE_SIZE,
-                this.position.getYPosition() * IMAGE_SIZE);
+    protected void refreshImage() {
+        this.image = new Image(gateSprite);
+
+
     }
 }

@@ -17,39 +17,42 @@ public class Lever extends Item {
 
     private final Color colour;
     private final String leverSprite;
-    private final Image leverImage;
+
 
     public Lever(Tile position, String type) {
         super(position);
 
         switch (type) {
-            case "RL":
+            case "RL" -> {
                 this.colour = Color.RED;
                 this.leverSprite = RED_LEVER_PATH;
-                break;
-            case "GL":
+            }
+            case "GL" -> {
                 this.colour = Color.GREEN;
                 this.leverSprite = GREEN_LEVER_PATH;
-                break;
-            case "BL":
+            }
+            case "BL" -> {
                 this.colour = Color.BLUE;
                 this.leverSprite = BLUE_LEVER_PATH;
-                break;
-            default:
+            }
+            default -> {
                 this.colour = null;
                 this.leverSprite = null;
+            }
         }
+        refreshImage();
 
-        this.leverImage = new Image(leverSprite);
     }
 
     public Color getColour() {
         return this.colour;
     }
 
+
     @Override
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(this.leverImage, this.position.getXPosition() * IMAGE_SIZE, this.position.getYPosition() * IMAGE_SIZE);
+    protected void refreshImage() {
+        this.image = new Image(leverSprite);
+
     }
 
 }

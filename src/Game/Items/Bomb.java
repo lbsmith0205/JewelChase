@@ -26,7 +26,6 @@ public class Bomb extends Item{
     private int bombTimer;
     private int activationTime;
     private String bombState;
-    private Image bombImage;
 
 
     public Bomb(Tile position, Board board) {
@@ -34,7 +33,6 @@ public class Bomb extends Item{
         this.bombTimer = BOMB_DEFAULT_TIMER;
         this.board = board;
         this.bombState = BOMB_SPRITE_DEFAULT_PATH;
-        this.bombImage = new Image(bombState);
         int bombXPosition = position.getXPosition();
         int bombYPosition = position.getYPosition();
         for (int x = 0; x < board.getWidth(); x++) {
@@ -43,6 +41,7 @@ public class Bomb extends Item{
         for (int y = 0; y < board.getHeight(); y++) {
             BLAST_ZONE.add(board.getTile(bombXPosition, y));
         }
+        refreshImage();
 
     }
 
@@ -84,8 +83,8 @@ public class Bomb extends Item{
     }
 
     @Override
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(this.bombImage, this.position.getXPosition() * IMAGE_SIZE,
-                this.position.getYPosition() * IMAGE_SIZE);
+    protected void refreshImage() {
+        this.image = new Image(BOMB_SPRITE_DEFAULT_PATH);
     }
+
 }

@@ -5,6 +5,7 @@ import Game.Characters.Character;
 
 import javafx.scene.paint.Color;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 import java.awt.*;
 
@@ -17,6 +18,7 @@ public abstract class Item {
     protected static final int IMAGE_SIZE = 64;
 
     protected final Tile position;
+    protected Image image;
     protected boolean exist;
     protected boolean contact = false;
 
@@ -70,10 +72,9 @@ public abstract class Item {
         return position;
     }
 
-    /**
-     * Uses GraphicContext to draw itself
-     *
-     * @param gc GraphicContext buffer from the Canvas
-     */
-    public abstract void draw(GraphicsContext gc);
+    public void draw(GraphicsContext gc) {
+        gc.drawImage(this.image, this.position.getXPosition() * IMAGE_SIZE,
+                this.position.getYPosition() * IMAGE_SIZE);
+    }
+    protected abstract void refreshImage();
 }

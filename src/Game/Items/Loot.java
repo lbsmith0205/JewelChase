@@ -27,41 +27,38 @@ public class Loot extends Item{
 
     private String lootSprite;
     private String lootType;
-    private Image lootLook;
 
 
     public Loot (Tile position, String lootType) {
         super(position);
-        switch (lootType){
-            case "¢":
+        switch (lootType) {
+            case "¢" -> {
                 this.lootType = lootType;
                 this.value = CENT_COIN_VALUE;
                 this.lootSprite = CENT_SPRITE_PATH;
-                break;
-            case "$":
+            }
+            case "$" -> {
                 this.lootType = lootType;
                 this.value = DOLLAR_COIN_VALUE;
                 this.lootSprite = DOLLAR_SPRITE_PATH;
-                break;
-            case "Ru":
+            }
+            case "Ru" -> {
                 this.lootType = lootType;
                 this.value = RUBY_VALUE;
                 this.lootSprite = RUBY_SPRITE_PATH;
-                break;
-            case "Di":
+            }
+            case "Di" -> {
                 this.lootType = lootType;
                 this.value = DIAMOND_VALUE;
                 this.lootSprite = DIAMOND_SPRITE_PATH;
-                break;
-            default:
+            }
+            default -> {
                 this.lootType = null;
                 this.value = 0;
                 this.lootSprite = null;
-                break;
+            }
         }
-
-        this.lootLook = new Image(lootSprite);
-
+        refreshImage();
     }
 
     public int getValue() {
@@ -73,8 +70,9 @@ public class Loot extends Item{
     }
 
     @Override
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(this.lootLook, this.position.getXPosition() * IMAGE_SIZE, this.position.getYPosition() * IMAGE_SIZE);
+    protected void refreshImage() {
+        this.image = new Image(lootSprite);
+
     }
 
 
