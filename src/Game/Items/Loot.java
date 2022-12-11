@@ -17,7 +17,7 @@ public class Loot extends Item{
     private static final String DOLLAR_SPRITE_PATH = "Sprites/Items/Dollar.png";
     private static final String DIAMOND_SPRITE_PATH = "Sprites/Items/Diamond.png";
     private static final String RUBY_SPRITE_PATH = "Sprites/Items/Ruby.png";
-    private static final String LOOTABLE_DAY_PATH = "Sprites/Items/LootableDoor.png";
+    private static final String LOOTABLE_DOOR_PATH = "Sprites/Items/LootableDoor.png";
     private static final int CENT_COIN_VALUE = 1;
     private static final int DOLLAR_COIN_VALUE = 2;
     private static final int RUBY_VALUE = 5;
@@ -51,7 +51,7 @@ public class Loot extends Item{
             }
             case "LD" -> {
                 this.value = 0;
-                this.lootSprite = LOOTABLE_DAY_PATH;
+                this.lootSprite = LOOTABLE_DOOR_PATH;
             }
             default -> {
                 this.lootType = null;
