@@ -6,8 +6,8 @@ import Game.Items.Gate;
 import javafx.scene.paint.Color;
 import Game.Items.Loot;
 import java.util.ArrayList;
-
 public class Tile {
+
 
     private final Color[] tileColours;
     private final int yPosition;

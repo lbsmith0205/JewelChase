@@ -29,7 +29,6 @@ public class FloorFollowingThief extends Thief {
     public FloorFollowingThief(Tile position, Direction direction) {
         super(position, direction);
         refreshImage();
-
     }
 
     public void setFollowingColour(Color colour) {
