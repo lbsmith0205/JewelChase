@@ -10,20 +10,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.ArrayList;
-
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.*;
-import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-
 
 /**
  * @author Kenny Masekoameng, Luke Smith, Daniel Baxter, Khoi Nguyen Cao
@@ -32,18 +24,10 @@ public class Level {
     private static final int SUBTILE_SIZE = 32;
     private static final int TILE_SIZE = 64;
 
-
-    private static final int SQUARES_IN_TILE = 4;
-    private static final int offsetsX[] = {0, SUBTILE_SIZE, 0, SUBTILE_SIZE};
-    private static final int offsetsY[] = {0, 0, SUBTILE_SIZE, SUBTILE_SIZE};
-
     private final String levelFilePath;
     private final int windowResWidth;
     private final int windowResHeight;
 
-
-    private Canvas tileLayer;
-    private Canvas itemCharacterLayer;
     private Board board;
     private int width;
     private int height;
@@ -354,14 +338,6 @@ public class Level {
                 System.out.println("File not found: " + file.getName());
             }
         }
-    }
-
-    public int[] getOffsetsX() {
-        return offsetsX;
-    }
-
-    public int[] getOffsetY() {
-        return offsetsY;
     }
 
     public int getWindowResWidth() {
