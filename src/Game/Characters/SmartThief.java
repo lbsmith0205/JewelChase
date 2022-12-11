@@ -17,16 +17,16 @@ import java.util.ArrayList;
  */
 
 public class SmartThief extends Thief {
-    private String SMART_THIEF_PATH = "Sprites/Characters/ST/Smart_Thief_" + direction.name() + ".png";
-
     /**
      * Creates an instance of Character.
      *
      * @param position The Tile on which the Character is located.
      */
+
+    private String pathToImage = "Sprites/Characters/ST/Smart_Thief_" + direction.name() + ".png";
     public SmartThief(Tile position, Direction direction) {
         super(position, direction);
-        this.image = new Image(SMART_THIEF_PATH);
+        refreshImage();
     }
 
     @Override
@@ -41,6 +41,7 @@ public class SmartThief extends Thief {
         ArrayList<ArrayList<Tile>> routes = availableRoutes(seed, navigableRoutes);
         Tile target = optimalMove(routes);
         direction = getNewDirection(position, target);
+        refreshImage();
         position.removeObjectFromTile(this);
         this.position = target;
         position.addObjectToTile(this);
@@ -82,18 +83,9 @@ public class SmartThief extends Thief {
         return route.get(route.size() - 1);
     }
 
-    private Direction getNewDirection(Tile source, Tile target) {
-        int proposedXTravel = Math.round(Math.signum(target.getXPosition() - source.getXPosition()));
-        int proposedYTravel = Math.round(Math.signum(target.getYPosition() - source.getYPosition()));
-        Direction d = null;
-        switch (proposedXTravel) {
-            case 1 -> d = Direction.RIGHT;
-            case -1 -> d = Direction.LEFT;
-        }
-        switch (proposedYTravel) {
-            case 1 -> d = Direction.DOWN;
-            case -1 -> d = Direction.UP;
-        }
-        return d;
+    @Override
+    protected void refreshImage() {
+        pathToImage = "Sprites/Characters/ST/Smart_Thief_" + direction.name() + ".png";
+        this.image = new Image(pathToImage);
     }
 }

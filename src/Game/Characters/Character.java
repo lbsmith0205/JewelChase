@@ -21,6 +21,8 @@ public abstract class Character {
     protected Direction direction;
     protected ArrayList<Color> currentColours;
     protected Image image;
+    protected String characterCode;
+    protected String pathToImage;
 
     /**
      * Creates an instance of Character.
@@ -87,7 +89,25 @@ public abstract class Character {
                 this.position.getYPosition() * IMAGE_SIZE);
     }
 
+    protected Direction getNewDirection(Tile source, Tile target) {
+        int proposedXTravel = Math.round(Math.signum(target.getXPosition() - source.getXPosition()));
+        int proposedYTravel = Math.round(Math.signum(target.getYPosition() - source.getYPosition()));
+        Direction d = null;
+        switch (proposedXTravel) {
+            case 1 -> d = Direction.RIGHT;
+            case -1 -> d = Direction.LEFT;
+        }
+        switch (proposedYTravel) {
+            case 1 -> d = Direction.DOWN;
+            case -1 -> d = Direction.UP;
+        }
+        return d;
+    }
+
     public abstract void move(Board currentBoard);
+
+    protected abstract void refreshImage();
+
 
 
 }

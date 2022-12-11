@@ -14,11 +14,9 @@ import java.awt.event.KeyEvent;
  * Sub class of Character, represents to player character.
  * @author Daniel Baxter, Jack Lewis.
  */
-
 public class Player extends Character {
 
-    private String PLAYER_PATH = "Sprites/Characters/Player/Player_" + direction.name() + ".png";
-
+    private String pathToImage = "Sprites/Characters/Player/Player_" + direction.name() + ".png";
     /**
      * Creates an instance of Character.
      *
@@ -26,7 +24,7 @@ public class Player extends Character {
      */
     public Player(Tile position, Direction direction) {
         super(position, direction);
-        this.image = new Image(PLAYER_PATH);
+        refreshImage();
     }
 
 
@@ -53,11 +51,18 @@ public class Player extends Character {
     public void move(Board board) {
         Tile destination = board.findAccessibleTile(direction, this.position, 1);
         if (destination != null) {
+
             position.removeObjectFromTile(this);
             this.position = destination;
+            refreshImage();
             position.addObjectToTile(this);
         }
     }
 
+    @Override
+    protected void refreshImage() {
+        pathToImage = "Sprites/Characters/Player/Player_" + direction.name() + ".png";
+        this.image = new Image(pathToImage);
+    }
 
 }

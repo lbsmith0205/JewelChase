@@ -38,9 +38,6 @@ public class NavGraph {
 
             }
         }
-        for (NavGraphNode node: nodes[12][4].getAccessibleNodes()) {
-            System.out.println("(" + node.getTile().getXPosition() + "," + node.getTile().getYPosition() + ")");
-        }
     }
 
 

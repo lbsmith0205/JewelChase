@@ -15,7 +15,6 @@ import javafx.scene.image.Image;
  */
 
 public class FlyingAssassin extends Character {
-    private String FLYING_ASSASSIN_PATH = "Sprites/Characters/FA/Flying_Assassin_" + direction.name() + ".png";
 
 
     /**
@@ -23,10 +22,10 @@ public class FlyingAssassin extends Character {
      *
      * @param position The Tile on which the Character is located.
      */
-
+    private String pathToImage = "Sprites/Characters/FA/Flying_Assassin_" + direction.name() + ".png";
     public FlyingAssassin(Tile position, Direction direction) {
         super(position, direction);
-        this.image = new Image(FLYING_ASSASSIN_PATH);
+        refreshImage();
     }
 
     @Override
@@ -48,10 +47,17 @@ public class FlyingAssassin extends Character {
             position.addObjectToTile(this);
         } catch (ArrayIndexOutOfBoundsException e) {
             direction = direction.turnBack();
+            refreshImage();
             move(currentBoard);
         }
 
 
+    }
+
+    @Override
+    protected void refreshImage() {
+        pathToImage = "Sprites/Characters/FA/Flying_Assassin_" + direction.name() + ".png";
+        this.image = new Image(pathToImage);
     }
 
 

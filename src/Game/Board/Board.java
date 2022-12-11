@@ -186,6 +186,29 @@ public class Board {
         }
     }
 
+    public Tile getAdjacentTileOfRequiredColour(Tile source, Direction d, Color requiredColour) {
+        try {
+            int x = source.getXPosition();
+            int y = source.getYPosition();
+            Color[] dummyTileColours = {requiredColour, requiredColour, requiredColour, requiredColour};
+            Tile dummyTile = new Tile(x, y, dummyTileColours);
+            switch (d) {
+                case UP -> y--;
+                case LEFT -> x--;
+                case DOWN -> y++;
+                case RIGHT -> x++;
+            }
+            Tile target = tiles[x][y];
+            if (isLegalMove(dummyTile, target)) {
+                return target;
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
+        return null;
+    }
+
 
 
 
