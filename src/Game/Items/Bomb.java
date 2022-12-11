@@ -57,7 +57,7 @@ public class Bomb extends Item{
     }
 
 
-
+/*
     private void changeBombState() {
         int explosionTime = level.getTime() - BOMB_DEFAULT_TIMER;
         int bombTimeRemaining = level.getTime() - explosionTime;
@@ -68,7 +68,7 @@ public class Bomb extends Item{
         }
 
     }
-
+*/
     public void deactivateBomb() {
         this.bombActivated = false;
     }

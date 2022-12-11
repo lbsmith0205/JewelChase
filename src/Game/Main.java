@@ -1,6 +1,7 @@
 package Game;
 
 import Game.Board.Level;
+import Game.Board.Menu;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -30,6 +31,8 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         tickTimeline.play();
+
+        Menu menu = new Menu(primaryStage);
     }
 
     private void tick() {
