@@ -341,6 +341,8 @@ public class Level {
         return board;
     }
 
+    public int getTime(){return time;}
+
     public int getAccumulatorValue() {
         return this.accumulator;
     }
