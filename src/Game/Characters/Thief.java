@@ -23,7 +23,7 @@ public abstract class Thief extends Character {
         this.position.removeObjectFromTile(loot);
     }
 
-    public void detonate(Board board, int timer) {
+    public void activateBomb(Board board, int timer) {
         int XPosition = this.getPosition().getXPosition();
         int YPosition = this.getPosition().getYPosition();
         for (Bomb bomb : board.getAllBombs()) {
