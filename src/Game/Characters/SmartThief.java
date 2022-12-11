@@ -54,13 +54,9 @@ public class SmartThief extends Thief {
             for (NavGraphNode accessibleNode : navigableRoutes.getNode(x, y).getAccessibleNodes()) {
                 if (!accessibleNode.getHasBeenVisited()) {
                     ArrayList<Tile> newRoute = new ArrayList<Tile>();
-                    //System.out.println(routeToString(route));
                     newRoute.addAll(route);
                     newRoute.add(accessibleNode.getTile());
-                    //System.out.println(routeToString(newRoute));
-                    //System.out.println(routeToString(route));
                     childRoutes.add(newRoute);
-                    //System.out.println(routeToString(newRoute));
                     accessibleNode.visit();
                 }
             }
@@ -100,15 +96,4 @@ public class SmartThief extends Thief {
         }
         return d;
     }
-
-    private String routeToString(ArrayList<Tile> route) {
-        String output = "";
-        for (Tile tile : route) {
-            output = output + "(" + tile.getXPosition() + "," + tile.getYPosition() + ") -> ";
-        }
-        return output;
-    }
-
-
-
 }

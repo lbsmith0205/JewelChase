@@ -53,29 +53,11 @@ public class NavGraph {
      * @return NavGraphNode, the nearest accessible node in specified direction, null if no accessible node found.
      */
     private NavGraphNode findAccessibleNode(Board board, Direction d, Tile source, int targetDistance) {
-        try {
-            int x = source.getXPosition();
-            int y = source.getYPosition();
-            switch (d) {
-                case UP -> y -= targetDistance;
-                case LEFT -> x -= targetDistance;
-                case DOWN -> y += targetDistance;
-                case RIGHT -> x += targetDistance;
-            }
-
-            Tile target = board.getTile(x,y);
-            if (board.isLegalMove(source, target)) {
-                return nodes[x][y];
-            } else {
-                if (target.hasBomb()) {
-                    return null;
-                }
-                targetDistance++;
-                return findAccessibleNode(board, d, source, targetDistance);
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return null;
+        Tile accessibleTile = board.findAccessibleTile(d, source, 1);
+        if (accessibleTile != null) {
+            return getNode(accessibleTile);
         }
+        return null;
     }
 
     public NavGraphNode getNode(int x, int y) {

@@ -1,6 +1,8 @@
 package Game.Board;
 
 import Game.Characters.Character;
+import Game.Characters.Player;
+import Game.Direction;
 import Game.Items.Bomb;
 import Game.Items.Item;
 import javafx.geometry.Pos;
@@ -113,6 +115,14 @@ public class Board {
     public NavGraph getNavGraph() {
         return this.navigableRoutes;
     }
+    public Player getPlayer() {
+        for (Character character : getAllCharacters()) {
+            if (character instanceof Player) {
+                return (Player) character;
+            }
+        }
+        return null;
+    }
 
     public void drawBoard(GraphicsContext gc) {
 
@@ -148,6 +158,32 @@ public class Board {
             c.draw(gc);
         }
 
+    }
+
+    public Tile findAccessibleTile(Direction d, Tile source, int targetDistance) {
+        try {
+            int x = source.getXPosition();
+            int y = source.getYPosition();
+            switch (d) {
+                case UP -> y -= targetDistance;
+                case LEFT -> x -= targetDistance;
+                case DOWN -> y += targetDistance;
+                case RIGHT -> x += targetDistance;
+            }
+
+            Tile target = tiles[x][y];
+            if (this.isLegalMove(source, target)) {
+                return target;
+            } else {
+                if (target.hasBomb()) {
+                    return null;
+                }
+                targetDistance++;
+                return findAccessibleTile(d, source, targetDistance);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
 

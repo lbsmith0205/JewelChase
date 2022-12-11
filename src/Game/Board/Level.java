@@ -355,4 +355,12 @@ public class Level {
     public String getLevelFilePath() {
         return this.levelFilePath;
     }
+
+    public Player getPlayer() {
+        return board.getPlayer();
+    }
+
+    public Board getBoard() {
+        return board;
+    }
 }

@@ -46,41 +46,12 @@ public class Player extends Character {
     }
 
     /**
-     * Returns the next accessible tile in a specified direction, returns null if none available.
-     * @param board
-     * @param d
-     * @param source
-     * @return
-     */
-    private Tile findAccessibleTile(Board board, Direction d, Tile source) {
-        try {
-            int x = source.getXPosition();
-            int y = source.getYPosition();
-            switch (d) {
-                case UP -> y--;
-                case LEFT -> x--;
-                case DOWN -> y++;
-                case RIGHT -> x++;
-            }
-
-            Tile target = board.getTile(x, y);
-            if (board.isLegalMove(source, target)) {
-                return target;
-            } else {
-                return findAccessibleTile(board, d, target);
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return null;
-        }
-    }
-
-    /**
      * Moves the player character to the desired Tile.
      * @param board
      */
     @Override
     public void move(Board board) {
-        Tile destination = findAccessibleTile(board, direction, this.position);
+        Tile destination = board.findAccessibleTile(direction, this.position, 1);
         if (destination != null) {
             position.removeObjectFromTile(this);
             this.position = destination;
