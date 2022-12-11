@@ -5,6 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 
 public class Menu {
 
@@ -17,6 +26,8 @@ public class Menu {
     private static final String MOTD_APPEND = "CS-230";
     private static final int MOTD_ALPHABET_LENGTH = 26;
     private static final int MOTD_INT_CONVERSION = -1;
+
+
 
     // Calls all functions used for the main menu
     public void startMenu(){
@@ -39,7 +50,8 @@ public class Menu {
 
     }
 
-    // i dont remember how this works...
+
+                         // i dont remember how this works...
     private String puzzleSolve(String puzzle){
         String possibleLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         int moveLetter = -1;
