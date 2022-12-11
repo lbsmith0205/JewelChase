@@ -34,6 +34,7 @@ public class Main extends Application {
         level.moveAll();
         level.countdown();
         level.drawLevel();
+        level.accumulate();
     }
     private void processKeyEvent(KeyEvent event) {
         switch (event.getCode()) {

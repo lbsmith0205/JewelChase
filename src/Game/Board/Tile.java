@@ -1,6 +1,8 @@
 package Game.Board;
 
 import Game.Items.Bomb;
+import Game.Items.Door;
+import Game.Items.Gate;
 import javafx.scene.paint.Color;
 import Game.Items.Loot;
 import java.util.ArrayList;
@@ -86,11 +88,30 @@ public class Tile {
     }
 
     public boolean hasBomb() {
-        for (Object o : objectsOnTile) {
-            if (o instanceof Bomb) {
+        for (Object object : objectsOnTile) {
+            if (object instanceof Bomb) {
                 return true;
             }
         }
         return false;
+    }
+
+    public void explode() {
+        ArrayList<Object> remnants = new ArrayList<>();
+        for (Object object : objectsOnTile) {
+            if (object instanceof Bomb) {
+                ((Bomb) object).explode();
+            }
+
+            // Note: consult group on effects of bomb on characters.
+            if (object instanceof Door || object instanceof Gate) {
+                remnants.add(object);
+            }
+            objectsOnTile = remnants;
+            if (objectsOnTile.isEmpty()) {
+                //objectsOnTile.add(new Fire fire); implement fire sprite.
+            }
+
+        }
     }
 }

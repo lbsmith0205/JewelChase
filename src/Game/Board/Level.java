@@ -21,8 +21,8 @@ import javafx.scene.paint.Color;
  * @author Kenny Masekoameng, Luke Smith, Daniel Baxter, Khoi Nguyen Cao
  */
 public class Level {
-    private static final int SUBTILE_SIZE = 32;
-    private static final int TILE_SIZE = 64;
+    private static final int SUB_TILE_SIDE = 32;
+    private static final int TILE_SIDE = 64;
 
     private final String levelFilePath;
     private final int windowResWidth;
@@ -38,15 +38,14 @@ public class Level {
     private Canvas boardArea;
     private Canvas topBar;
 
-
-
+    private int accumulator = 0;
 
     public Level(String fileName) {
         this.levelFilePath = "src/Levels/" + fileName + ".txt";
         this.readLevelFile(levelFilePath);
 
-        windowResWidth = this.board.getWidth() * TILE_SIZE;
-        windowResHeight = this.board.getHeight() * TILE_SIZE;
+        windowResWidth = this.board.getWidth() * TILE_SIDE;
+        windowResHeight = this.board.getHeight() * TILE_SIDE;
     }
 
     private Scanner fileReader(String levelFilePath) {
@@ -239,7 +238,7 @@ public class Level {
     public Pane drawInit() {
         BorderPane root = new BorderPane();
 
-        topBar = new Canvas(windowResWidth, SUBTILE_SIZE);
+        topBar = new Canvas(windowResWidth, SUB_TILE_SIDE);
         root.setTop(topBar);
 
         boardArea = new Canvas(windowResWidth, windowResHeight);
@@ -250,36 +249,14 @@ public class Level {
 
     public void drawLevel() {
         GraphicsContext gc = topBar.getGraphicsContext2D();
-        gc.clearRect(0, 0, windowResWidth, SUBTILE_SIZE);
-        gc.strokeText("Time: " + time + "s Score: " + score, 0, SUBTILE_SIZE / 2);
+        gc.clearRect(0, 0, windowResWidth, SUB_TILE_SIDE);
+        gc.strokeText("Time: " + time + "s Score: " + score, 0, SUB_TILE_SIDE / 2);
 
         gc = boardArea.getGraphicsContext2D();
         gc.clearRect(0, 0, windowResWidth, windowResHeight);
         board.drawBoard(gc);
 
     }
-
-
-
-
-
-    /**
-     * Update the state of the game, manage the movements and interactions happening on the Level
-     */
-    public void update() {
-        ArrayList<Character> characters = board.getAllCharacters();
-        for (Character c : characters) {
-            /*if (c instanceof SmartThief) {
-                ((SmartThief) c).move(this.board);
-            } else*/ if (c instanceof FloorFollowingThief) {
-                ((FloorFollowingThief) c).move(this.board);
-            } else if (c instanceof FlyingAssassin) {
-                ((FlyingAssassin) c).move(this.board);
-            }
-        }
-    }
-
-
 
     public void moveAll() {
         ArrayList<Character> characters = board.getAllCharacters();
@@ -362,5 +339,13 @@ public class Level {
 
     public Board getBoard() {
         return board;
+    }
+
+    public int getAccumulatorValue() {
+        return this.accumulator;
+    }
+
+    public void accumulate() {
+        accumulator++;
     }
 }

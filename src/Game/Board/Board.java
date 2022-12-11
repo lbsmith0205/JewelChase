@@ -209,6 +209,16 @@ public class Board {
         return null;
     }
 
+    public ArrayList<Bomb> getAllBombs() {
+        ArrayList<Bomb> listOfBombs = new ArrayList<>();
+        for (Object item : getAllItems()) {
+            if (item instanceof Bomb) {
+                listOfBombs.add((Bomb) item);
+            }
+        }
+        return listOfBombs;
+    }
+
 
 
 

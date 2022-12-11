@@ -5,8 +5,6 @@ import Game.Board.Tile;
 import Game.Direction;
 import javafx.scene.image.Image;
 import javafx.scene.canvas.GraphicsContext;
-
-
 import java.awt.event.KeyEvent;
 
 /**
@@ -14,8 +12,8 @@ import java.awt.event.KeyEvent;
  * Sub class of Character, represents to player character.
  * @author Daniel Baxter, Jack Lewis.
  */
-public class Player extends Character {
-
+public class Player extends Thief {
+    private int score = 0;
     private String pathToImage = "Sprites/Characters/Player/Player_" + direction.name() + ".png";
     /**
      * Creates an instance of Character.
@@ -63,6 +61,14 @@ public class Player extends Character {
     protected void refreshImage() {
         pathToImage = "Sprites/Characters/Player/Player_" + direction.name() + ".png";
         this.image = new Image(pathToImage);
+    }
+
+    public int getScore() {
+        return this.score;
+    }
+
+    public void addScore(int value) {
+        score += value;
     }
 
 }

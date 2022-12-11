@@ -2,11 +2,9 @@ package Game.Items;
 
 
 import Game.Board.Tile;
-import Game.Characters.Character;
+import Game.Characters.*;
 
-import Game.Characters.FloorFollowingThief;
-import Game.Characters.Player;
-import Game.Characters.SmartThief;
+import Game.Characters.Character;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -74,27 +72,10 @@ public class Loot extends Item{
         return lootType;
     }
 
-    /**
-     * Uses
-     * @param c
-     * @return
-     */
-    public int interact(Character c) {
-        if(c instanceof SmartThief || c instanceof FloorFollowingThief) {
-            this.remove();
-            return 0;
-        }
-
-        if(c instanceof Player) {
-            this.remove();
-            return this.value;
-        }
-
-        return 0;
-    }
-
     @Override
     public void draw(GraphicsContext gc) {
         gc.drawImage(this.lootLook, this.position.getXPosition() * IMAGE_SIZE, this.position.getYPosition() * IMAGE_SIZE);
     }
+
+
 }
