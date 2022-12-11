@@ -3,6 +3,7 @@ package Game;
 import Game.Board.Level;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -13,7 +14,7 @@ import javafx.util.Duration;
 
 public class Main extends Application {
 
-    Level level = new Level("Level3");
+    Level level = new Level("Level4");
     private Timeline tickTimeline;
 
     @Override
@@ -25,6 +26,7 @@ public class Main extends Application {
         tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         primaryStage.setTitle("Jewel Chase");
+        primaryStage.getIcons().add(new Image("Sprites/Items/Diamond.png", 256, 256, false, true));
         primaryStage.setScene(scene);
         primaryStage.show();
         tickTimeline.play();

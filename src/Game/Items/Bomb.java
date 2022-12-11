@@ -45,7 +45,7 @@ public class Bomb extends Item{
 
     }
 
-    public void activate() {
+    public void activate(int accumulatorValue) {
         this.bombActivated = true;
     }
 

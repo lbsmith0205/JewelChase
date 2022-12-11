@@ -194,13 +194,13 @@ public class Level {
     private void parseCharacters(String characterLine) {
         String[] characters = characterLine.split(" ");
         for (String character : characters) {
-            Scanner parseItem = new Scanner(character);
-            parseItem.useDelimiter(",");
-            int x = parseItem.nextInt();
-            int y = parseItem.nextInt();
-            String type = parseItem.next();
-            char supplementaryChar = parseItem.next().charAt(0);
-            parseItem.close();
+            Scanner parseCharacter = new Scanner(character);
+            parseCharacter.useDelimiter(",");
+            int x = parseCharacter.nextInt();
+            int y = parseCharacter.nextInt();
+            String type = parseCharacter.next();
+            char supplementaryChar = parseCharacter.next().charAt(0);
+            parseCharacter.close();
 
             Direction direction;
             switch (supplementaryChar) {

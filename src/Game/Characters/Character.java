@@ -21,8 +21,6 @@ public abstract class Character {
     protected Direction direction;
     protected ArrayList<Color> currentColours;
     protected Image image;
-    protected String characterCode;
-    protected String pathToImage;
 
     /**
      * Creates an instance of Character.
