@@ -3,42 +3,50 @@ package Game;
 import Game.Board.Level;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-import java.util.Scanner;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 public class Main extends Application {
-    static GameLoop gameLoop = new GameLoop("Level3");
-    Level level = gameLoop.getLevel();
+
+    Level level = new Level("Level3");
+    private Timeline tickTimeline;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Pane root = level.drawLevel();
+        Pane root = level.drawInit();
+        Scene scene = new Scene(root, level.getWindowResWidth(), level.getWindowResHeight() + 32);
+        //scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
 
-        Scene scene = new Scene(root, level.getWindowResWidth(), level.getWindowResHeight() + 40);
-
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        // Loop the timeline forever
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        primaryStage.setTitle("Jewel Chase");
         primaryStage.setScene(scene);
         primaryStage.show();
-
+        tickTimeline.play();
     }
+
+    private void tick() {
+        level.moveAll();
+        level.countdown();
+        level.drawLevel();
+    }
+    /*private void processKeyEvent(KeyEvent event) {
+        switch (event.getCode()) {
+            case W, UP -> Direction.UP;
+            case A, LEFT -> direction = Direction.LEFT;
+            case S, DOWN -> direction = Direction.DOWN;
+            case D, RIGHT -> direction = Direction.RIGHT;
+        }*/
 
 
 
     public static void main(String[] args) {
-        //new Thread(new GameLoop("Level3")).start();
-        new Thread(gameLoop).start();
-        /*while(true)
-        System.out.println(System.currentTimeMillis());*/
-        /*System.out.println("Enter: ");
-        Scanner in = new Scanner(System.in);
-        String line = in.nextLine();
-        Scanner string = new Scanner(line);
-        string.useDelimiter(",");
-        int i = string.nextInt();
-        String s = string.next();
-
-        System.out.println(i + " " + s);*/
         launch(args);
     }
 }

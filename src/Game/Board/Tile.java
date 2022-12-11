@@ -1,5 +1,6 @@
 package Game.Board;
 
+import Game.Items.Bomb;
 import javafx.scene.paint.Color;
 import Game.Items.Loot;
 import java.util.ArrayList;
@@ -51,12 +52,7 @@ public class Tile {
     }
 
     public void removeObjectFromTile(Object targetObject) {
-        for (int i = 0; i < objectsOnTile.size(); i++) {
-            Object object = objectsOnTile.get(i);
-            if (object == targetObject) {
-                objectsOnTile.remove(object);
-            }
-        }
+        objectsOnTile.remove(targetObject);
     }
 
     public boolean hasLoot() {
@@ -87,5 +83,14 @@ public class Tile {
         }
 
         return colour;
+    }
+
+    public boolean hasBomb() {
+        for (Object o : objectsOnTile) {
+            if (o instanceof Bomb) {
+                return true;
+            }
+        }
+        return false;
     }
 }

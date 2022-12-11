@@ -29,15 +29,20 @@ public class Player extends Character {
         this.image = new Image(PLAYER_PATH);
     }
 
+
     // will eventually relate this tile positions
     public void processKeyEvent(KeyEvent event, Board board) {
         switch (event.getKeyCode()) {
-            case KeyEvent.VK_W, KeyEvent.VK_UP -> move(board, Direction.UP);
-            case KeyEvent.VK_A, KeyEvent.VK_LEFT -> move(board, Direction.LEFT);
-            case KeyEvent.VK_S, KeyEvent.VK_DOWN -> move(board, Direction.DOWN);
-            case KeyEvent.VK_D, KeyEvent.VK_RIGHT -> move(board, Direction.RIGHT);
+            case KeyEvent.VK_W, KeyEvent.VK_UP -> direction = Direction.UP;
+            case KeyEvent.VK_A, KeyEvent.VK_LEFT -> direction = Direction.LEFT;
+            case KeyEvent.VK_S, KeyEvent.VK_DOWN -> direction = Direction.DOWN;
+            case KeyEvent.VK_D, KeyEvent.VK_RIGHT -> direction = Direction.RIGHT;
         }
+        move(board);
+    }
 
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     /**
@@ -72,16 +77,16 @@ public class Player extends Character {
     /**
      * Moves the player character to the desired Tile.
      * @param board
-     * @param d
      */
-    public void move(Board board, Direction d) {
-        Tile destination = findAccessibleTile(board, d, this.position);
+    @Override
+    public void move(Board board) {
+        Tile destination = findAccessibleTile(board, direction, this.position);
         if (destination != null) {
             position.removeObjectFromTile(this);
             this.position = destination;
             position.addObjectToTile(this);
-            this.direction = d;
         }
     }
+
 
 }

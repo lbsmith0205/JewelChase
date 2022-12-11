@@ -1,4 +1,5 @@
 package Game.Characters;
+import Game.Board.Board;
 import Game.Board.Tile;
 import Game.Direction;
 import javafx.application.Platform;
@@ -85,5 +86,9 @@ public abstract class Character {
         gc.drawImage(this.image, this.position.getXPosition() * IMAGE_SIZE,
                 this.position.getYPosition() * IMAGE_SIZE);
     }
+
+    public abstract void move(Board currentBoard);
+
+
 }
 

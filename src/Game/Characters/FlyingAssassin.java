@@ -17,8 +17,6 @@ import javafx.scene.image.Image;
 public class FlyingAssassin extends Character {
     private String FLYING_ASSASSIN_PATH = "Sprites/Characters/FA/Flying_Assassin_" + direction.name() + ".png";
 
-    int xPosition = position.getXPosition();
-    int yPosition = position.getYPosition();
 
     /**
      * Creates an instance of Character.
@@ -31,9 +29,10 @@ public class FlyingAssassin extends Character {
         this.image = new Image(FLYING_ASSASSIN_PATH);
     }
 
+    @Override
     public void move(Board currentBoard) {
-        int targetX = xPosition;
-        int targetY = yPosition;
+        int targetX = position.getXPosition();
+        int targetY = position.getYPosition();
 
         switch (direction) {
             case UP -> targetY--;
@@ -47,11 +46,11 @@ public class FlyingAssassin extends Character {
             position.removeObjectFromTile(this);
             this.position = target;
             position.addObjectToTile(this);
-            this.direction = direction;
         } catch (ArrayIndexOutOfBoundsException e) {
             direction = direction.turnBack();
             move(currentBoard);
         }
+
 
     }
 

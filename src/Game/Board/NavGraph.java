@@ -30,14 +30,19 @@ public class NavGraph {
         for (int x = 0; x < board.getWidth(); x++) {
             for (int y = 0; y < board.getHeight(); y++) {
                 Tile sourceTile = board.getTile(x, y);
-                nodes[x][y].addAccessibleNode(findAccessibleNode(board, Direction.UP, sourceTile));
-                nodes[x][y].addAccessibleNode(findAccessibleNode(board, Direction.LEFT, sourceTile));
-                nodes[x][y].addAccessibleNode(findAccessibleNode(board, Direction.DOWN, sourceTile));
-                nodes[x][y].addAccessibleNode(findAccessibleNode(board, Direction.RIGHT, sourceTile));
+                nodes[x][y].addAccessibleNode(findAccessibleNode(board, Direction.UP, sourceTile, 1));
+                nodes[x][y].addAccessibleNode(findAccessibleNode(board, Direction.LEFT, sourceTile, 1));
+                nodes[x][y].addAccessibleNode(findAccessibleNode(board, Direction.DOWN, sourceTile, 1));
+                nodes[x][y].addAccessibleNode(findAccessibleNode(board, Direction.RIGHT, sourceTile, 1));
                 nodes[x][y].getAccessibleNodes().removeAll(Collections.singleton(null));
+
             }
         }
+        for (NavGraphNode node: nodes[12][4].getAccessibleNodes()) {
+            System.out.println("(" + node.getTile().getXPosition() + "," + node.getTile().getYPosition() + ")");
+        }
     }
+
 
     /**
      * Recursive method returns the next accessible node in a specified direction from the source.
@@ -47,22 +52,26 @@ public class NavGraph {
      * @param source The Tile from which to begin the search.
      * @return NavGraphNode, the nearest accessible node in specified direction, null if no accessible node found.
      */
-    private NavGraphNode findAccessibleNode(Board board, Direction d, Tile source) {
+    private NavGraphNode findAccessibleNode(Board board, Direction d, Tile source, int targetDistance) {
         try {
             int x = source.getXPosition();
             int y = source.getYPosition();
             switch (d) {
-                case UP -> y--;
-                case LEFT -> x--;
-                case DOWN -> y++;
-                case RIGHT -> x++;
+                case UP -> y -= targetDistance;
+                case LEFT -> x -= targetDistance;
+                case DOWN -> y += targetDistance;
+                case RIGHT -> x += targetDistance;
             }
 
             Tile target = board.getTile(x,y);
             if (board.isLegalMove(source, target)) {
                 return nodes[x][y];
             } else {
-                return findAccessibleNode(board, d, target);
+                if (target.hasBomb()) {
+                    return null;
+                }
+                targetDistance++;
+                return findAccessibleNode(board, d, source, targetDistance);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
@@ -71,6 +80,20 @@ public class NavGraph {
 
     public NavGraphNode getNode(int x, int y) {
         return nodes[x][y];
+    }
+
+    public NavGraphNode getNode(Tile tile) {
+        int x = tile.getXPosition();
+        int y = tile.getYPosition();
+        return nodes[x][y];
+    }
+
+    public void unvisitAll() {
+        for (NavGraphNode[] rowOfNodes :  nodes) {
+            for (NavGraphNode node : rowOfNodes) {
+                node.unVisit();
+            }
+        }
     }
 
 }

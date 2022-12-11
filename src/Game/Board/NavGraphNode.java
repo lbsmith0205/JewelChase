@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class NavGraphNode {
     private final Tile tile;
     private final ArrayList<NavGraphNode> accessibleNodes = new ArrayList<>();
+    private boolean hasBeenVisited = false;
 
     public NavGraphNode(Tile tile) {
         this.tile = tile;
@@ -23,6 +24,18 @@ public class NavGraphNode {
 
     public ArrayList<NavGraphNode> getAccessibleNodes() {
         return this.accessibleNodes;
+    }
+
+    public void visit() {
+        hasBeenVisited = true;
+    }
+
+    public void unVisit() {
+        hasBeenVisited = false;
+    }
+
+    public boolean getHasBeenVisited() {
+        return hasBeenVisited;
     }
 
 

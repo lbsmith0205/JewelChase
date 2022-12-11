@@ -5,6 +5,7 @@ import Game.Board.Tile;
 import Game.Direction;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 /**
  * FloorFollowingThieves.java
@@ -14,6 +15,7 @@ import javafx.scene.image.Image;
 
 public class FloorFollowingThief extends Thief {
     private String FLOOR_THIEF_PATH = "Sprites/Characters/FFT/Floor_Following_Thief_" + direction.name() +".png";
+    private Color followingColour;
 
     /**
      * Creates an instance of FloorFollowingThief.
@@ -25,6 +27,10 @@ public class FloorFollowingThief extends Thief {
         this.image = new Image(FLOOR_THIEF_PATH);
     }
 
+    public void setFollowingColour(Color colour) {
+        this.followingColour = colour;
+    }
+    @Override
     public void move(Board currentBoard) {
 
     }

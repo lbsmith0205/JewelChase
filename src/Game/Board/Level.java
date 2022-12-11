@@ -14,8 +14,8 @@ import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.*;
@@ -24,15 +24,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
+
 /**
  * @author Kenny Masekoameng, Luke Smith, Daniel Baxter, Khoi Nguyen Cao
  */
 public class Level {
-    private static final int SQUARE_SIDE = 32, OFFSET_VALUE = SQUARE_SIDE;
+    private static final int SUBTILE_SIZE = 32;
     private static final int TILE_SIZE = 64;
+
+
     private static final int SQUARES_IN_TILE = 4;
-    private static final int offsetsX[] = {0, OFFSET_VALUE, 0, OFFSET_VALUE};
-    private static final int offsetsY[] = {0, 0, OFFSET_VALUE, OFFSET_VALUE};
+    private static final int offsetsX[] = {0, SUBTILE_SIZE, 0, SUBTILE_SIZE};
+    private static final int offsetsY[] = {0, 0, SUBTILE_SIZE, SUBTILE_SIZE};
 
     private final String levelFilePath;
     private final int windowResWidth;
@@ -47,6 +50,9 @@ public class Level {
     private int time;
     private int score;
     private int levelNo;
+
+    private Canvas boardArea;
+    private Canvas topBar;
 
 
 
@@ -95,7 +101,6 @@ public class Level {
         String characters = fileReader.nextLine();
         parseCharacters(characters);
         board.refreshNavGraph();
-
         fileReader.close();
     }
 
@@ -128,17 +133,23 @@ public class Level {
         char[] coloursList = colours.toCharArray();
         Color[] tileColours = new Color[4];
         for (int i = 0; i < 4; i++) {
-            switch (coloursList[i]) {
-                case 'R' -> tileColours[i] = Color.INDIANRED;
-                case 'G' -> tileColours[i] = Color.SPRINGGREEN;
-                case 'B' -> tileColours[i] = Color.ROYALBLUE;
-                case 'Y' -> tileColours[i] = Color.KHAKI;
-                case 'C' -> tileColours[i] = Color.CYAN;
-                case 'M' -> tileColours[i] = Color.MEDIUMPURPLE;
-            }
-            ;
+            tileColours[i] = charToColour(coloursList[i]);
         }
         return new Tile(x, y, tileColours);
+    }
+
+    private Color charToColour(char character) {
+        Color colour;
+        switch (character) {
+            case 'R' -> colour = Color.INDIANRED;
+            case 'G' -> colour = Color.SPRINGGREEN;
+            case 'B' -> colour = Color.ROYALBLUE;
+            case 'Y' -> colour = Color.KHAKI;
+            case 'C' -> colour = Color.CYAN;
+            case 'M' -> colour = Color.MEDIUMPURPLE;
+            default -> colour = Color.WHITE;
+        }
+        return colour;
     }
 
     /**
@@ -205,15 +216,15 @@ public class Level {
             int x = parseItem.nextInt();
             int y = parseItem.nextInt();
             String type = parseItem.next();
-            String directionChar = parseItem.next();
+            char supplementaryChar = parseItem.next().charAt(0);
             parseItem.close();
 
             Direction direction;
-            switch (directionChar) {
-                case "U" -> direction = Direction.UP;
-                case "L" -> direction = Direction.LEFT;
-                case "D" -> direction = Direction.DOWN;
-                case "R" -> direction = Direction.RIGHT;
+            switch (supplementaryChar) {
+                case 'U' -> direction = Direction.UP;
+                case 'L' -> direction = Direction.LEFT;
+                case 'D' -> direction = Direction.DOWN;
+                case 'R' -> direction = Direction.RIGHT;
                 default -> direction = null;
             }
 
@@ -223,7 +234,9 @@ public class Level {
                     board.getTile(x, y).addObjectToTile(newP);
                     break;
                 case "FFT":
+                    direction = Direction.LEFT;
                     FloorFollowingThief newFFT = new FloorFollowingThief(board.getTile(x, y), direction);
+                    newFFT.setFollowingColour(charToColour(supplementaryChar));
                     board.getTile(x, y).addObjectToTile(newFFT);
                     break;
                 case "FA":
@@ -239,77 +252,38 @@ public class Level {
 
     }
 
-    public Pane drawLevel() {
+    public Pane drawInit() {
         BorderPane root = new BorderPane();
-        StackPane gameBoard = new StackPane();
-        root.setBottom(gameBoard);
 
-        tileLayer = new Canvas(windowResWidth, windowResHeight);
-        gameBoard.getChildren().add(tileLayer);
-
-        Board temp = this.board;
-        int boardSize = temp.getWidth() * temp.getHeight();
-        int numOfSquares = boardSize * SQUARES_IN_TILE;
-
-        GraphicsContext gcTile = tileLayer.getGraphicsContext2D();
-        int j = 0;
-        while (j < numOfSquares) {
-            for (int y = 0; y < temp.getHeight(); y++) {
-                for (int x = 0; x < temp.getWidth(); x++) {
-                    for (int i = 0; i < SQUARES_IN_TILE; i++) {
-                        gcTile.setFill(temp.getTile(x, y).getTileColours()[i]);
-                        int rectX = x * TILE_SIZE + offsetsX[i];
-                        int rectY = y * TILE_SIZE + offsetsY[i];
-                        gcTile.fillRect(rectX, rectY, SQUARE_SIDE, SQUARE_SIDE);
-                    }
-                    j += 4;
-                    gcTile.setStroke(Color.BLACK);
-                    int outlineX = x * TILE_SIZE;
-                    int outlineY = y * TILE_SIZE;
-                    gcTile.strokeRect(outlineX, outlineY, TILE_SIZE, TILE_SIZE);
-                }
-            }
-        }
-
-        itemCharacterLayer = new Canvas(windowResWidth, windowResHeight);
-        gameBoard.getChildren().add(itemCharacterLayer);
-
-        GraphicsContext gcSpawning = tileLayer.getGraphicsContext2D();
-
-        ArrayList<Item> itemToDraw = getAllItem(temp);
-        ArrayList<Character> characterToDraw = getAllCharacter(temp);
-
-        for(Item i : itemToDraw) {
-            i.draw(gcSpawning);
-        }
-
-        for(Character c : characterToDraw) {
-            c.draw(gcSpawning);
-        }
-
-        HBox topBar = new HBox();
-        Label timer = new Label("Time: " + this.time);
-        Label score = new Label("Score: " + this.score);
-
-
-        timer.setFont(new Font("Cambria", 22));
-        score.setFont(new Font("Cambria", 22));
-
-        topBar.getChildren().add(timer);
-        topBar.getChildren().add(score);
-        topBar.setAlignment(Pos.CENTER_LEFT);
-
+        topBar = new Canvas(windowResWidth, SUBTILE_SIZE);
         root.setTop(topBar);
+
+        boardArea = new Canvas(windowResWidth, windowResHeight);
+        root.setBottom(boardArea);
 
         return root;
     }
+
+    public void drawLevel() {
+        GraphicsContext gc = topBar.getGraphicsContext2D();
+        gc.clearRect(0, 0, windowResWidth, SUBTILE_SIZE);
+        gc.strokeText("Time: " + time + "s Score: " + score, 0, SUBTILE_SIZE / 2);
+
+        gc = boardArea.getGraphicsContext2D();
+        gc.clearRect(0, 0, windowResWidth, windowResHeight);
+        board.drawBoard(gc);
+
+    }
+
+
+
 
 
     /**
      * Update the state of the game, manage the movements and interactions happening on the Level
      */
     public void update() {
-        ArrayList<Character> characters = getAllCharacter(this.board);
+        ArrayList<Character> characters = board.getAllCharacters();
         for (Character c : characters) {
             /*if (c instanceof SmartThief) {
                 ((SmartThief) c).move(this.board);
@@ -321,36 +295,15 @@ public class Level {
         }
     }
 
-    private ArrayList<Character> getAllCharacter(Board board) {
-        ArrayList<Character> characterList = new ArrayList<>();
-        for (int x = 0; x < this.board.getWidth(); x++) {
-            for (int y = 0; y < this.board.getHeight(); y++) {
-                ArrayList<Object> thingOnTile = this.board.getTile(x, y).getObjectsOnTile();
-                if(!thingOnTile.isEmpty()) {
-                    if(thingOnTile.get(0) instanceof Character) {
-                        Character characterToAdd = (Character) thingOnTile.get(0);
-                        characterList.add(characterToAdd);
-                    }
-                }
-            }
-        }
-        return characterList;
-    }
 
-    private ArrayList<Item> getAllItem(Board board) {
-        ArrayList<Item> itemList = new ArrayList<>();
-        for (int x = 0; x < this.board.getWidth(); x++) {
-            for (int y = 0; y < this.board.getHeight(); y++) {
-                ArrayList<Object> thingOnTile = this.board.getTile(x, y).getObjectsOnTile();
-                if(!thingOnTile.isEmpty()) {
-                    if(thingOnTile.get(0) instanceof Item) {
-                        Item itemToAdd = (Item) thingOnTile.get(0);
-                        itemList.add(itemToAdd);
-                    }
-                }
+
+    public void moveAll() {
+        ArrayList<Character> characters = board.getAllCharacters();
+        for (Character character : characters) {
+            if (!(character instanceof Player)) {
+                character.move(board);
             }
         }
-        return itemList;
     }
 
     public void save() {
@@ -381,7 +334,7 @@ public class Level {
                     }
                     printWriter.print("\n");
                 }
-                ArrayList<Item> items = getAllItem(this.board);
+                ArrayList<Item> items = board.getAllItems();
                 for(Item t : items) {
                     int xPos = t.getPosition().getXPosition();
                     int yPos = t.getPosition().getYPosition();
@@ -389,7 +342,7 @@ public class Level {
                 }
                 printWriter.print("\n");
 
-                ArrayList<Character> characters = getAllCharacter(this.board);
+                ArrayList<Character> characters = board.getAllCharacters();
                 for(Character c : characters) {
                     int xPos = c.getPosition().getXPosition();
                     int yPos = c.getPosition().getYPosition();
@@ -417,6 +370,10 @@ public class Level {
 
     public int getWindowResHeight() {
         return windowResHeight;
+    }
+
+    public void countdown() {
+        time--;
     }
 
     public String getLevelFilePath() {

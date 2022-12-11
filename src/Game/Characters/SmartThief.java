@@ -29,12 +29,15 @@ public class SmartThief extends Thief {
         this.image = new Image(SMART_THIEF_PATH);
     }
 
+    @Override
     public void move(Board currentBoard) {
         NavGraph navigableRoutes = currentBoard.getNavGraph();
+        navigableRoutes.unvisitAll();
         ArrayList<ArrayList<Tile>> seed = new ArrayList<>();
         ArrayList<Tile> thisTile = new ArrayList<>();
-        thisTile.add(this.position);
+        thisTile.add(position);
         seed.add(thisTile);
+        navigableRoutes.getNode(position).visit();
         ArrayList<ArrayList<Tile>> routes = availableRoutes(seed, navigableRoutes);
         Tile target = optimalMove(routes);
         direction = getNewDirection(position, target);
@@ -49,9 +52,17 @@ public class SmartThief extends Thief {
             int x = terminus(route).getXPosition();
             int y = terminus(route).getYPosition();
             for (NavGraphNode accessibleNode : navigableRoutes.getNode(x, y).getAccessibleNodes()) {
-                ArrayList<Tile> newRoute = route;
-                newRoute.add(accessibleNode.getTile());
-                childRoutes.add(newRoute);
+                if (!accessibleNode.getHasBeenVisited()) {
+                    ArrayList<Tile> newRoute = new ArrayList<Tile>();
+                    //System.out.println(routeToString(route));
+                    newRoute.addAll(route);
+                    newRoute.add(accessibleNode.getTile());
+                    //System.out.println(routeToString(newRoute));
+                    //System.out.println(routeToString(route));
+                    childRoutes.add(newRoute);
+                    //System.out.println(routeToString(newRoute));
+                    accessibleNode.visit();
+                }
             }
         }
         if (optimalMove(childRoutes) != null) {
@@ -64,7 +75,8 @@ public class SmartThief extends Thief {
     private Tile optimalMove(ArrayList<ArrayList<Tile>> availableRoutes) {
         for (ArrayList<Tile> route : availableRoutes) {
             if (terminus(route).hasLoot()) {
-                return route.get(0);
+                return route.get(1);
+
             }
         }
         return null;
@@ -89,6 +101,13 @@ public class SmartThief extends Thief {
         return d;
     }
 
+    private String routeToString(ArrayList<Tile> route) {
+        String output = "";
+        for (Tile tile : route) {
+            output = output + "(" + tile.getXPosition() + "," + tile.getYPosition() + ") -> ";
+        }
+        return output;
+    }
 
 
 
