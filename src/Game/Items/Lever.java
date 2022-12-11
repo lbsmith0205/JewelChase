@@ -1,14 +1,9 @@
 package Game.Items;
 
 import Game.Board.Tile;
-import Game.Characters.Character;
-import Game.Characters.Thief;
-
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
 
 public class Lever extends Item {
     private static final String BLUE_LEVER_PATH = "Sprites/Items/Levers/LeverBlue.png";
