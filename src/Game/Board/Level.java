@@ -423,7 +423,7 @@ public class Level {
         if (playerVictory == true) {
             //update leaderboard here;
         }
-        return checkEndGame();
+        return gameOver;
     }
 
     /**
@@ -449,10 +449,6 @@ public class Level {
      */
     public void countdown() {
         time--;
-    }
-
-    public String getLevelFilePath() {
-        return this.levelFilePath;
     }
 
     /**

@@ -5,7 +5,6 @@ import Game.Board.NavGraph;
 import Game.Board.NavGraphNode;
 import Game.Board.Tile;
 import Game.Direction;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import java.util.ArrayList;
 
@@ -30,7 +29,7 @@ public class SmartThief extends Thief {
     }
 
     /**
-     * Move the Smart Thief through the Board by following the closest path to the Loot.
+     * Move the Smart Thief along the shortest path to the nearest Loot.
      *
      * @param board Board Smart Thief is on.
      */
@@ -53,20 +52,26 @@ public class SmartThief extends Thief {
                 target = randomValidTile(board);
             }
         }
-
-
         refreshImage();
         position.removeObjectFromTile(this);
         this.position = target;
         position.addObjectToTile(this);
     }
 
-
+    /**
+     * Recursive method which returns a list of the shortest routes from the Smart Thief's position to every other Tile,
+     *  each recursion gets routes to tiles 1 tile further away.
+     *
+     * @param parentRoutes
+     * @param navigableRoutes
+     * @return
+     */
     public ArrayList<ArrayList<Tile>> availableRoutes(ArrayList<ArrayList<Tile>> parentRoutes, NavGraph navigableRoutes) {
         ArrayList<ArrayList<Tile>> childRoutes = new ArrayList<>();
         for (ArrayList<Tile> route : parentRoutes) {
             int x = terminus(route).getXPosition();
             int y = terminus(route).getYPosition();
+
             for (NavGraphNode accessibleNode : navigableRoutes.getNode(x, y).getAccessibleNodes()) {
                 if (!accessibleNode.getHasBeenVisited()) {
                     ArrayList<Tile> newRoute = new ArrayList<Tile>();
@@ -85,6 +90,11 @@ public class SmartThief extends Thief {
             return availableRoutes(childRoutes, navigableRoutes);
     }
 
+    /**
+     * Returns the first tile in a route to the nearest loot if one exists, returns null otherwise.
+     * @param availableRoutes
+     * @return
+     */
     private Tile optimalMove(ArrayList<ArrayList<Tile>> availableRoutes) {
         for (ArrayList<Tile> route : availableRoutes) {
             if (terminus(route).hasLoot()) {
@@ -94,6 +104,11 @@ public class SmartThief extends Thief {
         return null;
     }
 
+    /**
+     *
+     * @param route
+     * @return
+     */
     private Tile terminus(ArrayList<Tile> route) {
         return route.get(route.size() - 1);
     }
