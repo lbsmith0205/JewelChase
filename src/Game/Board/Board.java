@@ -338,6 +338,9 @@ public class Board {
         }
     }
 
+    /**
+     * Open the Door and allow the Player/Smart Thief to leave.
+     */
     public void placeLootableDoor() {
         if (!hasLoot()) {
             Door door = getDoor();
@@ -347,6 +350,11 @@ public class Board {
         }
     }
 
+    /**
+     * Check if the Board still have any Loot.
+     *
+     * @return true if not, false if there are still Loot.
+     */
     private boolean hasLoot() {
         for (Item item : getAllItems()) {
             if (item instanceof Loot) {
@@ -356,6 +364,11 @@ public class Board {
         return false;
     }
 
+    /**
+     * Get the Door item on the Board.
+     *
+     * @return the Door found.
+     */
     private Door getDoor() {
         for (Item item : getAllItems()) {
             if (item instanceof Door) {

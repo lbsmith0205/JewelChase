@@ -1,15 +1,19 @@
 package Game.Board;
 
+import Game.Direction;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import Game.Direction;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,7 +28,11 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
+/**
+ * A Menu used to create a Menu UI for the Player to interact with.
+ *
+ * @author Kenny Masekoameng, Luke Smith, Khoi Nguyen Cao.
+ */
 public class Menu {
     private static final String MOTD_INITIAL = "http";
     private static final String MOTD_GET_URL = "cswebcat.swansea.ac.uk";
@@ -83,6 +91,11 @@ public class Menu {
     private Scene levelSeven;
     private Level level7 = new Level("Level7");
 
+    /**
+     * Create the Menu and start up the UI.
+     *
+     * @param primaryStage the Stage the Menu is showing.
+     */
     public Menu(Stage primaryStage){
         gameStage = primaryStage;
 
@@ -99,7 +112,9 @@ public class Menu {
 
     //Need to do main menu javafx
 
-    //Updates message of the day
+    /**
+     * Solve the puzzle and update the Message of the Day.
+     */
     private void updateMOTD(){
         try{
             String unsolvedPuzzle = getPuzzle();
@@ -111,6 +126,12 @@ public class Menu {
 
     }
 
+    /**
+     * Solve the puzzle to get the Message of the Day.
+     *
+     * @param puzzle the puzzle needed to be solved.
+     * @return solved puzzle.
+     */
     private String puzzleSolve(String puzzle){
         String possibleLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         int moveLetter = -1;
@@ -126,6 +147,13 @@ public class Menu {
         return String.valueOf(solution);
     }
 
+    /**
+     * Get the puzzle and Message of the Day.
+     *
+     * @param path the URL to the website.
+     * @return the puzzle from the website
+     * @throws IOException
+     */
     private static String requested(final String path) throws IOException {
         URL url = new URL(MOTD_INITIAL,MOTD_GET_URL, path);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -147,14 +175,32 @@ public class Menu {
 
     }
 
+    /**
+     * Get the puzzle from the URL.
+     *
+     * @return the puzzle pulled from the URL.
+     * @throws IOException if input is wrong.
+     */
     private static String getPuzzle() throws IOException {
         return requested(MOTD_GET_PUZZLE_URL);
     }
 
+    /**
+     * Send the solution to the URL.
+     *
+     * @param answer the directory to the answers.
+     * @return the answers from the URL.
+     * @throws IOException if the input is wrong.
+     */
     private static String sendSolution(final String answer) throws IOException {
         return requested(MOTD_SOL_GET_URL + answer);
     }
 
+    /**
+     * Create the Main Menu when it first starts up.
+     *
+     * @return the scene need to be presented.
+     */
     private Scene createMenu(){
         Group root = new Group();
         menuToProfile = new Button("Profile");
@@ -195,6 +241,11 @@ public class Menu {
         return menuScene;
     }
 
+    /**
+     * Create the Menu to create a new Profile.
+     *
+     * @return the scene need to be presented.
+     */
     private Scene createProfile(){
 
         Group root = new Group();
@@ -211,11 +262,20 @@ public class Menu {
         return profileScene;
     }
 
+    /**
+     * Create a window to pick levels and start the level.
+     *
+     * @param stage the Stage it will be represented on.
+     * @return the scene will present the game.
+     */
     private Scene createNewGame(Stage stage){
         Group root = new Group();
         returnToMenu = new Button("Return");
         returnToMenu.setOnAction(e -> switchScenes(menuScene));
 
+        /*
+        Start the game loop and run the selected level.
+         */
         newGameToLevelOne = new Button("Level One");
         newGameToLevelOne.setOnAction(e -> {
             this.writeLevel = true;
@@ -311,6 +371,12 @@ public class Menu {
         root.getChildren().add(newGameToLevelSeven);
         return newGame;
     }
+
+    /**
+     * Creating the Menu for loading games.
+     *
+     * @return the scene to present the Menu.
+     */
     private Scene createLoadGame(){
 
         Group root = new Group();
@@ -327,7 +393,14 @@ public class Menu {
         root.getChildren().add(returnToMenu);
         return loadGame;
     }
+    /**
+     * Create the window for a Level.
+     *
+     * @param primaryStage the Stage it will be represented on.
+     * @return the scene to present the Level window.
+     */
     private Scene createLevel(Stage primaryStage){
+
         Pane root = level.drawInit();
         menuToNewGame = new Button("Return");
         menuToNewGame.setOnAction(e -> switchScenes(newGame));
@@ -343,6 +416,9 @@ public class Menu {
         return levelScene;
     }
 
+    /**
+     * Tick the timer down and update the Level and redrawing it.
+     */
     private void tick() {
         level.moveAll();
         level.interactAll();
@@ -350,6 +426,11 @@ public class Menu {
         level.countdown();
         level.drawLevel();
     }
+
+    /**
+     * Check the key pressed and move the Player around.
+     * @param event the key pressed.
+     */
     private void processKeyEvent(KeyEvent event) {
         if(tickTimeline.getStatus() != Animation.Status.PAUSED) {
             switch (event.getCode()) {
@@ -374,9 +455,10 @@ public class Menu {
         }
     }
 
-
-
-
+    /**
+     * Change the window of the UI.
+     * @param scene the scene to switch to.
+     */
     public void switchScenes(Scene scene){
         gameStage.setScene(scene);
     }
