@@ -38,10 +38,10 @@ public class Main extends Application {
         //tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
         //tickTimeline.setCycleCount(Animation.INDEFINITE);
 
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
-        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        //tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        //tickTimeline.setCycleCount(Animation.INDEFINITE);
 
- */
+
         Menu menu = new Menu(primaryStage);
     }
 /*

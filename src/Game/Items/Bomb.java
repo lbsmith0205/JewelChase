@@ -1,14 +1,8 @@
 package Game.Items;
 
 import Game.Board.Board;
-import Game.Board.Level;
-import Game.Characters.FloorFollowingThief;
-import Game.Characters.Player;
-import Game.Characters.SmartThief;
-import Game.Board.Tile;
-import Game.Characters.Character;
 
-import javafx.scene.canvas.GraphicsContext;
+import Game.Board.Tile;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -28,10 +22,10 @@ public class Bomb extends Item{
 
     private final ArrayList<Tile> BLAST_ZONE = new ArrayList<>();
     private final Board board;
-    private boolean bombActivated = false;
-    private int bombTimer;
+    private boolean isActive = false;
+    private int detonationTime;
     private int activationTime;
-    private String bombState;
+    private String bombSpritePath;
 
     /**
      * Create an instance of the Bomb.
@@ -42,9 +36,8 @@ public class Bomb extends Item{
      */
     public Bomb(Tile position, Board board) {
         super(position);
-        this.bombTimer = BOMB_DEFAULT_TIMER;
         this.board = board;
-        this.bombState = BOMB_SPRITE_DEFAULT_PATH;
+        this.bombSpritePath = BOMB_SPRITE_DEFAULT_PATH;
         int bombXPosition = position.getXPosition();
         int bombYPosition = position.getYPosition();
         for (int x = 0; x < board.getWidth(); x++) {
@@ -60,10 +53,12 @@ public class Bomb extends Item{
     /**
      * Trigger the bomb and set it to tick down.
      *
-     * @param accumulatorValue
+     * @param time
      */
-    public void activate(int accumulatorValue) {
-        this.bombActivated = true;
+    public void activate(int time) {
+        this.isActive = true;
+        activationTime = time;
+        detonationTime = activationTime - BOMB_DEFAULT_TIMER;
     }
 
     /**
@@ -78,21 +73,32 @@ public class Bomb extends Item{
     /**
      * Change the Bomb's image according to its timer
      */
-/*
-    private void changeBombState() {
-        int explosionTime = level.getTime() - BOMB_DEFAULT_TIMER;
-        int bombTimeRemaining = level.getTime() - explosionTime;
+    public void updateBombState(int time) {
+        int bombTimeRemaining = time - detonationTime;
         switch (bombTimeRemaining) {
-            case 3 -> bombState = BOMB_COUNTDOWN_PATH_3;
-            case 2 -> bombState = BOMB_COUNTDOWN_PATH_2;
-            case 1 -> bombState = BOMB_COUNTDOWN_PATH_1;
+            case 3 -> {
+                bombSpritePath = BOMB_COUNTDOWN_PATH_3;
+                refreshImage();
+            }
+            case 2 -> {
+                bombSpritePath = BOMB_COUNTDOWN_PATH_2;
+                refreshImage();
+            }
+            case 1 -> {
+                bombSpritePath = BOMB_COUNTDOWN_PATH_1;
+                refreshImage();
+            }
             case 0 -> explode();
         }
-    }*/
+    }
 
     @Override
     protected void refreshImage() {
-        this.image = new Image(bombState);
+        this.image = new Image(bombSpritePath);
+    }
+
+    public boolean getIsActive() {
+        return isActive;
     }
 
 }

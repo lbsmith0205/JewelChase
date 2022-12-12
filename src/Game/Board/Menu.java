@@ -5,18 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Time;
-import java.util.Objects;
 
 import Game.Direction;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -228,7 +222,7 @@ public class Menu {
             this.levelScene = levelOne;
             this.level = level1;
             switchScenes(levelScene);
-            levelScene = createlevel(stage);
+            levelScene = createLevel(stage);
         });
         newGameToLevelOne.setLayoutX(centreButton);
         newGameToLevelOne.setLayoutY(70);
@@ -239,7 +233,7 @@ public class Menu {
             this.levelScene = levelTwo;
             this.level = level2;
             switchScenes(levelScene);
-            levelScene = createlevel(stage);
+            levelScene = createLevel(stage);
         });
         newGameToLevelTwo.setLayoutX(centreButton);
         newGameToLevelTwo.setLayoutY(100);
@@ -250,7 +244,7 @@ public class Menu {
             this.levelScene = levelThree;
             this.level = level3;
             switchScenes(levelScene);
-            levelScene = createlevel(stage);
+            levelScene = createLevel(stage);
         });
         newGameToLevelThree.setLayoutX(centreButton);
         newGameToLevelThree.setLayoutY(130);
@@ -261,7 +255,7 @@ public class Menu {
             this.levelScene = levelFour;
             this.level = level4;
             switchScenes(levelScene);
-            levelScene = createlevel(stage);
+            levelScene = createLevel(stage);
         });
         newGameToLevelFour.setLayoutX(centreButton);
         newGameToLevelFour.setLayoutY(160);
@@ -272,7 +266,7 @@ public class Menu {
             this.levelScene = levelFive;
             this.level = level5;
             switchScenes(levelScene);
-            levelScene = createlevel(stage);
+            levelScene = createLevel(stage);
         });
         newGameToLevelFive.setLayoutX(centreButton);
         newGameToLevelFive.setLayoutY(190);
@@ -283,7 +277,7 @@ public class Menu {
             this.levelScene = levelSix;
             this.level = level6;
             switchScenes(levelScene);
-            levelScene = createlevel(stage);
+            levelScene = createLevel(stage);
         });
         newGameToLevelSix.setLayoutX(centreButton);
         newGameToLevelSix.setLayoutY(220);
@@ -294,7 +288,7 @@ public class Menu {
             this.levelScene = levelSeven;
             this.level = level7;
             switchScenes(levelScene);
-            levelScene = createlevel(stage);
+            levelScene = createLevel(stage);
         });
         newGameToLevelSeven.setLayoutX(centreButton);
         newGameToLevelSeven.setLayoutY(250);
@@ -333,7 +327,7 @@ public class Menu {
         root.getChildren().add(returnToMenu);
         return loadGame;
     }
-    private Scene createlevel(Stage primaryStage){
+    private Scene createLevel(Stage primaryStage){
         Pane root = level.drawInit();
         menuToNewGame = new Button("Return");
         menuToNewGame.setOnAction(e -> switchScenes(newGame));
@@ -352,6 +346,7 @@ public class Menu {
     private void tick() {
         level.moveAll();
         level.interactAll();
+        level.refreshBombs();
         level.countdown();
         level.drawLevel();
     }
@@ -366,7 +361,7 @@ public class Menu {
             }
         } else {
             switch (event.getCode()) {
-                case P -> level.save();
+                //case P -> level.save();
                 case ESCAPE -> tickTimeline.play();
             }
         }

@@ -1,5 +1,4 @@
 package Game.Characters;
-
 import Game.Board.Board;
 import Game.Board.Level;
 import Game.Board.Tile;
@@ -35,23 +34,22 @@ public abstract class Thief extends Character {
         loot.pullLever(board);
         level.adjustTime(loot.adjustTime(this));
         this.position.removeObjectFromTile(loot);
-
     }
 
     /**
-     * Trigger the Bomb if the Thief is in the surrounding Tiles of the Bomb.
+     * Activates the Bomb if a Thief is within the activation area.
      *
      * @param board Board the Thief/Bomb is in.
-     * @param timer
+     * @param time The time remaining in the level.
      */
-    public void activateBomb(Board board, int timer) {
+    public void activateBomb(Board board, int time) {
         int XPosition = this.getPosition().getXPosition();
         int YPosition = this.getPosition().getYPosition();
         for (Bomb bomb : board.getAllBombs()) {
             int xDistance = Math.abs(XPosition - bomb.getPosition().getXPosition());
             int yDistance = Math.abs(YPosition - bomb.getPosition().getYPosition());
             if (xDistance <= 1 || yDistance <= 1) {
-                bomb.activate(timer);
+                bomb.activate(time);
             }
         }
     }

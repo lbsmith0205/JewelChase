@@ -310,8 +310,19 @@ public class Level {
             if (character instanceof FlyingAssassin) {
                 ((FlyingAssassin) character).assassinate();
             }
+            if (character instanceof Thief) {
+                ((Thief) character).activateBomb(board, time);
+            }
         }
         board.placeLootableDoor();
+    }
+    public void refreshBombs() {
+        ArrayList<Bomb> bombs = board.getAllBombs();
+        for (Bomb bomb : bombs) {
+            if (bomb.getIsActive()) {
+                bomb.updateBombState(time);
+            }
+        }
     }
 
 
@@ -435,9 +446,6 @@ public class Level {
         return time;
     }
 
-    public int getAccumulatorValue() {
-        return this.accumulator;
-    }
 
     /**
      * Add to the accumulator.
