@@ -1,13 +1,10 @@
 package Game.Items;
 
 import Game.Board.Tile;
-import Game.Characters.Character;
 
 import javafx.scene.paint.Color;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
-import java.awt.*;
 
 /**
  * An Item class can be used to hold information about it.
