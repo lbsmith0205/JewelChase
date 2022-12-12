@@ -61,15 +61,34 @@ public class Menu {
     private Button newGameToLevelEight;
     private Button newGameToLevelNine;
 
+    private Scene levelScene;
+    private Level level;
+    private boolean writeLevel = false;
+
     private Scene newGame;
     private Scene loadGame;
-    private Scene levelOne;Level level1 = new Level("Level1");
-    private Scene levelTwo;Level level2 = new Level("Level2");
-    private Scene levelThree;Level level3 = new Level("Level3");
-    private Scene levelFour;Level level4 = new Level("Level4");
-    private Scene levelFive;Level level5 = new Level("Level5");
-    //private Scene levelSix;Level level6 = new Level("Level6");
-    // private Scene levelSeven;Level level7 = new Level("Level7");
+
+    private Scene levelOne;
+    private Level level1 = new Level("Level1");
+
+    private Scene levelTwo;
+    private Level level2 = new Level("Level2");
+
+    private Scene levelThree;
+    private Level level3 = new Level("Level3");
+
+    private Scene levelFour;
+    private Level level4 = new Level("Level4");
+
+    private Scene levelFive;
+    private Level level5 = new Level("Level5");
+
+    private Scene levelSix;
+    private Level level6 = new Level("Level6");
+
+    private Scene levelSeven;
+    private Level level7 = new Level("Level7");
+
     public Menu(Stage primaryStage){
         gameStage = primaryStage;
 
@@ -78,10 +97,8 @@ public class Menu {
 
         menuScene = createMenu();
         profileScene = createProfile();
-        newGame = createNewGame();
+        newGame = createNewGame(gameStage);
         loadGame = createLoadGame();
-        levelOne = createlevel(gameStage);
-
         gameStage.setScene(menuScene);
         gameStage.show();
     }
@@ -151,11 +168,13 @@ public class Menu {
 
         menuToNewGame = new Button("New Game");
         menuToNewGame.setOnAction(e -> switchScenes(newGame));
-        menuToNewGame.setLayoutX(centreButton);menuToNewGame.setLayoutY(160);
+        menuToNewGame.setLayoutX(centreButton);
+        menuToNewGame.setLayoutY(160);
 
         menuToLoadGame = new Button("Load Game");
         menuToLoadGame.setOnAction(e -> switchScenes(loadGame));
-        menuToLoadGame.setLayoutX(centreButton-2);menuToLoadGame.setLayoutY(195);
+        menuToLoadGame.setLayoutX(centreButton-2);
+        menuToLoadGame.setLayoutY(195);
 
         menuScene = new Scene(root, 600, 400, Color.LIGHTCORAL);
         Text banner = new Text("Jewel Chase\n Main Menu");
@@ -197,39 +216,88 @@ public class Menu {
         root.getChildren().add(returnToMenu);
         return profileScene;
     }
-    private Scene createNewGame(){
 
+    private Scene createNewGame(Stage stage){
         Group root = new Group();
         returnToMenu = new Button("Return");
         returnToMenu.setOnAction(e -> switchScenes(menuScene));
 
         newGameToLevelOne = new Button("Level One");
-        newGameToLevelOne.setOnAction(e -> switchScenes(levelOne));
-        newGameToLevelOne.setLayoutX(centreButton);newGameToLevelOne.setLayoutY(70);
+        newGameToLevelOne.setOnAction(e -> {
+            this.writeLevel = true;
+            this.levelScene = levelOne;
+            this.level = level1;
+            switchScenes(levelScene);
+            levelScene = createlevel(stage);
+        });
+        newGameToLevelOne.setLayoutX(centreButton);
+        newGameToLevelOne.setLayoutY(70);
 
         newGameToLevelTwo = new Button("Level Two");
-        newGameToLevelTwo.setOnAction(e -> switchScenes(levelTwo));
-        newGameToLevelTwo.setLayoutX(centreButton);newGameToLevelTwo.setLayoutY(100);
+        newGameToLevelTwo.setOnAction(e -> {
+            this.writeLevel = true;
+            this.levelScene = levelTwo;
+            this.level = level2;
+            switchScenes(levelScene);
+            levelScene = createlevel(stage);
+        });
+        newGameToLevelTwo.setLayoutX(centreButton);
+        newGameToLevelTwo.setLayoutY(100);
 
         newGameToLevelThree = new Button("Level Three");
-        newGameToLevelThree.setOnAction(e -> switchScenes(levelThree));
-        newGameToLevelThree.setLayoutX(centreButton);newGameToLevelThree.setLayoutY(130);
+        newGameToLevelThree.setOnAction(e -> {
+            this.writeLevel = true;
+            this.levelScene = levelThree;
+            this.level = level3;
+            switchScenes(levelScene);
+            levelScene = createlevel(stage);
+        });
+        newGameToLevelThree.setLayoutX(centreButton);
+        newGameToLevelThree.setLayoutY(130);
 
         newGameToLevelFour = new Button("Level Four");
-        newGameToLevelFour.setOnAction(e -> switchScenes(levelFour));
-        newGameToLevelFour.setLayoutX(centreButton);newGameToLevelFour.setLayoutY(160);
+        newGameToLevelFour.setOnAction(e -> {
+            this.writeLevel = true;
+            this.levelScene = levelFour;
+            this.level = level4;
+            switchScenes(levelScene);
+            levelScene = createlevel(stage);
+        });
+        newGameToLevelFour.setLayoutX(centreButton);
+        newGameToLevelFour.setLayoutY(160);
 
         newGameToLevelFive = new Button("Level Five");
-        newGameToLevelFive.setOnAction(e -> switchScenes(levelFive));
-        newGameToLevelFive.setLayoutX(centreButton);newGameToLevelFive.setLayoutY(190);
+        newGameToLevelFive.setOnAction(e -> {
+            this.writeLevel = true;
+            this.levelScene = levelFive;
+            this.level = level5;
+            switchScenes(levelScene);
+            levelScene = createlevel(stage);
+        });
+        newGameToLevelFive.setLayoutX(centreButton);
+        newGameToLevelFive.setLayoutY(190);
 
-        /*newGameToLevelSix = new Button("Level Six");
-        newGameToLevelSix.setOnAction(e -> switchScenes(levelSix));
-        newGameToLevelSix.setLayoutX(centreButton);newGameToLevelSix.setLayoutY(220);
+        newGameToLevelSix = new Button("Level Six");
+        newGameToLevelSix.setOnAction(e -> {
+            this.writeLevel = true;
+            this.levelScene = levelSix;
+            this.level = level6;
+            switchScenes(levelScene);
+            levelScene = createlevel(stage);
+        });
+        newGameToLevelSix.setLayoutX(centreButton);
+        newGameToLevelSix.setLayoutY(220);
 
         newGameToLevelSeven = new Button("Level Seven");
-        newGameToLevelSeven.setOnAction(e -> switchScenes(levelSeven));
-        newGameToLevelSeven.setLayoutX(centreButton);newGameToLevelSeven.setLayoutY(250);*/
+        newGameToLevelSeven.setOnAction(e -> {
+            this.writeLevel = true;
+            this.levelScene = levelSeven;
+            this.level = level7;
+            switchScenes(levelScene);
+            levelScene = createlevel(stage);
+        });
+        newGameToLevelSeven.setLayoutX(centreButton);
+        newGameToLevelSeven.setLayoutY(250);
 
         newGame = new Scene(root, 600, 400,Color.DODGERBLUE);
         Text text = new Text(" Jewel Chase\nSelect a Level");
@@ -245,6 +313,8 @@ public class Menu {
         root.getChildren().add(newGameToLevelThree);
         root.getChildren().add(newGameToLevelFour);
         root.getChildren().add(newGameToLevelFive);
+        root.getChildren().add(newGameToLevelSix);
+        root.getChildren().add(newGameToLevelSeven);
         return newGame;
     }
     private Scene createLoadGame(){
@@ -264,54 +334,52 @@ public class Menu {
         return loadGame;
     }
     private Scene createlevel(Stage primaryStage){
-        Pane root = level1.drawInit();
+        Pane root = level.drawInit();
         menuToNewGame = new Button("Return");
         menuToNewGame.setOnAction(e -> switchScenes(newGame));
 
-        levelOne = new Scene(root, level1.getWindowResWidth(), level1.getWindowResHeight() + 32);
-        levelOne.addEventFilter(KeyEvent.KEY_PRESSED, this::processKeyEvent);
+        levelScene = new Scene(root, level.getWindowResWidth(), level.getWindowResHeight() + 32);
+        levelScene.addEventFilter(KeyEvent.KEY_PRESSED, this::processKeyEvent);
 
         tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
         tickTimeline.setCycleCount(Animation.INDEFINITE);
-        primaryStage.setScene(levelOne);
+        primaryStage.setScene(levelScene);
         tickTimeline.play();
 
-        return levelOne;
+        return levelScene;
     }
 
     private void tick() {
-        level1.moveAll();
-        level1.countdown();
-        level1.drawLevel();
-        level1.accumulate();
+        level.moveAll();
+        level.interactAll();
+        level.countdown();
+        level.drawLevel();
     }
     private void processKeyEvent(KeyEvent event) {
-        switch (event.getCode()) {
-            case W, UP -> level1.getPlayer().setDirection(Direction.UP);
-            case A, LEFT -> level1.getPlayer().setDirection(Direction.LEFT);
-            case S, DOWN -> level1.getPlayer().setDirection(Direction.DOWN);
-            case D, RIGHT -> level1.getPlayer().setDirection(Direction.RIGHT);
+        if(tickTimeline.getStatus() != Animation.Status.PAUSED) {
+            switch (event.getCode()) {
+                case W, UP -> level.getPlayer().setDirection(Direction.UP);
+                case A, LEFT -> level.getPlayer().setDirection(Direction.LEFT);
+                case S, DOWN -> level.getPlayer().setDirection(Direction.DOWN);
+                case D, RIGHT -> level.getPlayer().setDirection(Direction.RIGHT);
+                case ESCAPE -> tickTimeline.pause();
+            }
+        } else {
+            switch (event.getCode()) {
+                case P -> level.save();
+                case ESCAPE -> tickTimeline.play();
+            }
         }
-        level1.getPlayer().move(level1.getBoard());
-        level1.drawLevel();
-        event.consume();
-    }
-   /*
-    public Scene drawGame() {
-        Pane root = level1.drawInit();
-        Scene scene = new Scene(root, level1.getWindowResWidth(), level1.getWindowResHeight() + 32);
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
 
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
-        tickTimeline.setCycleCount(Animation.INDEFINITE);
-        primaryStage.setTitle("Jewel Chase");
-        primaryStage.getIcons().add(new Image("Sprites/Coconut.png", 256, 256, false, true));
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        tickTimeline.play();
+        if(tickTimeline.getStatus() != Animation.Status.PAUSED) {
+            level.getPlayer().move(level.getBoard());
+            level.interactAll();
+            level.drawLevel();
+            event.consume();
+        }
     }
 
-    */
+
 
 
     public void switchScenes(Scene scene){

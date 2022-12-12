@@ -205,7 +205,6 @@ public class Board {
      * @param gc Graphic Context buffer draw on the Canvas.
      */
     public void drawBoard(GraphicsContext gc) {
-
         StackPane gameBoard = new StackPane();
         Canvas tileLayer = new Canvas(widthPixels, heightPixels);
         gameBoard.getChildren().add(tileLayer);
@@ -320,6 +319,11 @@ public class Board {
         return listOfBombs;
     }
 
+    /**
+     * Find all the Gates that exists on the Board and unlock them.
+     *
+     * @param type Colours of the Gates.
+     */
     public void openGates(String type) {
         ArrayList<Gate> gates = new ArrayList<>();
         for (Item item : getAllItems()) {
