@@ -31,8 +31,17 @@ public abstract class Thief extends Character {
         if (this instanceof Player) {
             ((Player) this).addScore(loot.getValue());
         }
+        if (loot.getLootType().equals("LD")) {
+            level.setGameOver(true);
+            if (this instanceof Player) {
+                level.setPlayerVictory(true);
+            } else {
+                level.setPlayerVictory(false);
+            }
+        }
         loot.pullLever(board);
         level.adjustTime(loot.adjustTime(this));
+
         this.position.removeObjectFromTile(loot);
     }
 
@@ -48,8 +57,12 @@ public abstract class Thief extends Character {
         for (Bomb bomb : board.getAllBombs()) {
             int xDistance = Math.abs(XPosition - bomb.getPosition().getXPosition());
             int yDistance = Math.abs(YPosition - bomb.getPosition().getYPosition());
-            if (xDistance <= 1 || yDistance <= 1) {
-                bomb.activate(time);
+            System.out.println(xDistance);
+            System.out.println(yDistance);
+            if (xDistance <= 0 || yDistance <= 0) {
+                if (!bomb.getIsActive()) {
+                    bomb.activate(time);
+                }
             }
         }
     }
