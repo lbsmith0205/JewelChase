@@ -68,18 +68,18 @@ public class Tile {
 
     public String getTileInString() {
         String colour = "";
-        for(int i = 0; i < tileColours.length; i++) {
-            if(tileColours[i] == Color.INDIANRED) {
+        for (Color tileColour : tileColours) {
+            if (tileColour == Color.INDIANRED) {
                 colour += "R";
-            } else if(tileColours[i] == Color.SPRINGGREEN) {
+            } else if (tileColour == Color.SPRINGGREEN) {
                 colour += "G";
-            } else if(tileColours[i] == Color.ROYALBLUE) {
+            } else if (tileColour == Color.ROYALBLUE) {
                 colour += "B";
-            } else if(tileColours[i] == Color.KHAKI) {
+            } else if (tileColour == Color.KHAKI) {
                 colour += "Y";
-            } else if(tileColours[i] == Color.CYAN) {
+            } else if (tileColour == Color.CYAN) {
                 colour += "C";
-            } else if(tileColours[i] == Color.MEDIUMPURPLE) {
+            } else if (tileColour == Color.MEDIUMPURPLE) {
                 colour += "M";
             }
         }
@@ -109,7 +109,7 @@ public class Tile {
             }
             objectsOnTile = remnants;
             if (objectsOnTile.isEmpty()) {
-                //objectsOnTile.add(new Fire fire); implement fire sprite.
+                //objectsOnTile.add(new Explosion explosion); implement fire sprite.
             }
 
         }

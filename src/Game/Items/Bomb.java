@@ -86,13 +86,9 @@ public class Bomb extends Item{
             case 3 -> bombState = BOMB_COUNTDOWN_PATH_3;
             case 2 -> bombState = BOMB_COUNTDOWN_PATH_2;
             case 1 -> bombState = BOMB_COUNTDOWN_PATH_1;
+            case 0 -> explode();
         }
-
-    }
-*/
-    public void deactivateBomb() {
-        this.bombActivated = false;
-    }
+    }*/
 
     @Override
     protected void refreshImage() {
