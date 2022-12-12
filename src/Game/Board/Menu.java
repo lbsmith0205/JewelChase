@@ -59,7 +59,7 @@ public class Menu {
     private Button newGameToLevelFour;private Button newGameToLevelFive;private Button newGameToLevelSix;
     private Button newGameToLevelSeven;private Button newGameToLevelEight;private Button newGameToLevelNine;
     private Button newGameToLevelTen;
-
+//
 
     private Scene newGame;
 
