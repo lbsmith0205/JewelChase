@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -90,6 +91,10 @@ public class Menu {
 
     private Scene levelSeven;
     private Level level7 = new Level("Level7");
+
+    private Group rootPause = new Group();
+    private Scene scenePause = new Scene(rootPause, 500, 300, Color.NAVY);
+    private Stage stagePause = new Stage();
 
     /**
      * Create the Menu and start up the UI.
@@ -417,6 +422,54 @@ public class Menu {
     }
 
     /**
+     * Create a window to interact with when the Game is paused
+     */
+    private void createPauseWindow() {
+        Button mainMenu = new Button("Main Menu");
+        mainMenu.setLayoutX(200);
+        mainMenu.setLayoutY(180);
+
+        Button exit = new Button("Exit");
+        exit.setLayoutX(200);
+        exit.setLayoutY(150);
+
+        Button saveButton = new Button("Save");
+        saveButton.setLayoutX(200);
+        saveButton.setLayoutY(125);
+
+        Button resume = new Button("Resume");
+        resume.setLayoutX(200);
+        resume.setLayoutY(100);
+
+
+        rootPause.getChildren().add(saveButton);
+        rootPause.getChildren().add(resume);
+        rootPause.getChildren().add(exit);
+        rootPause.getChildren().add(mainMenu);
+
+        resume.setOnAction(e -> {
+            tickTimeline.play();
+            stagePause.close();
+        });
+
+        exit.setOnAction(e -> {
+            tickTimeline.stop();
+            stagePause.close();
+            gameStage.close();
+        });
+
+        mainMenu.setOnAction(e -> {
+            tickTimeline.stop();
+            stagePause.close();
+            switchScenes(menuScene);
+        });
+
+        stagePause.setScene(scenePause);
+        stagePause.setTitle("Paused Game");
+        stagePause.show();
+    }
+
+    /**
      * Tick the timer down and update the Level and redrawing it.
      */
     private void tick() {
@@ -438,12 +491,17 @@ public class Menu {
                 case A, LEFT -> level.getPlayer().setDirection(Direction.LEFT);
                 case S, DOWN -> level.getPlayer().setDirection(Direction.DOWN);
                 case D, RIGHT -> level.getPlayer().setDirection(Direction.RIGHT);
-                case ESCAPE -> tickTimeline.pause();
+                case ESCAPE -> {
+                    tickTimeline.pause();
+                    createPauseWindow();
+                }
             }
         } else {
             switch (event.getCode()) {
-                //case P -> level.save();
-                case ESCAPE -> tickTimeline.play();
+                case ESCAPE -> {
+                    tickTimeline.play();
+                    stagePause.close();
+                }
             }
         }
 
