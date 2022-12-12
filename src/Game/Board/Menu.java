@@ -7,16 +7,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -48,6 +51,7 @@ public class Menu {
     private Stage gameStage;
     private Timeline tickTimeline;
     private Scene menuScene;
+    private Button createsProfile;
     private Button menuToProfile;
     private Button menuToNewGame;
     private Button menuToLoadGame;
@@ -252,6 +256,32 @@ public class Menu {
         returnToMenu = new Button("Return");
         returnToMenu.setOnAction(e -> switchScenes(menuScene));
         profileScene = new Scene(root, 600, 400,Color.DODGERBLUE);
+
+
+        TextField profileInput = new TextField();
+        profileInput.setPromptText("Enter a name");
+        profileInput.setLayoutX(220);
+        profileInput.setLayoutY(160);
+        profileInput.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Profile profile = new Profile(profileInput.getText());
+                try{
+                    profile.save();
+                }catch(IOException e){
+                }
+            }
+
+        });
+        /*String[] profileList = (new File("src/Profiles")).list();
+        for (int i = 0; i < profileList.length; i++){
+            Button button = new Button();
+            button.setText(profileList[i].ge);
+
+
+        }
+         */
+
         Text text = new Text("Jewel Chase\n    Profile");
         text.setX(220);
         text.setY(30);
@@ -259,8 +289,11 @@ public class Menu {
         text.setFont(Font.font("Helvetica", FontWeight.EXTRA_BOLD, 25));
         root.getChildren().add(text);
         root.getChildren().add(returnToMenu);
+        root.getChildren().add(profileInput);
         return profileScene;
     }
+
+
 
     /**
      * Create a window to pick levels and start the level.
