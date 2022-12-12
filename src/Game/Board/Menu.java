@@ -5,8 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Time;
 import java.util.Objects;
 
+import Game.Direction;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,11 +19,16 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 public class Menu {
@@ -31,16 +41,25 @@ public class Menu {
     private static final String MOTD_APPEND = "CS-230";
     private static final int MOTD_ALPHABET_LENGTH = 26;
     private static final int MOTD_INT_CONVERSION = -1;
+    private String messageOfTheDay;
+
 
     private Stage gameStage;
+    private Timeline tickTimeline;
 
     private Scene menuScene;
     private Button menuToProfile;
     private Button menuToNewGame;
     private Button menuToLoadGame;
 
+
     private Scene profileScene;
     private Button returnToMenu;
+
+    private Scene levelOne;
+    Level level = new Level("Level1");
+
+    private Button newGameToLevelOne;
 
     private Scene newGame;
 
@@ -51,27 +70,24 @@ public class Menu {
 
     public Menu(Stage primaryStage){
         gameStage = primaryStage;
+
         gameStage.setTitle("Jewel Chase");
+        gameStage.getIcons().add(new Image("Sprites/Coconut.png", 256, 256, false, true));
 
         menuScene = createMenu();
         profileScene = createProfile();
         newGame = createNewGame();
         loadGame = createLoadGame();
+        levelOne = createlevelOne(gameStage);
 
         gameStage.setScene(menuScene);
         gameStage.show();
     }
 
-
-    // Calls all functions used for the main menu
-    public void startMenu(){
-        updateMOTD();
-    }
     //Need to do main menu javafx
 
     //Updates message of the day
     private void updateMOTD(){
-        String messageOfTheDay;
         try{
             String unsolvedPuzzle = getPuzzle();
             String solvedPuzzle = puzzleSolve(unsolvedPuzzle);
@@ -82,8 +98,6 @@ public class Menu {
 
     }
 
-
-                         // i dont remember how this works...
     private String puzzleSolve(String puzzle){
         String possibleLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         int moveLetter = -1;
@@ -137,17 +151,29 @@ public class Menu {
         menuToNewGame.setOnAction(e -> switchScenes(newGame));
         menuToNewGame.setLayoutX(centreButton);menuToNewGame.setLayoutY(160);
 
-        menuToLoadGame = new Button("Level Select");
+        menuToLoadGame = new Button("Load Game");
         menuToLoadGame.setOnAction(e -> switchScenes(loadGame));
         menuToLoadGame.setLayoutX(centreButton-2);menuToLoadGame.setLayoutY(195);
 
         menuScene = new Scene(root, 600, 400, Color.LIGHTCORAL);
-        Text text = new Text("Jewel Chase\n Main Menu");
-        text.setX(220);
-        text.setY(30);
-        text.setFill(Color.WHITE);
-        text.setFont(Font.font("Helvetica", FontWeight.EXTRA_BOLD, 25));
-        root.getChildren().add(text);
+        Text banner = new Text("Jewel Chase\n Main Menu");
+        banner.setX(220);
+        banner.setY(30);
+        banner.setFill(Color.WHITE);
+        banner.setFont(Font.font("Helvetica", FontWeight.EXTRA_BOLD, 25));
+
+        updateMOTD();
+        Text motd = new Text(messageOfTheDay);
+        motd.setX(0);
+        motd.setY(350);
+        motd.setFill(Color.WHITE);
+        motd.setFont(Font.font("Helvetica", FontWeight.EXTRA_BOLD, 12));
+        motd.setWrappingWidth(580);
+        motd.setTextAlignment(TextAlignment.CENTER);
+
+
+        root.getChildren().add(motd);
+        root.getChildren().add(banner);
         root.getChildren().add(menuToProfile);
         root.getChildren().add(menuToNewGame);
         root.getChildren().add(menuToLoadGame);
@@ -174,6 +200,10 @@ public class Menu {
         Group root = new Group();
         returnToMenu = new Button("Return");
         returnToMenu.setOnAction(e -> switchScenes(menuScene));
+        newGameToLevelOne = new Button("Level One");
+        newGameToLevelOne.setOnAction(e -> switchScenes(levelOne));
+        newGameToLevelOne.setLayoutX(centreButton);newGameToLevelOne.setLayoutY(160);
+
         newGame = new Scene(root, 600, 400,Color.DODGERBLUE);
         Text text = new Text(" Jewel Chase\nSelect a Level");
         text.setX(220);
@@ -182,6 +212,7 @@ public class Menu {
         text.setFont(Font.font("Helvetica", FontWeight.EXTRA_BOLD, 25));
         root.getChildren().add(text);
         root.getChildren().add(returnToMenu);
+        root.getChildren().add(newGameToLevelOne);
         return newGame;
     }
     private Scene createLoadGame(){
@@ -189,6 +220,7 @@ public class Menu {
         Group root = new Group();
         returnToMenu = new Button("Return");
         returnToMenu.setOnAction(e -> switchScenes(menuScene));
+
         loadGame = new Scene(root, 600, 400,Color.DODGERBLUE);
         Text text = new Text("     Jewel Chase\nSelect a savepoint");
         text.setX(200);
@@ -199,6 +231,55 @@ public class Menu {
         root.getChildren().add(returnToMenu);
         return loadGame;
     }
+    private Scene createlevelOne(Stage primaryStage){
+
+        Group root = new Group();
+        menuToNewGame = new Button("Return");
+        menuToNewGame.setOnAction(e -> switchScenes(newGame));
+
+        levelOne = new Scene(root, level.getWindowResWidth(), level.getWindowResHeight() + 32);
+        levelOne.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
+
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        primaryStage.setScene(levelOne);
+        tickTimeline.play();
+
+        return levelOne;
+    }
+
+    private void tick() {
+        level.moveAll();
+        level.countdown();
+        level.drawLevel();
+        level.accumulate();
+    }
+    private void processKeyEvent(KeyEvent event) {
+        switch (event.getCode()) {
+            case W, UP -> level.getPlayer().setDirection(Direction.UP);
+            case A, LEFT -> level.getPlayer().setDirection(Direction.LEFT);
+            case S, DOWN -> level.getPlayer().setDirection(Direction.DOWN);
+            case D, RIGHT -> level.getPlayer().setDirection(Direction.RIGHT);
+        }
+        level.getPlayer().move(level.getBoard());
+        level.drawLevel();
+        event.consume();
+    }
+    /*l
+    public Scene drawGame() {
+        Pane root = level.drawInit();
+        Scene scene = new Scene(root, level.getWindowResWidth(), level.getWindowResHeight() + 32);
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
+
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        primaryStage.setTitle("Jewel Chase");
+        primaryStage.getIcons().add(new Image("Sprites/Coconut.png", 256, 256, false, true));
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        tickTimeline.play();
+    }
+     */
 
     public void switchScenes(Scene scene){
         gameStage.setScene(scene);

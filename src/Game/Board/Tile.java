@@ -1,10 +1,8 @@
 package Game.Board;
 
-import Game.Items.Bomb;
-import Game.Items.Door;
-import Game.Items.Gate;
+import Game.Items.*;
 import javafx.scene.paint.Color;
-import Game.Items.Loot;
+
 import java.util.ArrayList;
 public class Tile {
 
@@ -67,24 +65,24 @@ public class Tile {
     }
 
     public String getTileInString() {
-        String colour = "";
-        for(int i = 0; i < tileColours.length; i++) {
-            if(tileColours[i] == Color.INDIANRED) {
-                colour += "R";
-            } else if(tileColours[i] == Color.SPRINGGREEN) {
-                colour += "G";
-            } else if(tileColours[i] == Color.ROYALBLUE) {
-                colour += "B";
-            } else if(tileColours[i] == Color.KHAKI) {
-                colour += "Y";
-            } else if(tileColours[i] == Color.CYAN) {
-                colour += "C";
-            } else if(tileColours[i] == Color.MEDIUMPURPLE) {
-                colour += "M";
+        StringBuilder colour = new StringBuilder();
+        for (Color tileColour : tileColours) {
+            if (tileColour == Color.INDIANRED) {
+                colour.append("R");
+            } else if (tileColour == Color.SPRINGGREEN) {
+                colour.append("G");
+            } else if (tileColour == Color.ROYALBLUE) {
+                colour.append("B");
+            } else if (tileColour == Color.KHAKI) {
+                colour.append("Y");
+            } else if (tileColour == Color.CYAN) {
+                colour.append("C");
+            } else if (tileColour == Color.MEDIUMPURPLE) {
+                colour.append("M");
             }
         }
 
-        return colour;
+        return colour.toString();
     }
 
     public boolean hasBomb() {
@@ -109,7 +107,7 @@ public class Tile {
             }
             objectsOnTile = remnants;
             if (objectsOnTile.isEmpty()) {
-                //objectsOnTile.add(new Fire fire); implement fire sprite.
+                objectsOnTile.add(new Explosion(this));
             }
 
         }
