@@ -105,7 +105,7 @@ public class SmartThief extends Thief {
     }
 
     /**
-     *
+     * Returns the tile at the end of a specified route.
      * @param route
      * @return
      */
