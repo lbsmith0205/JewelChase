@@ -281,7 +281,7 @@ public class Menu {
         /*String[] profileList = (new File("src/Profiles")).list();
         for (int i = 0; i < profileList.length; i++){
             Button button = new Button();
-            button.setText(profileList[i].ge);
+            button.setText(profileList[i].get);
 
 
         }
