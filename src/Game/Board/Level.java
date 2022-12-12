@@ -307,6 +307,10 @@ public class Level {
         }
     }
 
+
+    /**
+     * Get interactions between the Characters and the Items.
+     */
     public void interactAll() {
         ArrayList<Character> characters = board.getAllCharacters();
         for (Character character : characters) {
@@ -322,6 +326,10 @@ public class Level {
         }
         board.placeLootableDoor();
     }
+
+    /**
+     * Update the Bombs and clear the Explosions afterwards.
+     */
     public void refreshBombs() {
         ArrayList<Bomb> bombs = board.getAllBombs();
         for (Bomb bomb : bombs) {
@@ -332,6 +340,9 @@ public class Level {
         removeFadedExplosions();
     }
 
+    /**
+     * Remove the Explosions on the Tiles
+     */
     private void removeFadedExplosions() {
         ArrayList<Explosion> markedForRemoval = new ArrayList();
         for (Item item : board.getAllItems()) {
