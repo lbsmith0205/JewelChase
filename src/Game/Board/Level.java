@@ -421,7 +421,7 @@ public class Level {
             gameOver = true;
         }
         if (playerVictory == true) {
-            //update leaderboard;
+            //update leaderboard here;
         }
         return checkEndGame();
     }
