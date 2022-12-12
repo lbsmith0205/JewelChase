@@ -17,6 +17,11 @@ import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 
+/**
+ *  A Board can be used to create the grid of Tiles for the Level.
+ *
+ * @author Daniel Baxter
+ */
 public class Board {
     private static final int TILE_SIDE = 64;
     private static final int NO_OF_SUB_TILES = 4;
@@ -30,6 +35,13 @@ public class Board {
     private final Tile[][] tiles;
     private NavGraph navigableRoutes;
 
+    /**
+     * Create an instance of Board.
+     *
+     * @param width value for width of the Board.
+     * @param height value for height of the Board.
+     * @param tiles 2D array list of Tiles.
+     */
     public Board(int width, int height, Tile[][] tiles) {
         this.width = width;
         this.widthPixels = width * TILE_SIDE;
@@ -38,18 +50,41 @@ public class Board {
         this.tiles = tiles;
     }
 
+    /**
+     * Get the height of the Board.
+     *
+     * @return height of the Board.
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Get the width of the Board.
+     *
+     * @return width of the Board.
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Get the Tile on the Board with the given coordinates.
+     *
+     * @param x x position of the Tile.
+     * @param y y position of the Tile.
+     * @return Tile that match the x and y.
+     */
     public Tile getTile(int x, int y) {
         return tiles[x][y];
     }
 
+    /**
+     * Check if the Board has the Tile.
+     *
+     * @param t Tile to check.
+     * @return true if the Tile exists, false if not.
+     */
     public boolean hasTile(Tile t) {
         int x = t.getXPosition();
         int y = t.getYPosition();
@@ -63,6 +98,13 @@ public class Board {
         return false;
     }
 
+    /**
+     * Check if the Tile can be moved onto from the current Tile.
+     *
+     * @param source Tile currently on.
+     * @param target Tile need to move onto.
+     * @return true if it meets the constraints, false if not.
+     */
     public boolean isLegalMove(Tile source, Tile target) {
         for (Object object : target.getObjectsOnTile()) {
             if (object instanceof Gate || object instanceof Bomb) {
@@ -79,6 +121,12 @@ public class Board {
         return false;
     }
 
+
+    /**
+     * Get an ArrayList of all the Characters on the Board.
+     *
+     * @return ArrayLisst of Characters on the Board.
+     */
     public ArrayList<Character> getAllCharacters() {
         ArrayList<Character> allCharacters = new ArrayList<>();
         for (Tile[] rowOfTiles : tiles) {
@@ -93,6 +141,11 @@ public class Board {
         return allCharacters;
     }
 
+    /**
+     * Get an ArrayList of all the Items on the Board.
+     *
+     * @return ArrayLisst of Items on the Board.
+     */
     public ArrayList<Item> getAllItems() {
         ArrayList<Item> allItems = new ArrayList<>();
         for (Tile[] rowOfTiles : tiles) {
@@ -108,13 +161,27 @@ public class Board {
     }
 
 
+    /**
+     * Create a new navigation graph.
+     */
     public void refreshNavGraph() {
         this.navigableRoutes = new NavGraph(this);
     }
 
+    /**
+     * Get the navigation graph.
+     *
+     * @return the navigation graph.
+     */
     public NavGraph getNavGraph() {
         return this.navigableRoutes;
     }
+
+    /**
+     * Get the Player on the Board.
+     *
+     * @return Player on the Board.
+     */
     public Player getPlayer() {
         for (Character character : getAllCharacters()) {
             if (character instanceof Player) {
@@ -124,6 +191,11 @@ public class Board {
         return null;
     }
 
+    /**
+     * Draw the Tiles, Items and Characters on the Canvas.
+     *
+     * @param gc Graphic Context buffer draw on the Canvas.
+     */
     public void drawBoard(GraphicsContext gc) {
 
         StackPane gameBoard = new StackPane();
@@ -160,6 +232,14 @@ public class Board {
 
     }
 
+    /**
+     * Find the Tile that is movable onto from the Board.
+     *
+     * @param d Direction moving towards to.
+     * @param source Tile currently on.
+     * @param targetDistance how far the Tile will be.
+     * @return Tile that can be move on.
+     */
     public Tile findAccessibleTile(Direction d, Tile source, int targetDistance) {
         try {
             int x = source.getXPosition();
@@ -186,6 +266,14 @@ public class Board {
         }
     }
 
+    /**
+     * Find the next Tile that has the same Color as the current Tile.
+     *
+     * @param source Tile currently on.
+     * @param d Direction looking at.
+     * @param requiredColour Color needed to find.
+     * @return the next Tile that match the requirements
+     */
     public Tile getAdjacentTileOfRequiredColour(Tile source, Direction d, Color requiredColour) {
         try {
             int x = source.getXPosition();
@@ -209,6 +297,11 @@ public class Board {
         return null;
     }
 
+    /**
+     * Find and get all the Bombs that exists on the Board.
+     *
+     * @return ArrayList of all the Bombs found.
+     */
     public ArrayList<Bomb> getAllBombs() {
         ArrayList<Bomb> listOfBombs = new ArrayList<>();
         for (Object item : getAllItems()) {

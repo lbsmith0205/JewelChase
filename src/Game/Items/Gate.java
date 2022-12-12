@@ -7,16 +7,25 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 
+/**
+ * A Gate can be used to lock a Tile out of movement.
+ *
+ * @author Khoi Nguyen Cao
+ */
 public class Gate extends Item {
     private static final String BLUE_GATE_PATH = "Sprites/Items/Gates/GateBlue.png";
     private static final String RED_GATE_PATH = "Sprites/Items/Gates/GateRed.png";
     private static final String GREEN_GATE_PATH = "Sprites/Items/Gates/GateGreen.png";
 
     private final Color colour;
-
-
     private final String gateSprite;
 
+    /**
+     * Create an instance of Gate.
+     *
+     * @param position Tile the Gate will be put on.
+     * @param type the Color the Gate assigned to.
+     */
     public Gate(Tile position, String type) {
         super(position);
 
@@ -42,6 +51,10 @@ public class Gate extends Item {
 
     }
 
+    /**
+     * Get the Color of the Gate
+     * @return Color of the Gate
+     */
     public Color getColour() {
         return colour;
     }

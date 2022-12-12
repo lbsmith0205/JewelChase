@@ -13,6 +13,11 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
+/**
+ * A Bomb class can be used to create explosion on the Board and delete other items.
+ *
+ * @author Khoi Nguyen Cao, Luke Smith, Daniel Baxter
+ */
 public class Bomb extends Item{
     private static final String BOMB_SPRITE_DEFAULT_PATH = "Sprites/Items/Bombs/Bomb.png";
     private static final String BOMB_COUNTDOWN_PATH_3 = "Sprites/Items/Bombs/Bomb3.png";
@@ -28,7 +33,13 @@ public class Bomb extends Item{
     private int activationTime;
     private String bombState;
 
-
+    /**
+     * Create an instance of the Bomb.
+     *
+     * @param position Tile the Bomb will be put on.
+     *
+     * @param board the Board that Bomb will explode on.
+     */
     public Bomb(Tile position, Board board) {
         super(position);
         this.bombTimer = BOMB_DEFAULT_TIMER;
@@ -46,17 +57,27 @@ public class Bomb extends Item{
 
     }
 
+    /**
+     * Trigger the bomb and set it to tick down.
+     *
+     * @param accumulatorValue
+     */
     public void activate(int accumulatorValue) {
         this.bombActivated = true;
     }
 
+    /**
+     * Explode the Tiles horizontally and vertically respectively to the Bomb
+     */
     public void explode() {
         for (Tile tile : BLAST_ZONE) {
             tile.explode();
         }
     }
 
-
+    /**
+     * Change the Bomb's image according to its timer
+     */
 /*
     private void changeBombState() {
         int explosionTime = level.getTime() - BOMB_DEFAULT_TIMER;

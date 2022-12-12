@@ -4,7 +4,11 @@ import Game.Board.Tile;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 
-
+/**
+ * A Lever can be used to unlock the Gates on the Board that have the same color.
+ *
+ * @author Khoi Nguyen Cao
+ */
 public class Lever extends Item {
     private static final String BLUE_LEVER_PATH = "Sprites/Items/Levers/LeverBlue.png";
     private static final String RED_LEVER_PATH = "Sprites/Items/Levers/LeverRed.png";
@@ -13,7 +17,12 @@ public class Lever extends Item {
     private final Color colour;
     private final String leverSprite;
 
-
+    /**
+     * Create an instance of Lever.
+     *
+     * @param position Tile the Lever will be put on.
+     * @param type the Color the Lever is assigned to.
+     */
     public Lever(Tile position, String type) {
         super(position);
 

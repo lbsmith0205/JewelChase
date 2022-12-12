@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 /**
  * Player.java
  * Sub class of Character, represents to player character.
+ *
  * @author Daniel Baxter, Jack Lewis.
  */
 public class Player extends Thief {

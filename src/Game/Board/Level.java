@@ -18,6 +18,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 /**
+ * A Level class hold the Board, Items and Characters on it, and it's the main class used to manage movements and
+ * interactions.
+ *
  * @author Kenny Masekoameng, Luke Smith, Daniel Baxter, Khoi Nguyen Cao
  */
 public class Level {
@@ -40,6 +43,12 @@ public class Level {
 
     private int accumulator = 0;
 
+
+    /**
+     * Create an instance of Level from the Level folder.
+     *
+     * @param fileName Level with its number.
+     */
     public Level(String fileName) {
         this.levelFilePath = "src/Levels/" + fileName + ".txt";
         this.readLevelFile(levelFilePath);
@@ -48,6 +57,12 @@ public class Level {
         windowResHeight = this.board.getHeight() * TILE_SIDE;
     }
 
+    /**
+     * Create an instance of Level from the SavedGame folder.
+     *
+     * @param fileName Level with its number.
+     * @param profile the name of the Profile of the load file.
+     */
     public Level(String fileName, String profile) {
         this.levelFilePath = "src/SavedGame/" + fileName + profile + ".txt";
         this.readLevelFile(levelFilePath);
@@ -56,6 +71,12 @@ public class Level {
         windowResHeight = this.board.getHeight() * TILE_SIDE;
     }
 
+    /**
+     * Create a scanner to read a file.
+     *
+     * @param levelFilePath path to the File.
+     * @return scanner of the file.
+     */
     private Scanner fileReader(String levelFilePath) {
         try {
             File file = new File(levelFilePath);
@@ -69,7 +90,7 @@ public class Level {
     /**
      * Converts level file into usable parameters.
      *
-     * @param levelFilePath
+     * @param levelFilePath path to the File.
      */
     private void readLevelFile(String levelFilePath) {
         Scanner fileReader = fileReader(levelFilePath);
@@ -99,7 +120,7 @@ public class Level {
     /**
      * Reads the level parameters from the top line of the level file.
      *
-     * @param levelInfo
+     * @param levelInfo the first line of the Level file format.
      */
     private void parseLevelInfo(String levelInfo) {
         Scanner paramParser = new Scanner(levelInfo);
@@ -115,10 +136,10 @@ public class Level {
     /**
      * Converts a single block of colour chars into a Tile object.
      *
-     * @param x
-     * @param y
-     * @param colours
-     * @return
+     * @param x x position of the Tile.
+     * @param y y position of the Tile.
+     * @param colours colours of the Tile.
+     * @return Tile made from the given info.
      */
     private Tile parseTile(int x, int y, String colours) {
         char[] coloursList = colours.toCharArray();
@@ -129,6 +150,12 @@ public class Level {
         return new Tile(x, y, tileColours);
     }
 
+    /**
+     * Convert a char into its respective colour.
+     *
+     * @param character colour in char.
+     * @return colour made from the char.
+     */
     private Color charToColour(char character) {
         Color colour;
         switch (character) {
@@ -146,7 +173,7 @@ public class Level {
     /**
      * Parses line of text file containing items and their locations.
      *
-     * @param itemLine
+     * @param itemLine line of text containing the info of Items.
      */
     private void parseItems(String itemLine) {
         String[] items = itemLine.split(" ");
@@ -197,7 +224,7 @@ public class Level {
     /**
      * Parses line of text file containing characters, their starting locations and starting directions.
      *
-     * @param characterLine
+     * @param characterLine line of text containing the info of Characters.
      */
     private void parseCharacters(String characterLine) {
         String[] characters = characterLine.split(" ");
@@ -243,6 +270,11 @@ public class Level {
 
     }
 
+    /**
+     * Create the window the level will appear on.
+     *
+     * @return the Pane containing the Board and the timer, score.
+     */
     public Pane drawInit() {
         BorderPane root = new BorderPane();
 
@@ -255,6 +287,9 @@ public class Level {
         return root;
     }
 
+    /**
+     * Draw the level with the Board, Items and Characters, timer, score.
+     */
     public void drawLevel() {
         GraphicsContext gc = topBar.getGraphicsContext2D();
         gc.clearRect(0, 0, windowResWidth, SUB_TILE_SIDE);
@@ -266,6 +301,9 @@ public class Level {
 
     }
 
+    /**
+     * Move the characters on the Board.
+     */
     public void moveAll() {
         ArrayList<Character> characters = board.getAllCharacters();
         for (Character character : characters) {
@@ -275,6 +313,10 @@ public class Level {
         }
     }
 
+
+    /**
+     * Update the level after moving everything, redrawing it and tick down from the timer
+     */
     public void update() {
         this.moveAll();
         this.countdown();
@@ -282,9 +324,12 @@ public class Level {
         this.accumulate();
     }
 
-    public void save() {
+    /**
+     * Save the Level to a .txt file, make directory if it doesn't exist yet.
+     */
+    public void save(String profileName) {
         String fileName = "Level" + levelNo + ".txt";
-        File saveDirectory = new File("src/SavedGame");
+        File saveDirectory = new File("src/SavedGame/" + profileName);
         File saveFile = new File(saveDirectory, fileName);
         if(!saveDirectory.exists()) {
             try {
@@ -298,6 +343,11 @@ public class Level {
 
     }
 
+    /**
+     * Write the Level info onto a file.
+     *
+     * @param file File to write the info on.
+     */
     private void print(File file) {
         PrintWriter printWriter = null;
         try {
@@ -334,14 +384,27 @@ public class Level {
 
     }
 
+    /**
+     * Get the width of the window.
+     *
+     * @return width of the window.
+     */
     public int getWindowResWidth() {
         return windowResWidth;
     }
 
+    /**
+     * Get the height of the window.
+     *
+     * @return height of the window.
+     */
     public int getWindowResHeight() {
         return windowResHeight;
     }
 
+    /**
+     * Tick down the timer.
+     */
     public void countdown() {
         time--;
     }
@@ -350,20 +413,34 @@ public class Level {
         return this.levelFilePath;
     }
 
+    /**
+     * Get the Player from the Board.
+     *
+     * @return Player on Board.
+     */
     public Player getPlayer() {
         return board.getPlayer();
     }
 
+    /**
+     * Get the Board stored in Level.
+     *
+     * @return Board in Level.
+     */
     public Board getBoard() {
         return board;
     }
 
-    public int getTime(){return time;}
+    public int getTime() {
+        return time;}
 
     public int getAccumulatorValue() {
         return this.accumulator;
     }
 
+    /**
+     * Add to the accumulator.
+     */
     public void accumulate() {
         accumulator++;
     }

@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * FloorFollowingThieves.java
- * Sub class of Character.
+ * A Floor Following Thief will follow the left-most Tile on the Board until it can't.
+ *
  * @author Daniel Baxter, Jack Lewis.
  */
 
@@ -31,9 +31,20 @@ public class FloorFollowingThief extends Thief {
         refreshImage();
     }
 
+    /**
+     * Set the Color the Floor Following Thief will track.
+     *
+     * @param colour Color assigned
+     */
     public void setFollowingColour(Color colour) {
         this.followingColour = colour;
     }
+
+    /**
+     * Floor Following Thief will try to follow the Tile on its left
+     *
+     * @param board
+     */
     @Override
     public void move(Board board) {
         ArrayList<Tile> validTiles = new ArrayList<>();

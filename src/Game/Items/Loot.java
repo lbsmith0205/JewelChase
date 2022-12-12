@@ -5,7 +5,8 @@ import Game.Board.Tile;
 import javafx.scene.image.Image;
 
 /**
- * Loot class, used to create an instance of either a Cent, Dollar, Diamond, or a Ruby
+ * Loot class, used to create an instance of either a Cent, Dollar, Diamond, or a Ruby.
+ *
  * @author Khoi Nguyen Cao
  */
 public class Loot extends Item{
@@ -29,6 +30,12 @@ public class Loot extends Item{
     private String lootType;
 
 
+    /**
+     * Create an instance of a Loot.
+     *
+     * @param position Tile the Loot will be put on.
+     * @param lootType type of the Loot will be.
+     */
     public Loot (Tile position, String lootType) {
         super(position);
         this.lootType = lootType;
@@ -74,10 +81,20 @@ public class Loot extends Item{
         refreshImage();
     }
 
+    /**
+     * Get how much the Loot is worth.
+     *
+     * @return value of the Loot.
+     */
     public int getValue() {
         return value;
     }
 
+    /**
+     * Get the type of the Loot.
+     *
+     * @return type of the Loot in String.
+     */
     public String getLootType() {
         return lootType;
     }
