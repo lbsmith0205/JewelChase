@@ -115,7 +115,7 @@ public class SmartThief extends Thief {
 
     /**
      * Returns the tile at the end of a specified route.
-     * @param route
+     * @param board
      * @return tile.
      */
     private Tile randomValidTile(Board board) {
