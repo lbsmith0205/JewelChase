@@ -238,7 +238,7 @@ public class Board {
      * @param d Direction moving towards to.
      * @param source Tile currently on.
      * @param targetDistance how far the Tile will be.
-     * @return Tile that can be move on.
+     * @return Tile that can be moved on.
      */
     public Tile findAccessibleTile(Direction d, Tile source, int targetDistance) {
         try {
