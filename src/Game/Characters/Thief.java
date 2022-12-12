@@ -27,10 +27,11 @@ public abstract class Thief extends Character {
      *
      * @param loot the Loot being picked up.
      */
-    public void steal(Loot loot) {
+    public void steal(Board board, Loot loot) {
         if (this instanceof Player) {
             ((Player) this).addScore(loot.getValue());
         }
+        loot.pullLever(board);
         this.position.removeObjectFromTile(loot);
     }
 

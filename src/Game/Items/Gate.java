@@ -17,33 +17,29 @@ public class Gate extends Item {
     private static final String RED_GATE_PATH = "Sprites/Items/Gates/GateRed.png";
     private static final String GREEN_GATE_PATH = "Sprites/Items/Gates/GateGreen.png";
 
-    private final Color colour;
+    private final String type;
     private final String gateSprite;
 
     /**
      * Create an instance of Gate.
      *
      * @param position Tile the Gate will be put on.
-     * @param type the Color the Gate assigned to.
+     * @param type the colour the Gate is assigned to.
      */
     public Gate(Tile position, String type) {
         super(position);
-
+        this.type = type;
         switch (type) {
             case "RGt" -> {
-                this.colour = Color.RED;
                 this.gateSprite = RED_GATE_PATH;
             }
             case "GGt" -> {
-                this.colour = Color.GREEN;
                 this.gateSprite = GREEN_GATE_PATH;
             }
             case "BGt" -> {
-                this.colour = Color.BLUE;
                 this.gateSprite = BLUE_GATE_PATH;
             }
             default -> {
-                this.colour = null;
                 this.gateSprite = null;
             }
         }
@@ -51,18 +47,14 @@ public class Gate extends Item {
 
     }
 
-    /**
-     * Get the Color of the Gate
-     * @return Color of the Gate
-     */
-    public Color getColour() {
-        return colour;
-    }
-
     @Override
     protected void refreshImage() {
         this.image = new Image(gateSprite);
 
 
+    }
+
+    public String getType() {
+        return this.type;
     }
 }

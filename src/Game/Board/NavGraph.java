@@ -35,11 +35,9 @@ public class NavGraph {
                 nodes[x][y].addAccessibleNode(findAccessibleNode(board, Direction.DOWN, sourceTile, 1));
                 nodes[x][y].addAccessibleNode(findAccessibleNode(board, Direction.RIGHT, sourceTile, 1));
                 nodes[x][y].getAccessibleNodes().removeAll(Collections.singleton(null));
-
             }
         }
     }
-
 
     /**
      * Recursive method returns the next accessible node in a specified direction from the source.
@@ -75,4 +73,11 @@ public class NavGraph {
         }
     }
 
+    public int getSize() {
+        int size = 0;
+        for (NavGraphNode[] rowOfNodes : nodes) {
+            size += rowOfNodes.length;
+        }
+        return size;
+    }
 }
