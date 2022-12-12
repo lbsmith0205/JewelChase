@@ -263,7 +263,7 @@ public class Menu {
         level.drawLevel();
         event.consume();
     }
-    /*
+    /*l
     public Scene drawGame() {
         Pane root = level.drawInit();
         Scene scene = new Scene(root, level.getWindowResWidth(), level.getWindowResHeight() + 32);
