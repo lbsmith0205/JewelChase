@@ -74,7 +74,7 @@ public class Menu {
         gameStage = primaryStage;
 
         gameStage.setTitle("Jewel Chase");
-        gameStage.getIcons().add(new Image("Sprites/Coconut.png", 256, 256, false, true));
+        gameStage.getIcons().add(new Image("Sprites/LogoWhatAmI.png", 256, 256, false, true));
 
         menuScene = createMenu();
         profileScene = createProfile();
