@@ -67,24 +67,24 @@ public class Tile {
     }
 
     public String getTileInString() {
-        String colour = "";
+        StringBuilder colour = new StringBuilder();
         for (Color tileColour : tileColours) {
             if (tileColour == Color.INDIANRED) {
-                colour += "R";
+                colour.append("R");
             } else if (tileColour == Color.SPRINGGREEN) {
-                colour += "G";
+                colour.append("G");
             } else if (tileColour == Color.ROYALBLUE) {
-                colour += "B";
+                colour.append("B");
             } else if (tileColour == Color.KHAKI) {
-                colour += "Y";
+                colour.append("Y");
             } else if (tileColour == Color.CYAN) {
-                colour += "C";
+                colour.append("C");
             } else if (tileColour == Color.MEDIUMPURPLE) {
-                colour += "M";
+                colour.append("M");
             }
         }
 
-        return colour;
+        return colour.toString();
     }
 
     public boolean hasBomb() {
