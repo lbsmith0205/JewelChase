@@ -73,6 +73,8 @@ public class Level {
         this.levelFilePath = "src/SavedGame/" + fileName + profile + ".txt";
         this.readLevelFile(levelFilePath);
 
+        this.leaderboard = new Leaderboard(levelNo);
+
         windowResWidth = this.board.getWidth() * TILE_SIDE;
         windowResHeight = this.board.getHeight() * TILE_SIDE;
     }
@@ -415,15 +417,23 @@ public class Level {
         }
 
     }
+
+    /**
+     * Check if the game is won.
+     *
+     * @return playerVictory true if it's a victory, false if not.
+     *         gameOver true if the game ended, false if not.
+     */
     public boolean checkEndGame() {
         if (getPlayer() == null) {
             playerVictory = false;
             gameOver = true;
         }
         if (playerVictory == true) {
-            //update leaderboard here;
+            gameOver = true;
+            //this.leaderboard.updateLeaderboard();
         }
-        return checkEndGame();
+        return gameOver;
     }
 
     /**

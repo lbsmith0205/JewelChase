@@ -413,12 +413,35 @@ public class Menu {
         levelScene = new Scene(root, level.getWindowResWidth(), level.getWindowResHeight() + 32);
         levelScene.addEventFilter(KeyEvent.KEY_PRESSED, this::processKeyEvent);
 
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> {
+            tick();
+            if(level.checkEndGame()) {
+                tickTimeline.stop();
+                switchScenes(createVictoryScreen());
+            }
+        }));
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         primaryStage.setScene(levelScene);
         tickTimeline.play();
 
         return levelScene;
+    }
+
+    /**
+     * Create a Victory screen when you win a game.
+     * @return scene to change to when victory.
+     */
+    private Scene createVictoryScreen() {
+        Group group = new Group();
+        Scene scene = new Scene(group, level.getWindowResWidth(),level.getWindowResHeight() + 32);
+        Button goToLevelScreen = new Button("CONTINUE!");
+        group.getChildren().add(goToLevelScreen);
+        goToLevelScreen.setLayoutX(level.getWindowResWidth()/2);
+        goToLevelScreen.setLayoutY(level.getWindowResHeight()/2);
+        goToLevelScreen.setOnAction(e -> {
+            switchScenes(newGame);
+        });
+        return scene;
     }
 
     /**
