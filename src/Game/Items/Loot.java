@@ -1,6 +1,7 @@
 package Game.Items;
 
 
+import Game.Board.Board;
 import Game.Board.Tile;
 import javafx.scene.image.Image;
 
@@ -88,6 +89,14 @@ public class Loot extends Item{
      */
     public int getValue() {
         return value;
+    }
+
+    public void pullLever(Board board) {
+        switch (lootType) {
+            case "RL" -> board.openGates("RGt");
+            case "GL" -> board.openGates("GGt");
+            case "BL" -> board.openGates("BGt");
+        }
     }
 
     /**

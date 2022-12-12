@@ -11,8 +11,8 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 
 /**
- * SmartThief.java
- * Sub class of Character.
+ * A Smart Thief will seek out the closest Loot it can find and steals it.
+ *
  * @author Daniel Baxter
  */
 
@@ -29,6 +29,11 @@ public class SmartThief extends Thief {
         refreshImage();
     }
 
+    /**
+     * Move the Smart Thief through the Board by following the closest path to the Loot.
+     *
+     * @param currentBoard Board Smart Thief is on.
+     */
     @Override
     public void move(Board currentBoard) {
         NavGraph navigableRoutes = currentBoard.getNavGraph();
@@ -46,6 +51,7 @@ public class SmartThief extends Thief {
         this.position = target;
         position.addObjectToTile(this);
     }
+
 
     public ArrayList<ArrayList<Tile>> availableRoutes(ArrayList<ArrayList<Tile>> parentRoutes, NavGraph navigableRoutes) {
         ArrayList<ArrayList<Tile>> childRoutes = new ArrayList<>();

@@ -144,7 +144,7 @@ public class Board {
     /**
      * Get an ArrayList of all the Items on the Board.
      *
-     * @return ArrayLisst of Items on the Board.
+     * @return ArrayList of Items on the Board.
      */
     public ArrayList<Item> getAllItems() {
         ArrayList<Item> allItems = new ArrayList<>();
@@ -310,6 +310,20 @@ public class Board {
             }
         }
         return listOfBombs;
+    }
+
+    public void openGates(String type) {
+        ArrayList<Gate> gates = new ArrayList<>();
+        for (Item item : getAllItems()) {
+            if (item instanceof Gate) {
+                gates.add((Gate) item);
+            }
+        }
+        for (Gate gate : gates) {
+            if (gate.getType().equals(type)) {
+                gate.getPosition().removeObjectFromTile(gate);
+            }
+        }
     }
 
 
