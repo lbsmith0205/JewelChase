@@ -9,13 +9,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * FlyingAssassin.java
- * Sub class of Character.
- * @author Oliver Rudge.
+ * A Flying Assassin move in a single line and turn 180 if it hits the end.
+ *
+ * @author Oliver Rudge, Daniel Baxter.
  */
 
 public class FlyingAssassin extends Character {
-
 
     /**
      * Creates an instance of Character.
@@ -28,6 +27,11 @@ public class FlyingAssassin extends Character {
         refreshImage();
     }
 
+    /**
+     * Move the Flying Assassin in a single row/column, turn around when it hits the end of the Board.
+     *
+     * @param currentBoard Board Character is on.
+     */
     @Override
     public void move(Board currentBoard) {
         int targetX = position.getXPosition();

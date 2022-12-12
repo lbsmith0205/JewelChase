@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.ArrayList;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.*;
@@ -61,7 +62,7 @@ public class Level {
      * Create an instance of Level from the SavedGame folder.
      *
      * @param fileName Level with its number.
-     * @param profile the name of the Profile of the load file.
+     * @param profile  the name of the Profile of the load file.
      */
     public Level(String fileName, String profile) {
         this.levelFilePath = "src/SavedGame/" + fileName + profile + ".txt";
@@ -136,8 +137,8 @@ public class Level {
     /**
      * Converts a single block of colour chars into a Tile object.
      *
-     * @param x x position of the Tile.
-     * @param y y position of the Tile.
+     * @param x       x position of the Tile.
+     * @param y       y position of the Tile.
      * @param colours colours of the Tile.
      * @return Tile made from the given info.
      */
@@ -331,7 +332,7 @@ public class Level {
         String fileName = "Level" + levelNo + ".txt";
         File saveDirectory = new File("src/SavedGame/" + profileName);
         File saveFile = new File(saveDirectory, fileName);
-        if(!saveDirectory.exists()) {
+        if (!saveDirectory.exists()) {
             try {
                 saveDirectory.mkdir();
                 saveFile.createNewFile();
@@ -432,7 +433,8 @@ public class Level {
     }
 
     public int getTime() {
-        return time;}
+        return time;
+    }
 
     public int getAccumulatorValue() {
         return this.accumulator;

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * A Character can be used to hold its position and manage its movement.
  *
- * @author Daniel Baxter.
+ * @author Daniel Baxter, Khoi Nguyen Cao.
  */
 public abstract class Character {
     protected static final int IMAGE_SIZE = 64;
@@ -24,6 +24,7 @@ public abstract class Character {
 
     /**
      * Creates an instance of Character.
+     *
      * @param position The Tile on which the Character is located.
      */
     public Character(Tile position, Direction direction) {
@@ -32,9 +33,9 @@ public abstract class Character {
     }
 
     /**
+     * Convert the type of Character to a String.
      *
-     *
-     * @return
+     * @return type of Character in String.
      */
     public String getTypeInString() {
         if(this instanceof Player) {
@@ -49,6 +50,11 @@ public abstract class Character {
         return null;
     }
 
+    /**
+     * Convert the current direction of Character to a String.
+     *
+     * @return direction in String.
+     */
     public String getDirectionInString() {
         if(this.direction == Direction.UP) {
             return "U";
@@ -62,19 +68,41 @@ public abstract class Character {
         return null;
     }
 
+    /**
+     * Set the position of the Character.
+     *
+     * @param newPosition new position(Tile) for Character
+     */
     public void setPosition(Tile newPosition) {
         this.position = newPosition;
     }
 
+    /**
+     * Get the current position Character is on.
+     *
+     * @return position of Character in Tile.
+     */
     public Tile getPosition() {
         return this.position;
     }
 
+    /**
+     * Draw the Character.
+     *
+     * @param gc Graphic Context buffer to draw on the Canvas.
+     */
     public void draw(GraphicsContext gc) {
         gc.drawImage(this.image, this.position.getXPosition() * IMAGE_SIZE,
                 this.position.getYPosition() * IMAGE_SIZE);
     }
 
+    /**
+     * Find a Direction that the Character can turn to.
+     *
+     * @param source Tile Character is on.
+     * @param target Tile Character want to move to.
+     * @return Direction to turn to.
+     */
     protected Direction getNewDirection(Tile source, Tile target) {
         int proposedXTravel = Math.round(Math.signum(target.getXPosition() - source.getXPosition()));
         int proposedYTravel = Math.round(Math.signum(target.getYPosition() - source.getYPosition()));
@@ -90,8 +118,16 @@ public abstract class Character {
         return d;
     }
 
+    /**
+     * Move the Character from one Tile to another.
+     *
+     * @param currentBoard Board Character is on.
+     */
     public abstract void move(Board currentBoard);
 
+    /**
+     * Redraw the Character to fit the current Direction and Tile it is in.
+     */
     protected abstract void refreshImage();
 
 

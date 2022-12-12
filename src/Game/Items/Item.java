@@ -1,13 +1,10 @@
 package Game.Items;
 
 import Game.Board.Tile;
-import Game.Characters.Character;
 
 import javafx.scene.paint.Color;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
-import java.awt.*;
 
 /**
  * An Item class can be used to hold information about it.
@@ -63,14 +60,7 @@ public abstract class Item {
                 return "GL";
             }
         } else if (this instanceof Gate) {
-            Color colour = ((Gate) this).getColour();
-            if (colour == Color.BLUE) {
-                return "BGt";
-            } else if (colour == Color.RED) {
-                return "RGt";
-            } else if (colour == Color.GREEN) {
-                return "GGt";
-            }
+            return ((Gate) this).getType();
         } else if (this instanceof Loot) {
             String type = ((Loot) this).getLootType();
             return type;

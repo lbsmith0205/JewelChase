@@ -2,13 +2,22 @@ package Game.Board;
 
 import java.io.IOException;
 
+/**
+ * CreateProfile will generate a new Profile for the user if it does not exist.
+ *
+ * @author Luke Smith.
+ */
 public class CreateProfile {
 
     private static final String[] UNUSABLE_CHARACTERS = {"#","%","&","{","}","\\","<",">","*","?","/"," ","$","!","'","\"",":",";","@","+","`","|","=",",","."};
 
     public String name;
 
-    // I will convert this to javafx when I can be arsed
+    /**
+     * Create a new Profile if it doesn't exist.
+     *
+     * @throws IOException if the input is wrong.
+     */
     public void createNewProfile() throws IOException {
         // Checks to see if name field is empty
         if(name.isEmpty()) {
