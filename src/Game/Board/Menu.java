@@ -51,14 +51,14 @@ public class Menu {
     private Button menuToNewGame;
     private Button menuToLoadGame;
 
-
     private Scene profileScene;
     private Button returnToMenu;
 
-    private Scene levelOne;
-    Level level = new Level("Level1");
+    private Button newGameToLevelOne;private Button newGameToLevelTwo;private Button newGameToLevelThree;
+    private Button newGameToLevelFour;private Button newGameToLevelFive;private Button newGameToLevelSix;
+    private Button newGameToLevelSeven;private Button newGameToLevelEight;private Button newGameToLevelNine;
+    private Button newGameToLevelTen;
 
-    private Button newGameToLevelOne;
 
     private Scene newGame;
 
@@ -66,6 +66,18 @@ public class Menu {
 
     private int centreButton = 260;
 
+    private Scene levelOne;Level level1 = new Level("Level1");
+    private Scene levelTwo;Level level2 = new Level("Level2");
+    private Scene levelThree;Level level3 = new Level("Level3");
+    private Scene levelFour;Level level4 = new Level("Level4");
+    private Scene levelFive;Level level5 = new Level("Level5");
+    /*
+    private Scene leveSix;Level level6 = new Level("Level6");
+    private Scene levelSeven;Level level7 = new Level("Level7");
+    private Scene levelEight;Level level8 = new Level("Level8");
+    private Scene levelNine;Level level9 = new Level("Level9");
+    private Scene levelTen;Level level10 = new Level("Level10");
+*/
 
     public Menu(Stage primaryStage){
         gameStage = primaryStage;
@@ -78,6 +90,8 @@ public class Menu {
         newGame = createNewGame();
         loadGame = createLoadGame();
         levelOne = createlevelOne(gameStage);
+        levelTwo = createlevelTwo(gameStage);
+        levelThree = createlevelThree(gameStage);
 
         gameStage.setScene(menuScene);
         gameStage.show();
@@ -198,9 +212,18 @@ public class Menu {
         Group root = new Group();
         returnToMenu = new Button("Return");
         returnToMenu.setOnAction(e -> switchScenes(menuScene));
+
         newGameToLevelOne = new Button("Level One");
         newGameToLevelOne.setOnAction(e -> switchScenes(levelOne));
         newGameToLevelOne.setLayoutX(centreButton);newGameToLevelOne.setLayoutY(160);
+
+        newGameToLevelTwo = new Button("Level Two");
+        newGameToLevelTwo.setOnAction(e -> switchScenes(levelTwo));
+        newGameToLevelTwo.setLayoutX(centreButton);newGameToLevelTwo.setLayoutY(190);
+
+        newGameToLevelThree = new Button("Level Three");
+        newGameToLevelThree.setOnAction(e -> switchScenes(levelTwo));
+        newGameToLevelThree.setLayoutX(centreButton);newGameToLevelThree.setLayoutY(220);
 
         newGame = new Scene(root, 600, 400,Color.DODGERBLUE);
         Text text = new Text(" Jewel Chase\nSelect a Level");
@@ -208,9 +231,12 @@ public class Menu {
         text.setY(30);
         text.setFill(Color.WHITE);
         text.setFont(Font.font("Helvetica", FontWeight.EXTRA_BOLD, 25));
+
         root.getChildren().add(text);
         root.getChildren().add(returnToMenu);
         root.getChildren().add(newGameToLevelOne);
+        root.getChildren().add(newGameToLevelTwo);
+        root.getChildren().add(newGameToLevelThree);
         return newGame;
     }
     private Scene createLoadGame(){
@@ -230,8 +256,151 @@ public class Menu {
         return loadGame;
     }
     private Scene createlevelOne(Stage primaryStage){
+        Pane root = level1.drawInit();
+        menuToNewGame = new Button("Return");
+        menuToNewGame.setOnAction(e -> switchScenes(newGame));
 
-        Group root = new Group();
+        levelOne = new Scene(root, level1.getWindowResWidth(), level1.getWindowResHeight() + 32);
+        levelOne.addEventFilter(KeyEvent.KEY_PRESSED, this::processKeyEvent);
+
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        primaryStage.setScene(levelOne);
+        tickTimeline.play();
+
+        return levelOne;
+    }
+    private Scene createlevelTwo(Stage primaryStage){
+        Pane root = level2.drawInit();
+        menuToNewGame = new Button("Return");
+        menuToNewGame.setOnAction(e -> switchScenes(newGame));
+
+        levelTwo = new Scene(root, level2.getWindowResWidth(), level2.getWindowResHeight() + 32);
+        levelTwo.addEventFilter(KeyEvent.KEY_PRESSED, this::processKeyEvent);
+
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        primaryStage.setScene(levelTwo);
+        tickTimeline.play();
+
+        return levelTwo;
+    }
+    private Scene createlevelThree(Stage primaryStage){
+
+        Pane root = level3.drawInit();
+        menuToNewGame = new Button("Return");
+        menuToNewGame.setOnAction(e -> switchScenes(newGame));
+
+        levelThree = new Scene(root, level3.getWindowResWidth(), level3.getWindowResHeight() + 32);
+        levelThree.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
+
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        primaryStage.setScene(levelThree);
+        tickTimeline.play();
+
+        return levelThree;
+    }
+    private Scene createlevelFour(Stage primaryStage){
+
+        Pane root = level4.drawInit();
+        menuToNewGame = new Button("Return");
+        menuToNewGame.setOnAction(e -> switchScenes(newGame));
+
+        levelFour = new Scene(root, level4.getWindowResWidth(), level4.getWindowResHeight() + 32);
+        levelFour.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
+
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        primaryStage.setScene(levelFour);
+        tickTimeline.play();
+
+        return levelFour;
+    }
+    private Scene createlevelFive(Stage primaryStage){
+
+        Pane root = level5.drawInit();
+        menuToNewGame = new Button("Return");
+        menuToNewGame.setOnAction(e -> switchScenes(newGame));
+
+        levelFive = new Scene(root, level5.getWindowResWidth(), level5.getWindowResHeight() + 32);
+        levelFive.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
+
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        primaryStage.setScene(levelFive);
+        tickTimeline.play();
+
+        return levelFive;
+    }
+    /*
+    private Scene createlevelSix(Stage primaryStage){
+
+        Pane root = level.drawInit();
+        menuToNewGame = new Button("Return");
+        menuToNewGame.setOnAction(e -> switchScenes(newGame));
+
+        levelOne = new Scene(root, level.getWindowResWidth(), level.getWindowResHeight() + 32);
+        levelOne.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
+
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        primaryStage.setScene(levelOne);
+        tickTimeline.play();
+
+        return levelOne;
+    }
+    private Scene createlevelSeven(Stage primaryStage){
+
+        Pane root = level.drawInit();
+        menuToNewGame = new Button("Return");
+        menuToNewGame.setOnAction(e -> switchScenes(newGame));
+
+        levelOne = new Scene(root, level.getWindowResWidth(), level.getWindowResHeight() + 32);
+        levelOne.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
+
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        primaryStage.setScene(levelOne);
+        tickTimeline.play();
+
+        return levelOne;
+    }
+    private Scene createlevelEight(Stage primaryStage){
+
+        Pane root = level.drawInit();
+        menuToNewGame = new Button("Return");
+        menuToNewGame.setOnAction(e -> switchScenes(newGame));
+
+        levelOne = new Scene(root, level.getWindowResWidth(), level.getWindowResHeight() + 32);
+        levelOne.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
+
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        primaryStage.setScene(levelOne);
+        tickTimeline.play();
+
+        return levelOne;
+    }
+    private Scene createlevelNine(Stage primaryStage){
+
+        Pane root = level.drawInit();
+        menuToNewGame = new Button("Return");
+        menuToNewGame.setOnAction(e -> switchScenes(newGame));
+
+        levelOne = new Scene(root, level.getWindowResWidth(), level.getWindowResHeight() + 32);
+        levelOne.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
+
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        primaryStage.setScene(levelOne);
+        tickTimeline.play();
+
+        return levelOne;
+    }
+    private Scene createlevelTen(Stage primaryStage){
+
+        Pane root = level.drawInit();
         menuToNewGame = new Button("Return");
         menuToNewGame.setOnAction(e -> switchScenes(newGame));
 
@@ -246,27 +415,29 @@ public class Menu {
         return levelOne;
     }
 
+     */
+
     private void tick() {
-        level.moveAll();
-        level.countdown();
-        level.drawLevel();
-        level.accumulate();
+        level1.moveAll();
+        level1.countdown();
+        level1.drawLevel();
+        level1.accumulate();
     }
     private void processKeyEvent(KeyEvent event) {
         switch (event.getCode()) {
-            case W, UP -> level.getPlayer().setDirection(Direction.UP);
-            case A, LEFT -> level.getPlayer().setDirection(Direction.LEFT);
-            case S, DOWN -> level.getPlayer().setDirection(Direction.DOWN);
-            case D, RIGHT -> level.getPlayer().setDirection(Direction.RIGHT);
+            case W, UP -> level1.getPlayer().setDirection(Direction.UP);
+            case A, LEFT -> level1.getPlayer().setDirection(Direction.LEFT);
+            case S, DOWN -> level1.getPlayer().setDirection(Direction.DOWN);
+            case D, RIGHT -> level1.getPlayer().setDirection(Direction.RIGHT);
         }
-        level.getPlayer().move(level.getBoard());
-        level.drawLevel();
+        level1.getPlayer().move(level1.getBoard());
+        level1.drawLevel();
         event.consume();
     }
-    /*l
+   /*
     public Scene drawGame() {
-        Pane root = level.drawInit();
-        Scene scene = new Scene(root, level.getWindowResWidth(), level.getWindowResHeight() + 32);
+        Pane root = level1.drawInit();
+        Scene scene = new Scene(root, level1.getWindowResWidth(), level1.getWindowResHeight() + 32);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
 
         tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
@@ -277,7 +448,9 @@ public class Menu {
         primaryStage.show();
         tickTimeline.play();
     }
-     */
+
+    */
+
 
     public void switchScenes(Scene scene){
         gameStage.setScene(scene);
