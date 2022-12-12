@@ -1,6 +1,7 @@
 package Game.Characters;
 
 import Game.Board.Board;
+import Game.Board.Level;
 import Game.Board.Tile;
 import Game.Direction;
 import Game.Items.Bomb;
@@ -27,12 +28,14 @@ public abstract class Thief extends Character {
      *
      * @param loot the Loot being picked up.
      */
-    public void steal(Board board, Loot loot) {
+    public void steal(Level level, Board board, Loot loot) {
         if (this instanceof Player) {
             ((Player) this).addScore(loot.getValue());
         }
         loot.pullLever(board);
+        level.adjustTime(loot.adjustTime(this));
         this.position.removeObjectFromTile(loot);
+
     }
 
     /**

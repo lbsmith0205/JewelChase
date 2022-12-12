@@ -34,6 +34,9 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         tickTimeline.play();
+         */
+        //tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
+        //tickTimeline.setCycleCount(Animation.INDEFINITE);
 
         tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
         tickTimeline.setCycleCount(Animation.INDEFINITE);
@@ -44,6 +47,7 @@ public class Main extends Application {
 /*
     private void tick() {
         level.moveAll();
+        level.interactAll();
         level.countdown();
         level.drawLevel();
         level.accumulate();
@@ -56,6 +60,7 @@ public class Main extends Application {
             case D, RIGHT -> level.getPlayer().setDirection(Direction.RIGHT);
         }
         level.getPlayer().move(level.getBoard());
+        level.interactAll();
         level.drawLevel();
         event.consume();
     }

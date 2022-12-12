@@ -3,6 +3,8 @@ package Game.Items;
 
 import Game.Board.Board;
 import Game.Board.Tile;
+import Game.Characters.Character;
+import Game.Characters.Player;
 import javafx.scene.image.Image;
 
 /**
@@ -20,10 +22,12 @@ public class Loot extends Item{
     private static final String RED_LEVER_PATH = "Sprites/Items/Levers/LeverRed.png";
     private static final String GREEN_LEVER_PATH = "Sprites/Items/Levers/LeverGreen.png";
     private static final String BLUE_LEVER_PATH = "Sprites/Items/Levers/LeverBlue.png";
+    private static final String CLOCK_PATH = "Sprites/Items/Clock.png";
     private static final int CENT_COIN_VALUE = 1;
     private static final int DOLLAR_COIN_VALUE = 2;
     private static final int RUBY_VALUE = 5;
     private static final int DIAMOND_VALUE = 10;
+    private static final int CLOCK_REWARD = 10; // seconds
 
     private final int value;
 
@@ -73,6 +77,10 @@ public class Loot extends Item{
                 this.value = 0;
                 this.lootSprite = BLUE_LEVER_PATH;
             }
+            case "Cl" -> {
+                this.value = 0;
+                this.lootSprite = CLOCK_PATH;
+            }
             default -> {
                 this.lootType = null;
                 this.value = 0;
@@ -96,6 +104,17 @@ public class Loot extends Item{
             case "RL" -> board.openGates("RGt");
             case "GL" -> board.openGates("GGt");
             case "BL" -> board.openGates("BGt");
+        }
+    }
+
+    public int adjustTime(Character character) {
+        if (!lootType.equals("Cl")) {
+            return 0;
+        }
+        if (character instanceof Player) {
+            return CLOCK_REWARD;
+        } else {
+            return -CLOCK_REWARD;
         }
     }
 

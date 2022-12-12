@@ -73,11 +73,15 @@ public class NavGraph {
         }
     }
 
-    public int getSize() {
-        int size = 0;
+    public boolean hasVisitedAllNodes() {
         for (NavGraphNode[] rowOfNodes : nodes) {
-            size += rowOfNodes.length;
+            for (NavGraphNode node : rowOfNodes) {
+                if (!node.getHasBeenVisited()) {
+                    return false;
+                }
+            }
         }
-        return size;
+        return true;
     }
+
 }

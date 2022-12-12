@@ -20,6 +20,7 @@ public class FloorFollowingThief extends Thief {
 
     private String pathToImage = "Sprites/Characters/FFT/Floor_Following_Thief_" + direction.name() +".png";
     private Color followingColour;
+    private boolean isOnEdge = false;
 
     /**
      * Creates an instance of FloorFollowingThief.
@@ -48,11 +49,25 @@ public class FloorFollowingThief extends Thief {
     @Override
     public void move(Board board) {
         ArrayList<Tile> validTiles = new ArrayList<>();
-        validTiles.add(board.getAdjacentTileOfRequiredColour(position, direction.turnLeft(), followingColour));
-        validTiles.add(board.getAdjacentTileOfRequiredColour(position, direction, followingColour));
-        validTiles.add(board.getAdjacentTileOfRequiredColour(position, direction.turnRight(), followingColour));
-        validTiles.add(board.getAdjacentTileOfRequiredColour(position, direction.turnBack(), followingColour));
+
+        if (board.getAdjacentTileOfRequiredColour(position, direction.turnLeft(), followingColour) == null) {
+            isOnEdge = true;
+        }
+
+        if (isOnEdge) {
+            validTiles.add(board.getAdjacentTileOfRequiredColour(position, direction.turnLeft(), followingColour));
+            validTiles.add(board.getAdjacentTileOfRequiredColour(position, direction, followingColour));
+            validTiles.add(board.getAdjacentTileOfRequiredColour(position, direction.turnRight(), followingColour));
+            validTiles.add(board.getAdjacentTileOfRequiredColour(position, direction.turnBack(), followingColour));
+        } else {
+            validTiles.add(board.getAdjacentTileOfRequiredColour(position, direction, followingColour));
+            validTiles.add(board.getAdjacentTileOfRequiredColour(position, direction.turnRight(), followingColour));
+            validTiles.add(board.getAdjacentTileOfRequiredColour(position, direction.turnBack(), followingColour));
+            validTiles.add(board.getAdjacentTileOfRequiredColour(position, direction.turnLeft(), followingColour));
+            validTiles.removeAll(Collections.singleton(null));
+        }
         validTiles.removeAll(Collections.singleton(null));
+
         if (!validTiles.isEmpty()) {
             Tile target = validTiles.get(0);
             direction = getNewDirection(position, target);
@@ -61,6 +76,7 @@ public class FloorFollowingThief extends Thief {
             this.position = target;
             position.addObjectToTile(this);
         }
+
     }
 
     @Override

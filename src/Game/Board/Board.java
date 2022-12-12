@@ -2,9 +2,9 @@ package Game.Board;
 
 import Game.Characters.Character;
 import Game.Characters.Player;
+import Game.Characters.Thief;
 import Game.Direction;
-import Game.Items.Bomb;
-import Game.Items.Item;
+import Game.Items.*;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import Game.Items.Gate;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
@@ -105,10 +104,19 @@ public class Board {
      * @param target Tile need to move onto.
      * @return true if it meets the constraints, false if not.
      */
-    public boolean isLegalMove(Tile source, Tile target) {
+    public boolean isLegalMove(Tile source, Tile target, String characterMode) {
         for (Object object : target.getObjectsOnTile()) {
-            if (object instanceof Gate || object instanceof Bomb) {
-                return false;
+            switch (characterMode) {
+                case "SmartThief" -> {
+                    if (object instanceof Gate || object instanceof Bomb || object instanceof Thief) {
+                        return false;
+                    }
+                }
+                default -> {
+                    if (object instanceof Gate || object instanceof Bomb) {
+                        return false;
+                    }
+                }
             }
         }
         for (Color currentColour : source.getTileColours()) {
@@ -252,7 +260,7 @@ public class Board {
             }
 
             Tile target = tiles[x][y];
-            if (this.isLegalMove(source, target)) {
+            if (this.isLegalMove(source, target, "SmartThief")) {
                 return target;
             } else {
                 if (target.hasBomb()) {
@@ -287,7 +295,7 @@ public class Board {
                 case RIGHT -> x++;
             }
             Tile target = tiles[x][y];
-            if (isLegalMove(dummyTile, target)) {
+            if (isLegalMove(dummyTile, target, "Default")) {
                 return target;
             }
 
@@ -325,6 +333,34 @@ public class Board {
             }
         }
     }
+
+    public void placeLootableDoor() {
+        if (!hasLoot()) {
+            Door door = getDoor();
+            Tile doorTile = door.getPosition();
+            Loot lootableDoor = new Loot (doorTile, "LD");
+            doorTile.addObjectToTile(lootableDoor);
+        }
+    }
+
+    private boolean hasLoot() {
+        for (Item item : getAllItems()) {
+            if (item instanceof Loot) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Door getDoor() {
+        for (Item item : getAllItems()) {
+            if (item instanceof Door) {
+                return (Door) item;
+            }
+        }
+        return null;
+    }
+
 
 
 

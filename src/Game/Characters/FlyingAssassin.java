@@ -8,6 +8,8 @@ import Game.Direction;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+
 /**
  * A Flying Assassin move in a single line and turn 180 if it hits the end.
  *
@@ -49,6 +51,7 @@ public class FlyingAssassin extends Character {
             position.removeObjectFromTile(this);
             this.position = target;
             position.addObjectToTile(this);
+            assassinate();
         } catch (ArrayIndexOutOfBoundsException e) {
             direction = direction.turnBack();
             refreshImage();
@@ -64,5 +67,13 @@ public class FlyingAssassin extends Character {
         this.image = new Image(pathToImage);
     }
 
+    public void assassinate() {
+        ArrayList<Object> objects = position.getObjectsOnTile();
+        for (Object object : objects) {
+            if (object instanceof Thief) {
+                position.getObjectsOnTile().remove(object);
+            }
+        }
+    }
 
 }

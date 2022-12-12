@@ -101,6 +101,15 @@ public class Tile {
         return false;
     }
 
+    public Loot getLoot() {
+        for (Object o : objectsOnTile) {
+            if (o instanceof Loot) {
+                return (Loot) o;
+            }
+        }
+        return null;
+    }
+
     /**
      * Convert the Tile colours into a String.
      *

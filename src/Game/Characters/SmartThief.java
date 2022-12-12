@@ -7,7 +7,6 @@ import Game.Board.Tile;
 import Game.Direction;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 
 /**
@@ -24,6 +23,7 @@ public class SmartThief extends Thief {
      */
 
     private String pathToImage = "Sprites/Characters/ST/Smart_Thief_" + direction.name() + ".png";
+
     public SmartThief(Tile position, Direction direction) {
         super(position, direction);
         refreshImage();
@@ -32,20 +32,29 @@ public class SmartThief extends Thief {
     /**
      * Move the Smart Thief through the Board by following the closest path to the Loot.
      *
-     * @param currentBoard Board Smart Thief is on.
+     * @param board Board Smart Thief is on.
      */
     @Override
-    public void move(Board currentBoard) {
-        NavGraph navigableRoutes = currentBoard.getNavGraph();
+    public void move(Board board) {
+        NavGraph navigableRoutes = board.getNavGraph();
         navigableRoutes.unvisitAll();
         ArrayList<ArrayList<Tile>> seed = new ArrayList<>();
         ArrayList<Tile> thisTile = new ArrayList<>();
         thisTile.add(position);
         seed.add(thisTile);
         navigableRoutes.getNode(position).visit();
-        ArrayList<ArrayList<Tile>> routes = availableRoutes(seed, navigableRoutes);
-        Tile target = optimalMove(routes);
-        direction = getNewDirection(position, target);
+        Tile target = null;
+        try {
+            ArrayList<ArrayList<Tile>> routes = availableRoutes(seed, navigableRoutes);
+            target = optimalMove(routes);
+            direction = getNewDirection(position, target);
+        } catch (StackOverflowError e) {
+            while (target == null) {
+                target = randomValidTile(board);
+            }
+        }
+
+
         refreshImage();
         position.removeObjectFromTile(this);
         this.position = target;
@@ -65,21 +74,21 @@ public class SmartThief extends Thief {
                     newRoute.add(accessibleNode.getTile());
                     childRoutes.add(newRoute);
                     accessibleNode.visit();
+
                 }
             }
         }
+
         if (optimalMove(childRoutes) != null) {
             return childRoutes;
-        } else {
-            return availableRoutes(childRoutes, navigableRoutes);
         }
+            return availableRoutes(childRoutes, navigableRoutes);
     }
 
     private Tile optimalMove(ArrayList<ArrayList<Tile>> availableRoutes) {
         for (ArrayList<Tile> route : availableRoutes) {
             if (terminus(route).hasLoot()) {
                 return route.get(1);
-
             }
         }
         return null;
@@ -87,6 +96,11 @@ public class SmartThief extends Thief {
 
     private Tile terminus(ArrayList<Tile> route) {
         return route.get(route.size() - 1);
+    }
+
+    private Tile randomValidTile(Board board) {
+        direction = Direction.getRandomDirection();
+        return board.findAccessibleTile(direction, position,1);
     }
 
     @Override

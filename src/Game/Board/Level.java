@@ -33,6 +33,7 @@ public class Level {
     private final int windowResHeight;
 
     private Board board;
+    private Player player;
     private int width;
     private int height;
     private int time;
@@ -187,37 +188,22 @@ public class Level {
             parseItem.close();
 
             switch (type) {
-                case "¢":
-                case "$":
-                case "Ru":
-                case "Di":
+                case "¢", "$", "Ru", "Di", "RL", "GL", "BL", "Cl" -> {
                     Loot newLoot = new Loot(board.getTile(x, y), type);
                     board.getTile(x, y).addObjectToTile(newLoot);
-                    break;
-                case "RGt":
-                case "GGt":
-                case "BGt":
+                }
+                case "RGt", "GGt", "BGt" -> {
                     Gate newGate = new Gate(board.getTile(x, y), type);
                     board.getTile(x, y).addObjectToTile(newGate);
-                    break;
-                case "RL":
-                case "GL":
-                case "BL":
-                    Lever newLever = new Lever(board.getTile(x, y), type);
-                    board.getTile(x, y).addObjectToTile(newLever);
-                    break;
-                case "D":
+                }
+                case "D" -> {
                     Door newDoor = new Door(board.getTile(x, y));
                     board.getTile(x, y).addObjectToTile(newDoor);
-                    break;
-                case "Bo":
+                }
+                case "Bo" -> {
                     Bomb newBomb = new Bomb(board.getTile(x, y), board);
                     board.getTile(x, y).addObjectToTile(newBomb);
-                    break;
-                case "Cl":
-                    Clock newClock = new Clock(board.getTile(x, y));
-                    board.getTile(x, y).addObjectToTile(newClock);
-                    break;
+                }
             }
         }
     }
@@ -250,6 +236,7 @@ public class Level {
             switch (type) {
                 case "P":
                     Player newP = new Player(board.getTile(x, y), direction);
+                    player = newP;
                     board.getTile(x, y).addObjectToTile(newP);
                     break;
                 case "FFT":
@@ -294,7 +281,7 @@ public class Level {
     public void drawLevel() {
         GraphicsContext gc = topBar.getGraphicsContext2D();
         gc.clearRect(0, 0, windowResWidth, SUB_TILE_SIDE);
-        gc.strokeText("Time: " + time + "s Score: " + score, 0, SUB_TILE_SIDE / 2);
+        gc.strokeText("Time: " + time + "s Score: " + player.getScore(), 0, SUB_TILE_SIDE / 2);
 
         gc = boardArea.getGraphicsContext2D();
         gc.clearRect(0, 0, windowResWidth, windowResHeight);
@@ -314,6 +301,19 @@ public class Level {
         }
     }
 
+    public void interactAll() {
+        ArrayList<Character> characters = board.getAllCharacters();
+        for (Character character : characters) {
+            if (character instanceof Thief && character.getPosition().hasLoot()) {
+                ((Thief) character).steal(this, board, character.getPosition().getLoot());
+            }
+            if (character instanceof FlyingAssassin) {
+                ((FlyingAssassin) character).assassinate();
+            }
+        }
+        board.placeLootableDoor();
+    }
+
 
     /**
      * Update the level after moving everything, redrawing it and tick down from the timer
@@ -322,7 +322,6 @@ public class Level {
         this.moveAll();
         this.countdown();
         this.drawLevel();
-        this.accumulate();
     }
 
     /**
@@ -443,7 +442,7 @@ public class Level {
     /**
      * Add to the accumulator.
      */
-    public void accumulate() {
-        accumulator++;
+    public void adjustTime(int adjustment) {
+        time += adjustment;
     }
 }
