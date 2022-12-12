@@ -60,14 +60,7 @@ public abstract class Item {
                 return "GL";
             }
         } else if (this instanceof Gate) {
-            Color colour = ((Gate) this).getColour();
-            if (colour == Color.BLUE) {
-                return "BGt";
-            } else if (colour == Color.RED) {
-                return "RGt";
-            } else if (colour == Color.GREEN) {
-                return "GGt";
-            }
+            return ((Gate) this).getType();
         } else if (this instanceof Loot) {
             String type = ((Loot) this).getLootType();
             return type;
