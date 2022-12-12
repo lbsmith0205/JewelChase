@@ -10,9 +10,9 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 /**
- * Character.java
- * Super class for all player and non player character classes.
- * @author Daniel Baxter, Jack Lewis.
+ * A Character can be used to hold its position and manage its movement.
+ *
+ * @author Daniel Baxter.
  */
 public abstract class Character {
     protected static final int IMAGE_SIZE = 64;
@@ -31,23 +31,11 @@ public abstract class Character {
         this.direction = direction;
     }
 
-
     /**
-     * Determines whether a move to a proposed tile is legal.
-     * @param target The Tile object to which a move is proposed.
-     * @return boolean, true if move is legal, false otherwise.
+     *
+     *
+     * @return
      */
-    protected boolean isLegalMove(Tile target) {
-        for (Color currentColour : currentColours) {
-            for (Color targetColour : target.getTileColours()) {
-                if (targetColour == currentColour) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public String getTypeInString() {
         if(this instanceof Player) {
             return "P";
