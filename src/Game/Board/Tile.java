@@ -1,10 +1,8 @@
 package Game.Board;
 
-import Game.Items.Bomb;
-import Game.Items.Door;
-import Game.Items.Gate;
+import Game.Items.*;
 import javafx.scene.paint.Color;
-import Game.Items.Loot;
+
 import java.util.ArrayList;
 public class Tile {
 
@@ -109,7 +107,7 @@ public class Tile {
             }
             objectsOnTile = remnants;
             if (objectsOnTile.isEmpty()) {
-                //objectsOnTile.add(new Explosion explosion); implement fire sprite.
+                objectsOnTile.add(new Explosion(this));
             }
 
         }

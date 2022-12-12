@@ -26,6 +26,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -160,14 +161,15 @@ public class Menu {
         banner.setY(30);
         banner.setFill(Color.WHITE);
         banner.setFont(Font.font("Helvetica", FontWeight.EXTRA_BOLD, 25));
-        updateMOTD();
 
+        updateMOTD();
         Text motd = new Text(messageOfTheDay);
         motd.setX(0);
         motd.setY(350);
         motd.setFill(Color.WHITE);
         motd.setFont(Font.font("Helvetica", FontWeight.EXTRA_BOLD, 12));
         motd.setWrappingWidth(580);
+        motd.setTextAlignment(TextAlignment.CENTER);
 
 
         root.getChildren().add(motd);
