@@ -67,7 +67,7 @@ public class Profile {
      *
      * @throws IOException if the input is wrong.
      */
-    private void newProfileFile() throws IOException {
+    public void newProfileFile() throws IOException {
         File saveDirectory = new File("src/Profiles/");
         File myObj = new File(saveDirectory, profileName);
         if(!saveDirectory.exists()) {

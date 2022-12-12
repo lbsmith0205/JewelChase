@@ -461,10 +461,6 @@ public class Level {
         time--;
     }
 
-    public String getLevelFilePath() {
-        return this.levelFilePath;
-    }
-
     /**
      * Get the Player from the Board.
      *

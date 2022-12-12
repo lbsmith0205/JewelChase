@@ -53,7 +53,7 @@ public abstract class Character {
     /**
      * Convert the current direction of Character to a String.
      *
-     * @return direction in String.
+     * @return direction as String.
      */
     public String getDirectionInString() {
         if(this.direction == Direction.UP) {
@@ -97,7 +97,7 @@ public abstract class Character {
     }
 
     /**
-     * Find a Direction that the Character can turn to.
+     * Calculate the direction that the Character should be facing based on the tiles it is traveling between.
      *
      * @param source Tile Character is on.
      * @param target Tile Character want to move to.
