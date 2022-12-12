@@ -107,12 +107,17 @@ public class SmartThief extends Thief {
     /**
      * Returns the tile at the end of a specified route.
      * @param route
-     * @return
+     * @return tile.
      */
     private Tile terminus(ArrayList<Tile> route) {
         return route.get(route.size() - 1);
     }
 
+    /**
+     * Returns the tile at the end of a specified route.
+     * @param route
+     * @return tile.
+     */
     private Tile randomValidTile(Board board) {
         direction = Direction.getRandomDirection();
         return board.findAccessibleTile(direction, position,1);

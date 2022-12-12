@@ -57,9 +57,7 @@ public abstract class Thief extends Character {
         for (Bomb bomb : board.getAllBombs()) {
             int xDistance = Math.abs(XPosition - bomb.getPosition().getXPosition());
             int yDistance = Math.abs(YPosition - bomb.getPosition().getYPosition());
-            System.out.println(xDistance);
-            System.out.println(yDistance);
-            if (xDistance <= 0 || yDistance <= 0) {
+            if (xDistance <= 1 || yDistance <= 1) {
                 if (!bomb.getIsActive()) {
                     bomb.activate(time);
                 }
