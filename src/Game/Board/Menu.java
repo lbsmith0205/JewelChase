@@ -7,22 +7,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -278,14 +274,6 @@ public class Menu {
             }
 
         });
-        /*String[] profileList = (new File("src/Profiles")).list();
-        for (int i = 0; i < profileList.length; i++){
-            Button button = new Button();
-            button.setText(profileList[i].get);
-
-
-        }
-         */
 
         Text text = new Text("Jewel Chase\n    Profile");
         text.setX(220);
