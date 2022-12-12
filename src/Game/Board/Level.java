@@ -39,6 +39,7 @@ public class Level {
     private int time;
     private int score;
     private int levelNo;
+    private Leaderboard leaderboard;
 
     private Canvas boardArea;
     private Canvas topBar;
@@ -55,6 +56,8 @@ public class Level {
     public Level(String fileName) {
         this.levelFilePath = "src/Levels/" + fileName + ".txt";
         this.readLevelFile(levelFilePath);
+
+        this.leaderboard = new Leaderboard(levelNo);
 
         windowResWidth = this.board.getWidth() * TILE_SIDE;
         windowResHeight = this.board.getHeight() * TILE_SIDE;
