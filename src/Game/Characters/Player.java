@@ -8,18 +8,19 @@ import javafx.scene.canvas.GraphicsContext;
 import java.awt.event.KeyEvent;
 
 /**
- * Player.java
- * Sub class of Character, represents to player character.
+ * A Player controlled by a user, move by arrow keys or AWSD keys.
  *
- * @author Daniel Baxter, Jack Lewis.
+ * @author Daniel Baxter.
  */
 public class Player extends Thief {
     private int score = 0;
     private String pathToImage = "Sprites/Characters/Player/Player_" + direction.name() + ".png";
+
     /**
-     * Creates an instance of Character.
+     Creates an instance of Character.
      *
-     * @param position The Tile on which the Character is located.
+     * @param position the Tile on which the Character is located.
+     * @param direction the Direction Player starts at.
      */
     public Player(Tile position, Direction direction) {
         super(position, direction);
@@ -43,7 +44,8 @@ public class Player extends Thief {
 
     /**
      * Moves the player character to the desired Tile.
-     * @param board
+     *
+     * @param board Board the Player is on.
      */
     @Override
     public void move(Board board) {
@@ -63,10 +65,20 @@ public class Player extends Thief {
         this.image = new Image(pathToImage);
     }
 
+    /**
+     * Get the score of the Player.
+     *
+     * @return score of the PLayer.
+     */
     public int getScore() {
         return this.score;
     }
 
+    /**
+     * Add to the score.
+     *
+     * @param value value to add to score.
+     */
     public void addScore(int value) {
         score += value;
     }
