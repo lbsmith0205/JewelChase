@@ -11,8 +11,6 @@ import java.util.ArrayList;
  * @author Luke Smith, Daniel Baxter, Khoi Nguyen Cao.
  */
 public class Tile {
-    public static final int T_SIZE = 64;
-
     private final Color[] tileColours;
     private final int yPosition;
     private final int xPosition;
@@ -155,20 +153,25 @@ public class Tile {
      */
     public void explode() {
         ArrayList<Object> remnants = new ArrayList<>();
-        for (Object object : objectsOnTile) {
-            if (object instanceof Bomb) {
-                ((Bomb) object).explode();
-            }
 
-            // Note: consult group on effects of bomb on characters.
+        for (Object object : objectsOnTile) {
+            ArrayList<Tile> toExplode = new ArrayList<>();
+            if (object instanceof Bomb) {
+                if (!((Bomb) object).getIsActive()) {
+                    toExplode.addAll(((Bomb) object).getBlastZone());
+                }
+            }
+            for (Tile tile : toExplode) {
+                tile.explode();
+            }
             if (object instanceof Door || object instanceof Gate) {
                 remnants.add(object);
             }
-            objectsOnTile = remnants;
-            if (objectsOnTile.isEmpty()) {
-                objectsOnTile.add(new Explosion(this));
-            }
+        }
 
+        objectsOnTile = remnants;
+        if (objectsOnTile.isEmpty()) {
+            objectsOnTile.add(new Explosion(this));
         }
     }
 }

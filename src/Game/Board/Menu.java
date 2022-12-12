@@ -425,6 +425,7 @@ public class Menu {
         level.refreshBombs();
         level.countdown();
         level.drawLevel();
+
     }
 
     /**

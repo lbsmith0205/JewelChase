@@ -46,6 +46,7 @@ public class Bomb extends Item{
         for (int y = 0; y < board.getHeight(); y++) {
             BLAST_ZONE.add(board.getTile(bombXPosition, y));
         }
+        BLAST_ZONE.remove(position);
         refreshImage();
 
     }
@@ -77,14 +78,17 @@ public class Bomb extends Item{
         int bombTimeRemaining = time - detonationTime;
         switch (bombTimeRemaining) {
             case 3 -> {
+                System.out.println("Bomb 3");
                 bombSpritePath = BOMB_COUNTDOWN_PATH_3;
                 refreshImage();
             }
             case 2 -> {
+                System.out.println("Bomb 2");
                 bombSpritePath = BOMB_COUNTDOWN_PATH_2;
                 refreshImage();
             }
             case 1 -> {
+                System.out.println("Bomb 1");
                 bombSpritePath = BOMB_COUNTDOWN_PATH_1;
                 refreshImage();
             }
@@ -99,6 +103,10 @@ public class Bomb extends Item{
 
     public boolean getIsActive() {
         return isActive;
+    }
+
+    public ArrayList<Tile> getBlastZone() {
+        return BLAST_ZONE;
     }
 
 }

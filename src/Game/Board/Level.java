@@ -42,8 +42,9 @@ public class Level {
 
     private Canvas boardArea;
     private Canvas topBar;
+    private boolean gameOver = false;
+    private boolean playerVictory = false;
 
-    private int accumulator = 0;
 
 
     /**
@@ -323,6 +324,23 @@ public class Level {
                 bomb.updateBombState(time);
             }
         }
+        removeFadedExplosions();
+    }
+
+    private void removeFadedExplosions() {
+        ArrayList<Explosion> markedForRemoval = new ArrayList();
+        for (Item item : board.getAllItems()) {
+            if (item instanceof Explosion) {
+                ((Explosion) item).fade();
+                if (((Explosion) item).hasFaded()) {
+                    markedForRemoval.add((Explosion) item);
+                }
+            }
+        }
+        for (Explosion explosion : markedForRemoval) {
+            explosion.getPosition().getObjectsOnTile().remove(explosion);
+        }
+
     }
 
 
@@ -394,6 +412,16 @@ public class Level {
         }
 
     }
+    public boolean checkEndGame() {
+        if (getPlayer() == null) {
+            playerVictory = false;
+            gameOver = true;
+        }
+        if (playerVictory == true) {
+            //update leaderboard;
+        }
+        return checkEndGame();
+    }
 
     /**
      * Get the width of the window.
@@ -452,5 +480,13 @@ public class Level {
      */
     public void adjustTime(int adjustment) {
         time += adjustment;
+    }
+
+    public void setPlayerVictory(boolean value) {
+        playerVictory = value;
+    }
+
+    public void setGameOver(boolean value) {
+        gameOver = value;
     }
 }
