@@ -13,7 +13,7 @@ import java.util.Collections;
 /**
  * A Floor Following Thief will follow the left-most Tile on the Board until it can't.
  *
- * @author Daniel Baxter, Jack Lewis.
+ * @author Daniel Baxter.
  */
 
 public class FloorFollowingThief extends Thief {
@@ -41,9 +41,9 @@ public class FloorFollowingThief extends Thief {
     }
 
     /**
-     * Floor Following Thief will try to follow the Tile on its left
+     * Floor Following Thief will try to follow the Tile on its left-hand side.
      *
-     * @param board
+     * @param board Board the Floor Following Thief is on.
      */
     @Override
     public void move(Board board) {
